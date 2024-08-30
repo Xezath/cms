@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from Usuario import views
-from django.urls import path, re_path
+from django.urls import path
 
 
 
@@ -24,7 +24,7 @@ urlpatterns = [
 
     path('admin/',admin.site.urls),
     path('', views.home, name='home'),  # URL para la página principal
-    path('signup/', views.signup, name='signup'),  # URL para el registro
+    path('registrar/', views.registrar, name='registrar'),  # URL para el registro
     
 
 ]
