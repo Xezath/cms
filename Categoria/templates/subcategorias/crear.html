@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block Titulo %} Agregar nueva SubCategoría {% endblock %}
+{% block contenido %}
+
+<div class="card">
+    <div class="card-header">Crear una Subcategoria</div>
+    <div class="card-body">
+        <h4 class="card-title">Datos de la Subcategoria</h4>
+        {% include 'subcategorias/form.html' %}
+    </div>
+    <div class="card-footer text-muted"></div>
+</div>
+
+
+{% endblock %}
