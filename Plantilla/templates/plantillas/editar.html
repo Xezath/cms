@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block Titulo %} Editar Plantilla {% endblock %}
+{% block contenido %} 
+<div class="card">
+    <div class="card-header">Editar la Plantilla</div>
+    <div class="card-body">
+        <h4 class="card-title">Datos de la Plantilla</h4>
+        {% include 'plantillas/form.html' %}
+    </div>
+    <div class="card-footer text-muted"></div>
+</div>
+{% endblock %}

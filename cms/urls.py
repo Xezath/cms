@@ -27,6 +27,7 @@ urlpatterns = [
     path('', views.home, name='home'),  # URL para la página principal
     path('signup/', views.signup, name='signup'),  # URL para el registro
     path('categoria/', include('Categoria.urls')),
+    path('plantilla/', include('Plantilla.urls')),
     
 
 ]
