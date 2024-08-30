@@ -26,8 +26,9 @@ urlpatterns = [
     path('admin/',admin.site.urls),
     path('', views.home, name='home'),  # URL para la página principal
     path('registrar/', views.registrar, name='registrar'),  # URL para el registro
+    path('exito/', views.exito, name='exito'),
     path('categoria/', include('Categoria.urls')),
     path('plantilla/', include('Plantilla.urls')),
-    
+    path('home/',views.home, name='Home')
 
 ]
