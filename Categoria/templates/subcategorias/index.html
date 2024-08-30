@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block Titulo %} Todas las Categorias {% endblock %}
+{% block contenido %}
+
+<div class="card">
+    <div class="card-header">
+        <a
+            name=""
+            id=""
+            class="btn btn-success"
+            href="{% url 'crear_sub' %}"
+            role="button"
+            >Nueva Subcategoria</a
+        >
+        
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">SubCategorias</h4>
+        <div
+            class="table-responsive"
+        >
+            <table
+                class="table table-primary"
+            >
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Padre</th>
+                        <th scope="col">Descripcion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="">
+                        <td scope="row">1</td>
+                        <td>Videoclips</td>
+                        <td>Músicas</td>
+                        <td>Videos musicales de canciones</td>
+                        <td><a
+                            name=""
+                            id=""
+                            class="btn btn-info"
+                            href="{% url 'editar_sub' %}"
+                            role="button"
+                            >Editar</a
+                        >
+                        <a
+                            name=""
+                            id=""
+                            class="btn btn-danger"
+                            href="#"
+                            role="button"
+                            >Borrar</a
+                        >
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+    <div class="card-footer text-muted"></div>
+</div>
+
+
+{% endblock %}
