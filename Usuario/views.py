@@ -50,7 +50,7 @@ def registrar(request):
             user = authenticate(username=username, password=password)
             login(request, user)
 
-            return redirect('home')  # Redirige a la página que desees
+            return redirect('exito')  # Redirige a la página que desees
         else:
             print("Errores de formulario:", form.errors)  # Ver errores de validación   
         
