@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block Titulo %} Agregar nueva categoría {% endblock %}
+{% block contenido %}
+
+<div class="card">
+    <div class="card-header">Crear una categoria</div>
+    <div class="card-body">
+        <h4 class="card-title">Datos de la categoria</h4>
+        {% include 'categorias/form.html' %}
+    </div>
+    <div class="card-footer text-muted"></div>
+</div>
+
+
+{% endblock %}
