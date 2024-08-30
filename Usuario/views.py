@@ -3,13 +3,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from .forms import CustomUserCreationForm
 from django.shortcuts import redirect
-from django.contrib import messages
-
 
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+   return render(request, 'home.html')
+
+def exito(request):
+    return render(request, 'exito.html')
 
 def registrar(request):
     if request.method == "POST":
@@ -22,11 +23,10 @@ def registrar(request):
             print("Datos validados y limpios:", form.cleaned_data)  # Ver datos limpios
             user = authenticate(username=username, password=password)
             login(request, user)
-            messages.success(request, f'Usuario {username} registrado correctamente.')  # Mensaje de éxito
-            return redirect('home')  # Redirige a la página que desees
+
+            return redirect('exito')  # Redirige a la página que desees
         else:
-            print("Errores de formulario:", form.errors)  # Ver errores de validación
-            messages.error(request, 'Por favor, corrija los errores a continuación.')  # Mensaje de error
+            print("Errores de formulario:", form.errors)  # Ver errores de validación   
         
     else:
         form = CustomUserCreationForm()
