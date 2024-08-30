@@ -3,4 +3,4 @@ from django.http import HttpResponse
 # Create your views here.
 
 def cat(request):
-    return HttpResponse("<h1>Categoria<!h1>")
+    return render(request, 'paginas/index.html')
