@@ -1,9 +1,9 @@
 
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login,logout, authenticate
 from .forms import CustomUserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import redirect
-
 
 # Create your views here.
 def home(request):
@@ -11,6 +11,17 @@ def home(request):
 
 def exito(request):
     return render(request, 'exito.html')
+
+def cerrar_sesion(request):
+    logout(request)
+    return redirect ('home.html')
+
+def signin(request):
+    return render(request, 'signin.html',{
+        'form': AuthenticationForm
+    })
+
+
 
 def registrar(request):
     if request.method == "POST":
@@ -24,7 +35,7 @@ def registrar(request):
             user = authenticate(username=username, password=password)
             login(request, user)
 
-            return redirect('exito')  # Redirige a la página que desees
+            return redirect('home')  # Redirige a la página que desees
         else:
             print("Errores de formulario:", form.errors)  # Ver errores de validación   
         
