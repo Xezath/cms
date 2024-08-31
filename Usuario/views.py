@@ -5,6 +5,7 @@ from .forms import CustomUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import redirect
 
+
 # Create your views here.
 def home(request):
    return render(request, 'home.html')
