@@ -7,7 +7,7 @@ def plantillas(request):
     plantillas = Plantilla.objects.all()
     #print(categorias)
     return render(request, 'plantillas/index.html', {'plantillas': plantillas})
-def crear(request):
+def crear_plantilla(request):
     return render(request, 'plantillas/crear.html')
-def editar(request):
+def editar_plantilla(request):
     return render(request, 'plantillas/editar.html')

@@ -9,9 +9,9 @@ def categorias(request):
     categorias = Categoria.objects.all()
     #print(categorias)
     return render(request, 'categorias/index.html', {'categorias': categorias})
-def crear(request):
+def crear_cat(request):
     return render(request, 'categorias/crear.html')
-def editar(request):
+def editar_cat(request):
     return render(request, 'categorias/editar.html')
 
 #Subcategorias
