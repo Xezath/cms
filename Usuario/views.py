@@ -14,7 +14,7 @@ def exito(request):
 
 def cerrar_sesion(request):
     logout(request)
-    return redirect ('home.html')
+    return redirect ('home')
 
 def Iniciar_Sesion(request):
     if request.method == 'GET':
