@@ -40,7 +40,19 @@ def subcategorias(request):
     return render(request, 'subcategorias/index.html', {'subcategorias': subcategorias})
 def crear_sub(request):
     formulario = SubcategoriaForm(request.POST or None)
+    if formulario.is_valid():
+        formulario.save()
+        return redirect('/categoria/subcategorias')
     return render(request, 'subcategorias/crear.html', {'formulario': formulario})
-def editar_sub(request):
-    formulario = EditarSubcategoriaForm(request.POST or None)
+def editar_sub(request, id):
+    subcategoria = Subcategoria.objects.get(id=id)
+    formulario = EditarSubcategoriaForm(request.POST or None, instance=subcategoria)
+    if formulario.is_valid and request.POST:
+        formulario.save()
+        return redirect('/categoria/subcategorias')
     return render(request, 'subcategorias/editar.html', {'formulario': formulario})
+
+def borrar_sub(request, id):
+    subcategoria = Subcategoria.objects.get(id=id)
+    subcategoria.delete()
+    return redirect('/categoria/subcategorias')

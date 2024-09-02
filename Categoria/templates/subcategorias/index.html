@@ -36,7 +36,7 @@
                             name=""
                             id=""
                             class="btn btn-info"
-                            href="{% url 'editar_sub' %}"
+                            href="{% url 'editar_sub' subcategoria.id %}"
                             role="button"
                             >Editar</a
                         >
@@ -44,7 +44,7 @@
                             name=""
                             id=""
                             class="btn btn-danger"
-                            href="#"
+                            href="{% url 'borrar_sub' subcategoria.id %}"
                             role="button"
                             >Borrar</a
                         >

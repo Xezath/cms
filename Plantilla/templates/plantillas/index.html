@@ -7,7 +7,7 @@
         <div class="d-flex justify-content-end">
             <a
                 class="btn btn-success"
-                href="{% url 'crear' %}"
+                href="{% url 'crear_plantilla' %}"
                 role="button"
             >
                 Nueva Plantilla
@@ -43,7 +43,7 @@
                             name=""
                             id=""
                             class="btn btn-info"
-                            href="{% url 'editar' %}"
+                            href="{% url 'editar_plantilla' plantilla.id %}"
                             role="button"
                             >Editar</a
                         >
@@ -51,7 +51,7 @@
                             name=""
                             id=""
                             class="btn btn-danger"
-                            href="#"
+                            href="{% url 'borrar_plantilla' plantilla.id %}"
                             role="button"
                             >Borrar</a
                         >
