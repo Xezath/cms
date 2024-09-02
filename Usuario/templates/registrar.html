@@ -1,26 +1,4 @@
 {% extends "base.html" %}
-<<<<<<< HEAD
-{% block Titulo %} Inicio {% endblock %}
-{% block contenido %} 
-
-<h1>Registro</h1>
-
-<form method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    
-    <button type="submit">Registrar</button>
-</form>
-<br>
-<h6>O</h6>
-<h3>Iniciar Sesión con cuenta de GitHub</h3>
-<br>
-<button
-    onclick="window.location.href='../accounts/github/login/'"
->
-    Iniciar sesión con cuenta de GitHub
-</button>
-=======
 {% block titulo %} Registro {% endblock %}
 
 {% block contenido %}
@@ -46,5 +24,4 @@
         </div>
     </div>
 </div>
->>>>>>> refs/remotes/origin/main
 {% endblock %}
