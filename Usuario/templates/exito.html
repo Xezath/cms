@@ -1,7 +1,21 @@
 {% extends "base.html" %}
-{% block Titulo %} Inicio {% endblock %}
-{% block contenido %} 
+{% block titulo %} Confirmación de Registro {% endblock %}
 
-<h1>Te has registrado correctamente</h1>
-
+{% block contenido %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card text-center">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Confirmación</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="display-4">Te has registrado correctamente</h1>
+                    <p class="lead">¡Gracias por registrarte! Ahora puedes iniciar sesión.</p>
+                    <a href="{% url 'inicio' %}" class="btn btn-primary mt-3">Volver al inicio</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

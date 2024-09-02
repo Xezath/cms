@@ -3,25 +3,19 @@
 {% block contenido %}
 
 <div class="card">
-    <div class="card-header">
+    <div class="card-header text-end">
         <a
             name=""
             id=""
             class="btn btn-success"
             href="{% url 'crear_sub' %}"
             role="button"
-            >Nueva Subcategoria</a
-        >
-        
+        >Nueva Subcategoria</a>
     </div>
     <div class="card-body">
-        <h4 class="card-title">SubCategorias</h4>
-        <div
-            class="table-responsive"
-        >
-            <table
-                class="table table-primary"
-            >
+        <h4 class="card-title">SubCategorías</h4>
+        <div class="table-responsive">
+            <table class="table table-primary">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -60,10 +54,8 @@
                 </tbody>
             </table>
         </div>
-        
     </div>
     <div class="card-footer text-muted"></div>
 </div>
-
 
 {% endblock %}

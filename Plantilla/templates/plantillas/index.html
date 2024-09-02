@@ -4,29 +4,25 @@
 
 <div class="card">
     <div class="card-header">
-        <a
-            name=""
-            id=""
-            class="btn btn-success"
-            href="{% url 'crear' %}"
-            role="button"
-            >Nueva Plantilla</a
-        >
-        
+        <div class="d-flex justify-content-end">
+            <a
+                class="btn btn-success"
+                href="{% url 'crear' %}"
+                role="button"
+            >
+                Nueva Plantilla
+            </a>
+        </div>
     </div>
     <div class="card-body">
         <h4 class="card-title">Plantillas</h4>
-        <div
-            class="table-responsive"
-        >
-            <table
-                class="table table-primary"
-            >
+        <div class="table-responsive">
+            <table class="table table-primary">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Descripcion</th>
+                        <th scope="col">Descripción</th>
                         <th scope="col">Tipo de letra</th>
                         <th scope="col">Margenes (tipo)</th>
                         <th scope="col">Módulos</th>
@@ -64,10 +60,8 @@
                 </tbody>
             </table>
         </div>
-        
     </div>
     <div class="card-footer text-muted"></div>
 </div>
-
 
 {% endblock %}
