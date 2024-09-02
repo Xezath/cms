@@ -40,7 +40,7 @@
                             name=""
                             id=""
                             class="btn btn-info"
-                            href="{% url 'editar_cat' %}"
+                            href="{% url 'editar_cat' categoria.id %}"
                             role="button"
                             >Editar</a
                         >
@@ -48,7 +48,7 @@
                             name=""
                             id=""
                             class="btn btn-danger"
-                            href="#"
+                            href="{% url 'borrar_cat' categoria.id %}"
                             role="button"
                             >Borrar</a
                         >
