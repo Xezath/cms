@@ -10,6 +10,7 @@ urlpatterns = [
     #Subcategorias
     path('subcategorias', views.subcategorias, name='subcategorias'),
     path('subcategorias/crear', views.crear_sub, name='crear_sub'),
-    path('subcategorias/editar', views.editar_sub, name='editar_sub')
+    path('borrar_sub/<int:id>', views.borrar_sub, name='borrar_sub'),
+    path('subcategorias/editar/<int:id>', views.editar_sub, name='editar_sub')
 
 ]
