@@ -8,7 +8,7 @@ class Categoria(models.Model):
     descripcion = models.TextField(verbose_name="Descripcion", null=True)
 
     def __str__(self):
-        fila = "Nombre: " + self.nombre
+        fila = self.nombre
         return fila
 
 #Subcategoría
@@ -19,7 +19,7 @@ class Subcategoria(models.Model):
     categoriaPadre = models.ForeignKey(Categoria, related_name="subcategorias", blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        fila = "Nombre: " + self.nombre
+        fila = self.nombre
         return fila
 
 
