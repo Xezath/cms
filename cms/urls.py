@@ -32,5 +32,6 @@ urlpatterns = [
     path('Iniciar_Sesion/', views.Iniciar_Sesion, name='Iniciar_Sesion'),
     path('categoria/', include('Categoria.urls')),
     path('plantilla/', include('Plantilla.urls')),
+    path('accounts/', include('allauth.urls'))
    
 ]
