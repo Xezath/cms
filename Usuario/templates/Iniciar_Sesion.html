@@ -1,31 +1,6 @@
 {% extends "base.html" %}
 {% block titulo %} Inicio {% endblock %}
 
-<<<<<<< HEAD
-<h1>Inicio de Sesion</h1>
-{{error}}
-<form action="/Iniciar_Sesion/"method="POST">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button>
-        Iniciar sesión
-    </button>
-</form>
-<br>
-<h6>O</h6>
-<h3>Iniciar Sesión con cuenta de GitHub</h3>
-<br>
-<button
-    onclick="window.location.href='../accounts/github/login/'"
->
-    Iniciar sesión con cuenta de GitHub
-</button>
-
-<!-- <a href="{% provider_login_url 'github' %}">Entrar con cuenta de GitHub</a> -->
-
-
-{% endblock %}
-=======
 {% block contenido %}
 {% load socialaccount %}
 <div class="container mt-5">
@@ -58,4 +33,3 @@
     </div>
 </div>
 {% endblock %}
->>>>>>> refs/remotes/origin/main
