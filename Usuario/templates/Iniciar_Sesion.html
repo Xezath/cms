@@ -1,16 +1,32 @@
 {% extends "base.html" %}
-{% block Titulo %} Inicio {% endblock %}
-{% block contenido %} 
+{% block titulo %} Inicio {% endblock %}
 
-<h1>Inicio de Sesion</h1>
-{{error}}
-<form action="/Iniciar_Sesion/"method="POST">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button>
-        Entrar
-    </button>
-</form>
-
-
+{% block contenido %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0">Iniciar Sesión</h4>
+                </div>
+                <div class="card-body">
+                    {% if error %}
+                    <div class="alert alert-danger text-center" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endif %}
+                    <form action="/Iniciar_Sesion/" method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="d-flex justify-content-center mt-3">
+                            <button type="submit" class="btn btn-primary">
+                                Entrar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

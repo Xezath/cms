@@ -4,36 +4,32 @@
 
 <div class="card">
     <div class="card-header">
-        <a
-            name=""
-            id=""
-            class="btn btn-success"
-            href="{% url 'crear' %}"
-            role="button"
-            >Nueva Plantilla</a
-        >
-        
+        <div class="d-flex justify-content-end">
+            <a
+                class="btn btn-success"
+                href="{% url 'crear' %}"
+                role="button"
+            >
+                Nueva Plantilla
+            </a>
+        </div>
     </div>
     <div class="card-body">
         <h4 class="card-title">Plantillas</h4>
-        <div
-            class="table-responsive"
-        >
-            <table
-                class="table table-primary"
-            >
+        <div class="table-responsive">
+            <table class="table table-primary">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Descripcion</th>
+                        <th scope="col">Descripción</th>
                         <th scope="col">Tipo de letra</th>
-                        <th scope="col">Margenes</th>
+                        <th scope="col">Márgenes</th>
                         <th scope="col">Módulos</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="">
+                    <tr>
                         <td scope="row">1</td>
                         <td>Predeterminado</td>
                         <td>A4</td>
@@ -41,31 +37,28 @@
                         <td>Arial</td>
                         <td>2</td>
                         <td>ImagenPNG</td>
-                        <td><a
-                            name=""
-                            id=""
-                            class="btn btn-info"
-                            href="{% url 'editar' %}"
-                            role="button"
-                            >Editar</a
-                        >
-                        <a
-                            name=""
-                            id=""
-                            class="btn btn-danger"
-                            href="#"
-                            role="button"
-                            >Borrar</a
-                        >
+                        <td>
+                            <a
+                                class="btn btn-info"
+                                href="{% url 'editar' %}"
+                                role="button"
+                            >
+                                Editar
+                            </a>
+                            <a
+                                class="btn btn-danger"
+                                href="#"
+                                role="button"
+                            >
+                                Borrar
+                            </a>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        
     </div>
     <div class="card-footer text-muted"></div>
 </div>
-
 
 {% endblock %}

@@ -3,64 +3,56 @@
 {% block contenido %}
 
 <div class="card">
-    <div class="card-header">
+    <div class="card-header text-end">
         <a
             name=""
             id=""
             class="btn btn-success"
             href="{% url 'crear_sub' %}"
             role="button"
-            >Nueva Subcategoria</a
-        >
-        
+        >Nueva Subcategoria</a>
     </div>
     <div class="card-body">
-        <h4 class="card-title">SubCategorias</h4>
-        <div
-            class="table-responsive"
-        >
-            <table
-                class="table table-primary"
-            >
+        <h4 class="card-title">SubCategorías</h4>
+        <div class="table-responsive">
+            <table class="table table-primary">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Padre</th>
-                        <th scope="col">Descripcion</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="">
+                    <tr>
                         <td scope="row">1</td>
                         <td>Videoclips</td>
                         <td>Músicas</td>
                         <td>Videos musicales de canciones</td>
-                        <td><a
-                            name=""
-                            id=""
-                            class="btn btn-info"
-                            href="{% url 'editar_sub' %}"
-                            role="button"
-                            >Editar</a
-                        >
-                        <a
-                            name=""
-                            id=""
-                            class="btn btn-danger"
-                            href="#"
-                            role="button"
-                            >Borrar</a
-                        >
+                        <td>
+                            <a
+                                name=""
+                                id=""
+                                class="btn btn-info"
+                                href="{% url 'editar_sub' %}"
+                                role="button"
+                            >Editar</a>
+                            <a
+                                name=""
+                                id=""
+                                class="btn btn-danger"
+                                href="#"
+                                role="button"
+                            >Borrar</a>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        
     </div>
     <div class="card-footer text-muted"></div>
 </div>
-
 
 {% endblock %}
