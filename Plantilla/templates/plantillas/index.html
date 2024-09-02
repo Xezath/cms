@@ -28,19 +28,20 @@
                         <th scope="col">Nombre</th>
                         <th scope="col">Descripcion</th>
                         <th scope="col">Tipo de letra</th>
-                        <th scope="col">Margenes</th>
+                        <th scope="col">Margenes (tipo)</th>
                         <th scope="col">Módulos</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% for plantilla in plantillas %}
                     <tr class="">
-                        <td scope="row">1</td>
-                        <td>Predeterminado</td>
-                        <td>A4</td>
-                        <td>Plantilla que se crea por defecto</td>
-                        <td>Arial</td>
-                        <td>2</td>
-                        <td>ImagenPNG</td>
+                        <td scope="row">{{plantilla.id}}</td>
+                        <td>{{plantilla.nombre}}</td>
+                        <td>{{plantilla.descripcion}}</td>
+                        <td>{{plantilla.tipografia}}</td>
+                        <td>{{plantilla.margenes.id}}</td>
+                        <td>{{plantilla.modulos}}</td>
                         <td><a
                             name=""
                             id=""
@@ -59,6 +60,7 @@
                         >
                         </td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

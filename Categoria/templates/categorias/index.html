@@ -27,14 +27,15 @@
                         <th scope="col">ID</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Descripcion</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for libro in libros %}
+                    {% for categoria in categorias %}
                     <tr class="">
-                        <td scope="row">1</td>
-                        <td>Musica</td>
-                        <td>Videos musicales y musicas en gral</td>
+                        <td scope="row">{{categoria.id}}</td>
+                        <td>{{categoria.nombre}}</td>
+                        <td>{{categoria.descripcion}}</td>
                         <td><a
                             name=""
                             id=""
