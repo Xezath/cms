@@ -5,6 +5,9 @@ from django.db import models
 class Tipografia(models.Model):
     id = models.AutoField(primary_key=True)
     estilo = models.CharField(max_length=50)
+    def __str__(self) -> str:
+        fila = self.estilo
+        return fila
 
 class Margenes(models.Model):   #Márgenes predefinidos
     id = models.AutoField(primary_key=True)
@@ -13,9 +16,17 @@ class Margenes(models.Model):   #Márgenes predefinidos
     arr = models.DecimalField(decimal_places=2, max_digits=1000)
     aba = models.DecimalField(decimal_places=2, max_digits=1000)
 
+    def __str__(self) -> str:
+        fila = self.id
+        return fila
+
 class Modulos(models.Model):    #Módulos multimedia
     id = models.AutoField(primary_key=True)
     tipoMultimedia = models.CharField(max_length=50)
+
+    def __str__(self) -> str:
+        fila = self.tipoMultimedia
+        return fila
 
 class Plantilla(models.Model):
     id = models.AutoField(primary_key=True)
@@ -28,5 +39,5 @@ class Plantilla(models.Model):
     modulos = models.ForeignKey(Modulos, on_delete=models.CASCADE)
 
     def __str__(self):
-        fila = "Nombre: " + self.nombre
+        fila = self.nombre
         return fila

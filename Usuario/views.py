@@ -46,8 +46,9 @@ def registrar(request):
             form.save()
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
+            email = form.cleaned_data.get('email')
             print("Datos validados y limpios:", form.cleaned_data)  # Ver datos limpios
-            user = authenticate(username=username, password=password)
+            user = authenticate(username=username, password=password, email=email)
             login(request, user)
 
             return redirect('exito')  # Redirige a la página que desees
