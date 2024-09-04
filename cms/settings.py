@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-9o6p%u5$u5z65s$1p&)yy18dabfiwwn-fjwl)q%s*@67whabd9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','localhost', '172.28.62.58']
 
 SITE_ID = 1
 
@@ -148,6 +148,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
+
+STATIC_ROOT = '/home/jaz/venv/cms/static/'
 
 STATIC_URL = 'static/'
 
