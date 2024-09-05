@@ -51,6 +51,7 @@
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}" aria-current="page">Inicio</a>
                     </li>
+                    {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/categorias/' %}active{% endif %}" href="{% url 'categorias' %}">Categorías</a>
                     </li>
@@ -60,6 +61,7 @@
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/plantillas/' %}active{% endif %}" href="{% url 'plantillas' %}">Plantillas</a>
                     </li>
+                    {% endif %}
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Cerrar Sesión</a>

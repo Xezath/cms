@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Categoria package &mdash; documentación de CMS - 1.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=4936afed"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=d190bf04"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            CMS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Categoria package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-Categoria.admin">Categoria.admin module</a></li>
+<li><a class="reference internal" href="#module-Categoria.apps">Categoria.apps module</a><ul>
+<li><a class="reference internal" href="#Categoria.apps.CategoriaConfig"><code class="docutils literal notranslate"><span class="pre">CategoriaConfig</span></code></a><ul>
+<li><a class="reference internal" href="#Categoria.apps.CategoriaConfig.default_auto_field"><code class="docutils literal notranslate"><span class="pre">CategoriaConfig.default_auto_field</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.apps.CategoriaConfig.name"><code class="docutils literal notranslate"><span class="pre">CategoriaConfig.name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-Categoria.models">Categoria.models module</a><ul>
+<li><a class="reference internal" href="#Categoria.models.Categoria"><code class="docutils literal notranslate"><span class="pre">Categoria</span></code></a><ul>
+<li><a class="reference internal" href="#Categoria.models.Categoria.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Categoria.DoesNotExist</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.models.Categoria.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Categoria.MultipleObjectsReturned</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.models.Categoria.descripcion"><code class="docutils literal notranslate"><span class="pre">Categoria.descripcion</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.models.Categoria.id"><code class="docutils literal notranslate"><span class="pre">Categoria.id</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.models.Categoria.nombre"><code class="docutils literal notranslate"><span class="pre">Categoria.nombre</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.models.Categoria.objects"><code class="docutils literal notranslate"><span class="pre">Categoria.objects</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.models.Categoria.subcategorias"><code class="docutils literal notranslate"><span class="pre">Categoria.subcategorias</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Categoria.models.Subcategoria"><code class="docutils literal notranslate"><span class="pre">Subcategoria</span></code></a><ul>
+<li><a class="reference internal" href="#Categoria.models.Subcategoria.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Subcategoria.DoesNotExist</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.models.Subcategoria.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Subcategoria.MultipleObjectsReturned</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.models.Subcategoria.categoriaPadre"><code class="docutils literal notranslate"><span class="pre">Subcategoria.categoriaPadre</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.models.Subcategoria.categoriaPadre_id"><code class="docutils literal notranslate"><span class="pre">Subcategoria.categoriaPadre_id</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.models.Subcategoria.descripcion"><code class="docutils literal notranslate"><span class="pre">Subcategoria.descripcion</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.models.Subcategoria.id"><code class="docutils literal notranslate"><span class="pre">Subcategoria.id</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.models.Subcategoria.nombre"><code class="docutils literal notranslate"><span class="pre">Subcategoria.nombre</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.models.Subcategoria.objects"><code class="docutils literal notranslate"><span class="pre">Subcategoria.objects</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-Categoria.tests">Categoria.tests module</a></li>
+<li><a class="reference internal" href="#module-Categoria.urls">Categoria.urls module</a></li>
+<li><a class="reference internal" href="#module-Categoria.views">Categoria.views module</a><ul>
+<li><a class="reference internal" href="#Categoria.views.categorias"><code class="docutils literal notranslate"><span class="pre">categorias()</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.views.crear_cat"><code class="docutils literal notranslate"><span class="pre">crear_cat()</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.views.crear_sub"><code class="docutils literal notranslate"><span class="pre">crear_sub()</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.views.editar_cat"><code class="docutils literal notranslate"><span class="pre">editar_cat()</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.views.editar_sub"><code class="docutils literal notranslate"><span class="pre">editar_sub()</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.views.inicio"><code class="docutils literal notranslate"><span class="pre">inicio()</span></code></a></li>
+<li><a class="reference internal" href="#Categoria.views.subcategorias"><code class="docutils literal notranslate"><span class="pre">subcategorias()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-Categoria">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CMS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Categoria package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Categoria.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="categoria-package">
+<h1>Categoria package<a class="headerlink" href="#categoria-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Categoria.migrations.html">Categoria.migrations package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Categoria.migrations.html#module-Categoria.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-Categoria.admin">
+<span id="categoria-admin-module"></span><h2>Categoria.admin module<a class="headerlink" href="#module-Categoria.admin" title="Link to this heading"></a></h2>
+</section>
+<section id="module-Categoria.apps">
+<span id="categoria-apps-module"></span><h2>Categoria.apps module<a class="headerlink" href="#module-Categoria.apps" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Categoria.apps.CategoriaConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Categoria.apps.</span></span><span class="sig-name descname"><span class="pre">CategoriaConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/apps.html#CategoriaConfig"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.apps.CategoriaConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AppConfig</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Categoria.apps.CategoriaConfig.default_auto_field">
+<span class="sig-name descname"><span class="pre">default_auto_field</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'django.db.models.BigAutoField'</span></em><a class="headerlink" href="#Categoria.apps.CategoriaConfig.default_auto_field" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Categoria.apps.CategoriaConfig.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Categoria'</span></em><a class="headerlink" href="#Categoria.apps.CategoriaConfig.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Categoria.models">
+<span id="categoria-models-module"></span><h2>Categoria.models module<a class="headerlink" href="#module-Categoria.models" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Categoria.models.Categoria">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Categoria.models.</span></span><span class="sig-name descname"><span class="pre">Categoria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descripcion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/models.html#Categoria"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.models.Categoria" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="Categoria.models.Categoria.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#Categoria.models.Categoria.DoesNotExist" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="Categoria.models.Categoria.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#Categoria.models.Categoria.MultipleObjectsReturned" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Categoria.models.Categoria.descripcion">
+<span class="sig-name descname"><span class="pre">descripcion</span></span><a class="headerlink" href="#Categoria.models.Categoria.descripcion" title="Link to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Categoria.models.Categoria.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#Categoria.models.Categoria.id" title="Link to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Categoria.models.Categoria.nombre">
+<span class="sig-name descname"><span class="pre">nombre</span></span><a class="headerlink" href="#Categoria.models.Categoria.nombre" title="Link to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Categoria.models.Categoria.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#Categoria.models.Categoria.objects" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Categoria.models.Categoria.subcategorias">
+<span class="sig-name descname"><span class="pre">subcategorias</span></span><a class="headerlink" href="#Categoria.models.Categoria.subcategorias" title="Link to this definition"></a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Categoria.models.Subcategoria">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Categoria.models.</span></span><span class="sig-name descname"><span class="pre">Subcategoria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descripcion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categoriaPadre</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/models.html#Subcategoria"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.models.Subcategoria" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="Categoria.models.Subcategoria.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#Categoria.models.Subcategoria.DoesNotExist" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="Categoria.models.Subcategoria.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#Categoria.models.Subcategoria.MultipleObjectsReturned" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Categoria.models.Subcategoria.categoriaPadre">
+<span class="sig-name descname"><span class="pre">categoriaPadre</span></span><a class="headerlink" href="#Categoria.models.Subcategoria.categoriaPadre" title="Link to this definition"></a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Categoria.models.Subcategoria.categoriaPadre_id">
+<span class="sig-name descname"><span class="pre">categoriaPadre_id</span></span><a class="headerlink" href="#Categoria.models.Subcategoria.categoriaPadre_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Categoria.models.Subcategoria.descripcion">
+<span class="sig-name descname"><span class="pre">descripcion</span></span><a class="headerlink" href="#Categoria.models.Subcategoria.descripcion" title="Link to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Categoria.models.Subcategoria.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#Categoria.models.Subcategoria.id" title="Link to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Categoria.models.Subcategoria.nombre">
+<span class="sig-name descname"><span class="pre">nombre</span></span><a class="headerlink" href="#Categoria.models.Subcategoria.nombre" title="Link to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Categoria.models.Subcategoria.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#Categoria.models.Subcategoria.objects" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Categoria.tests">
+<span id="categoria-tests-module"></span><h2>Categoria.tests module<a class="headerlink" href="#module-Categoria.tests" title="Link to this heading"></a></h2>
+</section>
+<section id="module-Categoria.urls">
+<span id="categoria-urls-module"></span><h2>Categoria.urls module<a class="headerlink" href="#module-Categoria.urls" title="Link to this heading"></a></h2>
+</section>
+<section id="module-Categoria.views">
+<span id="categoria-views-module"></span><h2>Categoria.views module<a class="headerlink" href="#module-Categoria.views" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="Categoria.views.categorias">
+<span class="sig-prename descclassname"><span class="pre">Categoria.views.</span></span><span class="sig-name descname"><span class="pre">categorias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/views.html#categorias"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.views.categorias" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Categoria.views.crear_cat">
+<span class="sig-prename descclassname"><span class="pre">Categoria.views.</span></span><span class="sig-name descname"><span class="pre">crear_cat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/views.html#crear_cat"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.views.crear_cat" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Categoria.views.crear_sub">
+<span class="sig-prename descclassname"><span class="pre">Categoria.views.</span></span><span class="sig-name descname"><span class="pre">crear_sub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/views.html#crear_sub"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.views.crear_sub" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Categoria.views.editar_cat">
+<span class="sig-prename descclassname"><span class="pre">Categoria.views.</span></span><span class="sig-name descname"><span class="pre">editar_cat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/views.html#editar_cat"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.views.editar_cat" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Categoria.views.editar_sub">
+<span class="sig-prename descclassname"><span class="pre">Categoria.views.</span></span><span class="sig-name descname"><span class="pre">editar_sub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/views.html#editar_sub"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.views.editar_sub" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Categoria.views.inicio">
+<span class="sig-prename descclassname"><span class="pre">Categoria.views.</span></span><span class="sig-name descname"><span class="pre">inicio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/views.html#inicio"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.views.inicio" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Categoria.views.subcategorias">
+<span class="sig-prename descclassname"><span class="pre">Categoria.views.</span></span><span class="sig-name descname"><span class="pre">subcategorias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/views.html#subcategorias"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.views.subcategorias" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-Categoria">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-Categoria" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2024, Equipo5.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
