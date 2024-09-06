@@ -64,6 +64,8 @@
                     {% endif %}
                     {% if user.is_authenticated %}
                     <li class="nav-item">
+                        <p class="nav-link">Bienvenido, {{ user.username }}!</p>
+                        <p class="nav-link">Rol: {% if user.groups.exists %}{{ user.groups.first.name }}{% else %}Ninguno{% endif %}</p>
                         <a class="nav-link" href="/logout">Cerrar Sesión</a>
                     </li>
                     {% else %}
