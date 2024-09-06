@@ -1,9 +1,10 @@
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,  get_object_or_404
 from django.contrib.auth import login,logout, authenticate
 from .forms import CustomUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
-from django.shortcuts import redirect
+from django.contrib.auth.models import User,Group
+from .forms import GroupForm, GroupEditForm
 
 # Create your views here.
 def home(request):
@@ -52,9 +53,12 @@ def Iniciar_Sesion(request):
             # Si la autenticación es exitosa, se inicia la sesión del usuario.
             # Luego se redirige a la página de inicio.
             login(request, user)
-            return redirect ('home')
 
-     
+            # Obtener el nombre del rol del usuario
+            user_groups = user.groups.all()
+            user_roles = [group.name for group in user_groups]
+            request.session['roles'] = user_roles  # Guardar roles en la sesión
+            return redirect ('home')
 
 def registrar(request):
     # Maneja el registro de nuevos usuarios
@@ -85,3 +89,53 @@ def registrar(request):
     
     # Renderiza la plantilla del formulario de registro con el formulario en el contexto.
     return render(request, 'registrar.html', {'form': form})
+
+
+# usuarios/views.py
+def crear_rol(request):
+    if request.method == 'POST':
+        form = GroupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('roles_listar')
+    else:
+        form = GroupForm()
+    return render(request, 'crear_rol.html', {'form': form})
+
+def editar_rol(request, pk):
+    group = get_object_or_404(Group, pk=pk)
+    if request.method == 'POST':
+        form = GroupEditForm(request.POST, instance=group)
+        if form.is_valid():
+            form.save()
+            return redirect('roles_listar')
+    else:
+        form = GroupEditForm(instance=group)
+    return render(request, 'editar_rol.html', {'form': form})
+
+def eliminar_rol(request, pk):
+    group = get_object_or_404(Group, pk=pk)
+    if request.method == 'POST':
+        group.delete()
+        return redirect('roles_listar')
+    return render(request, 'eliminar_rol.html', {'group': group})
+
+def roles_listar(request):
+    roles = Group.objects.all()
+    return render(request, 'roles_listar.html', {'roles': roles})
+
+def ver_usuarios(request):
+    usuarios = User.objects.all()
+    return render(request, 'ver_usuarios.html', {'usuarios': usuarios})
+
+def ver_roles(request):
+    roles = Group.objects.all()
+    return render(request, 'ver_roles.html', {'roles': roles})
+
+
+def lista_usuarios(request):
+    # Obtener todos los usuarios registrados
+    usuarios = User.objects.all()
+    return render(request, 'lista_usuarios.html', {'usuarios': usuarios})
+
+
