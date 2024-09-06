@@ -4,7 +4,7 @@ from django.db import models
 #Categoría
 class Categoria(models.Model):
     id = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=50, blank=False, null=False)
     descripcion = models.TextField(verbose_name="Descripcion", null=True)
 
     def __str__(self):
@@ -14,9 +14,9 @@ class Categoria(models.Model):
 #Subcategoría
 class Subcategoria(models.Model):
     id = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100, blank=False, null=False)
     descripcion = models.TextField(verbose_name="Descripcion", null=True)
-    categoriaPadre = models.ForeignKey(Categoria, related_name="subcategorias", blank=True, null=True, on_delete=models.CASCADE)
+    categoriaPadre = models.ForeignKey(Categoria, related_name="subcategorias", blank=False, null=False, on_delete=models.CASCADE)
 
     def __str__(self):
         fila = self.nombre

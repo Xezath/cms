@@ -4,12 +4,17 @@
     <div class="mb-3">
         <label for="" class="form-label">{{campo.label}}</label>
         <input
-            type="{{ campo.field.widget.input.type }}"
+            type="{{ campo.field.widget.input_type }}"
             class="form-control"
             name="{{ campo.name }}"
             id=""
             aria-describedby="helpId"
             placeholder="{{campo.label}}"
+<<<<<<< Updated upstream
+=======
+            value="{{ campo.value | default:'' }}"
+            {% if campo.field.required %} required {% endif %}
+>>>>>>> Stashed changes
         />
     </div>
     <div class="col-12 help-text">{{ campo.errors }}</div>
