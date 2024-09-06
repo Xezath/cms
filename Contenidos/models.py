@@ -24,9 +24,9 @@ class Contenidos(models.Model):
         return self.titulo
 
 #permisos para realizar ciertas acciones
-class Meta:
-    permisos = [
-        ("can_add", "Puede agregar contenido"),
-        ("can_modify", "Puede editar contenido"),
-        ("can_delete", "Puede eliminar contenido"),
-    ]
+    class Meta:
+        permissions = [
+            ("can_add", "Puede agregar contenido"),
+            ("can_modify", "Puede editar contenido"),
+            ("can_delete", "Puede eliminar contenido"),
+        ]
