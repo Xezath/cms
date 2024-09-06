@@ -15,6 +15,11 @@
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         />
+
+        <!-- CKEditor -->
+        <link rel="stylesheet" href="{% static 'ckeditor/ckeditor.css' %}">
+        <script src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+
         <style>
             .navbar-custom {
                 background-color: #007bff;
@@ -52,6 +57,9 @@
                         <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}" aria-current="page">Inicio</a>
                     </li>
                     {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link {%if request.path == '/contenidos/'  %}active{% endif %}" href="{% url 'contenidos' %}">Contenidos</a> 
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/categorias/' %}active{% endif %}" href="{% url 'categorias' %}">Categorías</a>
                     </li>

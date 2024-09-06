@@ -3,8 +3,10 @@ from django.http import HttpResponse
 from .models import Categoria
 from .models import Subcategoria
 from .forms import CategoriaForm, SubcategoriaForm, EditarCategoriaForm, EditarSubcategoriaForm
-# Create your views here.
+from django.contrib.auth.decorators import login_required
 
+# Create your views here.
+@login_required
 def inicio(request):
     return render(request, 'paginas/inicio.html')
 

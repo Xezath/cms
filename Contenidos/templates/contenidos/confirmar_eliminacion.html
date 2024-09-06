@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+<!--para mostrar mensaje antes de eliminar un contenido-->
+{% block contenido %}
+<div class="container">
+    <h2>Confirmar eliminación</h2>
+    <div class="card mb-3">
+        <div class="card-body">
+            <p>¿Desea eliminar el contenido "{{ contenido.titulo }}"?</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">SÌ, ELIMINAR</button>
+                <a href="{% url 'contenidos' %}" class="btn btn-secondary">CANCELAR</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
