@@ -1,24 +1,25 @@
 {% extends "base.html" %}
+
 {% block Titulo %} Inicio {% endblock %}
-{% block contenido %} 
 
-<div class="row align-items-md-stretch">
-    <div class="col-md-6">
-        <div
-            class="h-100 p-5 text-white bg-primary border rounded-3"
-        >
-            <h2>Bienvenidos al CMS</h2>
-            <p>
-                La página se encuentra en desarrollo...
-            </p>
-            <button
-                class="btn btn-outline-light"
-                type="button"
-                onclick="window.location.href='../Iniciar_Sesion/'">Iniciar Sesión
-            >
-            </button>
-    </div>
-</div>
-
-
+{% block contenido %}
+    {% if user.is_authenticated %}
+        <h1>Bienvenido, {{ user.username }}!</h1>
+    {% else %}
+        <div class="row align-items-md-stretch">
+            <div class="col-md-6">
+                <div class="h-100 p-5 text-white bg-primary border rounded-3">
+                    <h2>Bienvenidos al CMS</h2>
+                    <p>
+                        La página se encuentra en desarrollo...
+                    </p>
+                    <button
+                        class="btn btn-outline-light"
+                        type="button"
+                        onclick="window.location.href='../Iniciar_Sesion/'">Iniciar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

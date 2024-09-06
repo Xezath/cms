@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+<div class="container">
+    <h2>Editar Contenido</h2>
+
+    <div class="card mb-3">
+        <div class="card-header">Actualice los datos:</div>
+        <div class="card-body">
+            <form method="post" action="{% url 'editar_contenido' pk=form.instance.pk %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                <a href="{% url 'contenidos' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
