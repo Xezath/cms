@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+<div class="container">
+    <h2>Crear nuevo contenido</h2>
+
+    <div class="card mb-3">
+        <div class="card-header">Ingrese los siguientes datos:</div>
+        <div class="card-body">
+            <form method="post" action="{% url 'crear_contenido' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ formulario.as_p }}
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

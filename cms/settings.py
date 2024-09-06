@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -56,10 +58,22 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     "crispy_forms",
     "crispy_bootstrap5",
+    'ckeditor',
+    'ckeditor_uploader',
     'Usuario',
     'Categoria',
-    'Plantilla'
+    'Plantilla',
+    'Contenidos'
 ]
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full', 
+        'width': '100%',
+        'height': 300,
+        'removePlugins': 'stylesheetparser', 
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -75,6 +89,10 @@ MIDDLEWARE = [
 LOGIN_REDIRECT_URL = '/'
 
 ROOT_URLCONF = 'cms.urls'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'
 
 TEMPLATES = [
     {
@@ -88,7 +106,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-         },
+        },
     },
 ]
 
@@ -119,7 +137,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'cms',
         'USER': 'postgres',  
-        'PASSWORD': 'admin',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '5432',  # puerto por defecto de PostgreSQL
     }
@@ -146,10 +164,14 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
+
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'), 
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

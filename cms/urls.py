@@ -30,6 +30,7 @@ urlpatterns = [
     path('home/',views.home, name='home'),
     path('logout/', views.cerrar_sesion, name='cerrar_sesion'),
     path('Iniciar_Sesion/', views.Iniciar_Sesion, name='Iniciar_Sesion'),
+    path('contenidos/', include('Contenidos.urls')),
     path('categoria/', include('Categoria.urls')),
     path('plantilla/', include('Plantilla.urls')),
     path('accounts/', include('allauth.urls'))
