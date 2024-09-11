@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block titulo %} Ver Roles {% endblock %}
+{% block contenido %}
+
+<h1>Roles</h1>
+<ul>
+    {% for role in roles %}
+        <li>{{ role.name }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

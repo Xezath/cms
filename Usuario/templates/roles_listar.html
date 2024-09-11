@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block titulo %} Listar Roles {% endblock %}
+{% block contenido %}
+<h1>Roles</h1>
+<a href="{% url 'crear_rol' %}">Crear Rol</a>
+<ul>
+    {% for role in roles %}
+        <li>
+            {{ role.name }}
+            <a href="{% url 'editar_rol' role.id %}">Editar</a>
+            <a href="{% url 'eliminar_rol' role.id %}">Eliminar</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block titulo %} Ver Usuarios {% endblock %}
+{% block contenido %}
+<h1>Usuarios</h1>
+<ul>
+    {% for user in usuarios %}
+        <li>{{ user.username }} - Superuser: {{ user.is_superuser }} - Staff: {{ user.is_staff }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

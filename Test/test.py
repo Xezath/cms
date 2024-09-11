@@ -45,3 +45,14 @@ class IniciarSesionTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'Iniciar_Sesion.html')
         self.assertContains(response, 'Username or password is incorrect')
+
+
+from django.test import TestCase
+from django.contrib.auth.models import User, Group
+
+class UserRoleTest(TestCase):
+    def test_first_user_is_superuser(self):
+        User.objects.create_user(username='testuser', password='testpassword')
+        user = User.objects.get(username='testuser')
+        self.assertTrue(user.is_superuser)
+        self.assertTrue(user.is_staff)
