@@ -1,4 +1,4 @@
-<form enctype="multipart/form-data" method="post">
+<form enctype="multipart/form-data" method="post" onsubmit="return confirmarEnvio();">
     {% csrf_token %}
     {% for campo in formulario %}
     <div class="mb-3">
@@ -15,6 +15,7 @@
             value="{{ campo.value | default:'' }}"
             {% if campo.field.required %} required {% endif %}
 >>>>>>> Stashed changes
+            {% if campo.field.required %} required {% endif %}
         />
     </div>
     <div class="col-12 help-text">{{ campo.errors }}</div>
@@ -26,5 +27,14 @@
         type="submit"
         value="Aceptar"
     />
+    <a
+        name=""
+        id=""
+        class="btn btn-secondary"
+        href="{% url 'categorias' %}"
+        role="button"
+        >Cancelar</a
+    >
+    
     
 </form>

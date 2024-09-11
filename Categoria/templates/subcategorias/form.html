@@ -11,7 +11,11 @@
             aria-describedby="helpId"
             placeholder="{{campo.label}}"
             value="{{ campo.value | default:'' }}"
+<<<<<<< Updated upstream
             {% if campo.field.required %} required {% endif %}
+=======
+            required
+>>>>>>> Stashed changes
         />
     </div>
     <div class="col-12 help-text">{{ campo.errors }}</div>

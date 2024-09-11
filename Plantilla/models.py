@@ -27,6 +27,11 @@ class Modulos(models.Model):    #Módulos multimedia
     def __str__(self) -> str:
         fila = self.tipoMultimedia
         return fila
+    
+class Color(models.Model):  #Colores
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=50)
+    codigo = models.CharField(max_length=50)
 
 class Plantilla(models.Model):
     id = models.AutoField(primary_key=True)

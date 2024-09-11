@@ -1,17 +1,18 @@
-<form enctype="multipart/form-data" method="post">
+<form enctype="multipart/form-data" method="post" onsubmit="return confirmarEnvio();">
     {% csrf_token %}
     {% for campo in formulario %}
+
     <div class="mb-3">
-        <label for="" class="form-label">{{campo.label}}</label>
+        <label for="" class="form-label">{{ campo.label }}</label>
         <input
             type="{{ campo.field.widget.input.type }}"
             class="form-control"
             name="{{ campo.name }}"
             id=""
             aria-describedby="helpId"
-            placeholder="{{campo.label}}"
+            placeholder="{{ campo.label }}"
             value="{{ campo.value | default:'' }}"
-            {% if campo.field.required %} required {% endif %}
+            required
         />
     </div>
     <div class="col-12 help-text">{{ campo.errors }}</div>
@@ -29,8 +30,11 @@
         class="btn btn-secondary"
         href="{% url 'plantillas' %}"
         role="button"
-        >Cancelar</a
-    >
-    
-    
+    >Cancelar</a>
 </form>
+
+<script>
+    function confirmarEnvio() {
+        return confirm("¿Estás seguro de que deseas realizar esta acción?");
+    }
+</script>
