@@ -56,15 +56,36 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.openid_connect',
     "crispy_forms",
     "crispy_bootstrap5",
     'ckeditor',
     'ckeditor_uploader',
+    'oauth2_provider',
     'Usuario',
     'Categoria',
     'Plantilla',
     'Contenidos'
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'oauth2_provider.backends.OAuth2Backend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+)
+SITE_ID = 1
+
+OAUTH2_PROVIDER = {
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 36000,
+}
+
+# Keycloak settings
+KEYCLOAK_SERVER_URL = 'http://localhost:8080/auth/'
+KEYCLOAK_REALM = 'sso-login'
+KEYCLOAK_CLIENT_ID = 'sso-login-django'
+KEYCLOAK_CLIENT_SECRET = 'yAPWogweSFGNoC7trXNA0jR0wtr1z5WZ'
+KEYCLOAK_REDIRECT_URI = 'http://localhost:8000/complete/keycloak/'
+
 
 CKEDITOR_CONFIGS = {
     'default': {
@@ -113,15 +134,14 @@ TEMPLATES = [
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
-    'github': {
-
-        'APP': {
-            'client_id': 'Ov23li8dMzjZDjBi8NWh',
-            'secret': 'd1737349fcd0751ce89bf4ac9ab6eb219db8a1ba',
-            'key': ''
-        }
+    'openid_connect': {
+        'SERVER_URL': 'http://localhost:8080/auth/realms/sso-login',
+        'CLIENT_ID': 'sso-login-django',
+        'CLIENT_SECRET': 'yAPWogweSFGNoC7trXNA0jR0wtr1z5WZ',
+        'KEY': 'openid_connect',  # Asegúrate de que coincida con el proveedor
     }
 }
+
 
 
 
@@ -137,7 +157,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'cms',
         'USER': 'postgres',  
-        'PASSWORD': 'password',
+        'PASSWORD': '1234',
         'HOST': 'localhost',
         'PORT': '5432',  # puerto por defecto de PostgreSQL
     }

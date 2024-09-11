@@ -6,8 +6,8 @@ class CrearPlantillaForm(forms.ModelForm):
         model = Plantilla
         fields = '__all__'
 
+
 class EditarPlantillaForm(forms.ModelForm):
     class Meta:
         model = Plantilla
         fields = '__all__'
-
