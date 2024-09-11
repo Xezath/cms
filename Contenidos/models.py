@@ -8,7 +8,7 @@ class Categoria(models.Model):
 
     def __str__(self):
         return self.nombre
-        
+
 class Contenidos(models.Model):
     TIPOS_CONTENIDO = [
         ('IMG', 'Imagen'),
