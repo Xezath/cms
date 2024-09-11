@@ -44,7 +44,7 @@ class Plantilla(models.Model):
     colorFondo = models.ForeignKey(Color, on_delete=models.CASCADE)
     tipografia = models.ForeignKey(Tipografia, on_delete=models.CASCADE)
     margenes = models.ForeignKey(Margenes, on_delete=models.CASCADE)
-    disposicion = models.BooleanField() #Horizonal o Vertical
+    disposicionHorizontal = models.BooleanField() #Horizonal o Vertical
     modulos = models.ForeignKey(Modulos, on_delete=models.CASCADE)
 
     def __str__(self):
