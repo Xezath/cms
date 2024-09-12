@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+<!--para mostrar mensaje de exito -->
+{% block contenido %}
+<div class="container">
+    <h2>Cambios realizados en Categoria</h2>
+    <div class="card mb-3">
+        <div class="card-body">
+            <p>Se han realizado los cambios exitosamente</p>
+            <form method="post">
+                {% csrf_token %}
+                <a href="{% url 'categorias' %}" class="btn btn-primary">CONTINUAR</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

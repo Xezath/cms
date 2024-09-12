@@ -1,17 +1,9 @@
-<form enctype="multipart/form-data" method="post">
+<form enctype="multipart/form-data" method="post" onsubmit="return confirmarEnvio();">
     {% csrf_token %}
     {% for campo in formulario %}
     <div class="mb-3">
-        <label for="" class="form-label">{{campo.label}}</label>
-        <input
-            type="{{ campo.field.widget.input.type }}"
-            class="form-control"
-            name="{{ campo.name }}"
-            id=""
-            aria-describedby="helpId"
-            placeholder="{{campo.label}}"
-            value="{{ campo.value | default:'' }}"
-        />
+        <label for="" class="form-label">{{ campo.label }}</label>
+        {{ campo }}  <!-- Django automáticamente renderiza el campo como un <select> -->
     </div>
     <div class="col-12 help-text">{{ campo.errors }}</div>
     {% endfor %}
@@ -30,6 +22,10 @@
         role="button"
         >Cancelar</a
     >
-    
+    <script>
+        function confirmarEnvio() {
+            return confirm("¿Estás seguro de que deseas realizar esta acción?");
+        }
+    </script>
     
 </form>
