@@ -14,3 +14,23 @@ def create_default_groups(sender, **kwargs):
         groups = ['Administrador', 'Suscriptor', 'Autor', 'Editor', 'Publicador']
         for group_name in groups:
             Group.objects.get_or_create(name=group_name)
+
+    permisos = Permission.objects.all() #consigue todos los permisos
+    
+    administrador = Group.objects.get(name='Administrador') 
+    for permiso in permisos: 
+        administrador.permissions.add(permiso)
+
+    autor = Group.objects.get_or_create(name='Autor')
+    autor.permissions.add(Permission.objects.get(codename='add_contenidos'))
+
+    editor = Group.objects.get_or_create(name='Autor')
+
+
+    suscriptor = Group.objects.get_or_create(name='Autor')
+
+
+    publicador = Group.objects.get_or_create(name='Autor')
+
+
+    
