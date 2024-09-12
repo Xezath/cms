@@ -4,12 +4,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def contenidos(request):
     contenidos = Contenidos.objects.all()
     return render(request, 'contenidos/contenidos.html', {'contenidos': contenidos})
 
-@permission_required('Contenidos.can_add', raise_exception=True)
+@permission_required('Contenidos.add_contenidos',raise_exception=True)
 def crear_contenido(request):
     formulario = ContenidosForm(request.POST or None)
     if formulario.is_valid():
