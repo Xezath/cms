@@ -1,3 +1,0 @@
-psycopg2==2.9.7 #para usar postgres
-django==5.1
-crispy-bootstrap5==2024.2
