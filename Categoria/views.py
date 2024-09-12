@@ -4,6 +4,7 @@ from .models import Categoria
 from .models import Subcategoria
 from .forms import CategoriaForm, SubcategoriaForm, EditarCategoriaForm, EditarSubcategoriaForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 
 # Create your views here.
 @login_required
@@ -15,6 +16,7 @@ def categorias(request):
     #print(categorias)
     return render(request, 'categorias/index.html', {'categorias': categorias})
 
+@permission_required('Categoria.add_categoria', raise_exception=True)
 def crear_cat(request):
     formulario = CategoriaForm(request.POST or None)
     if formulario.is_valid():
@@ -22,6 +24,7 @@ def crear_cat(request):
         return redirect('/categoria/mensajeExito')
     return render(request, 'categorias/crear.html', {'formulario': formulario})
 
+@permission_required('Categoria.change_categoria', raise_exception=True)
 def editar_cat(request, id):
     categoria = Categoria.objects.get(id=id)
     formulario = EditarCategoriaForm(request.POST or None, instance=categoria)
@@ -30,6 +33,7 @@ def editar_cat(request, id):
         return redirect('/categoria/mensajeExito')
     return render(request, 'categorias/editar.html', {'formulario': formulario})
 
+@permission_required('Categoria.delete_categoria', raise_exception=True)
 def borrar_cat(request, id):
     categoria = Categoria.objects.get(id=id)
     categoria.delete()

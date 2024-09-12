@@ -68,7 +68,18 @@ def registrar(request):
         if form.is_valid():
             # Si el formulario es válido, guarda el nuevo usuario en la base de datos.
             print("Datos recibidos (POST):", request.POST)  # Muestra los datos del formulario recibidos en la solicitud POST.
-            form.save()
+            user=form.save()
+
+            # Comprobar si este es el primer usuario registrado
+            if User.objects.count() == 1:
+                # Asignar el grupo "Administrador" si es el primer usuario
+                admin_group = Group.objects.get(name='Administrador')
+                user.groups.add(admin_group)
+            else:
+                # Asignar el grupo "Suscriptor" a los demás usuarios
+                suscriptor_group = Group.objects.get(name='Suscriptor')
+                user.groups.add(suscriptor_group)
+                
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
             email = form.cleaned_data.get('email')

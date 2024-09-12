@@ -30,3 +30,4 @@ class Contenidos(models.Model):
             ("can_modify", "Puede editar contenido"),
             ("can_delete", "Puede eliminar contenido"),
         ]
+
