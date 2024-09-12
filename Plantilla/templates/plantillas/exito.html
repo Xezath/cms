@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+<!--para mostrar mensaje de exito -->
+{% block contenido %}
+<div class="container">
+    <h2>Se ha creado la plantilla</h2>
+    <div class="card mb-3">
+        <div class="card-body">
+            <p>Se ha realizado la creación exitosamente</p>
+            <form method="post">
+                {% csrf_token %}
+                <a href="{% url 'plantillas' %}" class="btn btn-primary">CONTINUAR</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
