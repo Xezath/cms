@@ -5,7 +5,9 @@
 {% block contenido %}
 <div class="card">
     <div class="card-header">
-        <a class="btn btn-success" href="{% url 'crear_contenido' %}" role="button">Nuevo Contenido</a> <!-- para crear contenido-->
+        {% if perms.Contenidos.can_add %}
+         <a class="btn btn-success" href="{% url 'crear_contenido' %}" role="button">Nuevo Contenido</a> <!-- para crear contenido-->
+        {% endif %}
     </div>
     <div class="card-body">
         <h4 class="card-title">Contenidos</h4>
@@ -16,26 +18,33 @@
                         <th scope="col">ID</th>
                         <th scope="col">Título</th>
                         <th scope="col">Tipo</th>
-                        <th scope="col">Fecha de creacion</th>
-                        <th>Acciones</th>
-                        <th></th>
+                        <th scope="col">Fecha de creación</th>
+                      {% if perms.Contenidos.can_modify and perms.Contenidos.can_delete %}
+                            <th>Acciones</th>
+                         {% endif %}
                     </tr>
                 </thead>
                 <tbody>
                     {% for contenido in contenidos %}
                     <tr>
                         <td>{{ contenido.id }}</td>
-                        <td>{{ contenido.titulo }}</td>
+                        <td>
+                            <a href="{% url 'visualizar_contenido' contenido.id %}">{{ contenido.titulo }}</a> <!-- Enlace al detalle del contenido -->
+                        </td>
                         <td>{{ contenido.get_tipo_display }}</td>
                         <td>{{ contenido.fecha_creacion }}</td>
                         <td>
+                            {% if perms.Contenidos.can_modify %}
                             <a class="btn btn-info" href="{% url 'editar_contenido' contenido.id %}" role="button">Editar</a>
+                            {% endif %}
+                            {% if perms.Contenidos.can_delete %}
                             <a class="btn btn-danger" href="{% url 'eliminar_contenido' contenido.id %}" role="button">Eliminar</a>
+                            {% endif %}
                         </td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="4">No hay contenidos disponibles.</td> <!-- en caso de que no se hayan creado contenidos-->
+                        <td colspan="5">No hay contenidos disponibles.</td> <!-- en caso de que no se hayan creado contenidos-->
                     </tr>
                     {% endfor %}
                 </tbody>

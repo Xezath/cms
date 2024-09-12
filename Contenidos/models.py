@@ -10,13 +10,7 @@ class Categoria(models.Model):
         return self.nombre
 
 class Contenidos(models.Model):
-    TIPOS_CONTENIDO = [
-        ('IMG', 'Imagen'),
-        ('VID', 'Video'),
-        ('TXT', 'Texto'),
-    ]
     titulo = models.CharField(max_length=255)
-    tipo = models.CharField(max_length=3, choices=TIPOS_CONTENIDO)
     contenido = RichTextField(default='')
     fecha_creacion = models.DateTimeField(default=timezone.now, editable=False)
     categoria = models.ForeignKey(Categoria, null=True, blank=True, on_delete=models.SET_NULL)
