@@ -12,7 +12,7 @@ def home(request):
     # La función 'render' toma el objeto 'request' y la plantilla 'home.html' para generar la respuesta HTTP.
     return render(request, 'home.html')
 
-    
+
 def exito(request):
     # Renderiza la página de éxito, que podría mostrar un mensaje de éxito
     # después de que el usuario complete una acción como el registro o el inicio de sesión.
