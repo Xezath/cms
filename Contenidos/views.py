@@ -9,13 +9,14 @@ def contenidos(request):
     contenidos = Contenidos.objects.all()
     return render(request, 'contenidos/contenidos.html', {'contenidos': contenidos})
 
-@permission_required('Contenidos.can_add', raise_exception=True)
+#@permission_required('Contenidos.can_add', raise_exception=True)
 def crear_contenido(request):
+    categorias = Categoria.objects.all()
     formulario = ContenidosForm(request.POST or None)
     if formulario.is_valid():
         formulario.save()
-        return redirect('contenidos') 
-    return render(request, 'contenidos/crear.html', {'formulario': formulario})
+        return redirect('contenidos')  
+    return render(request, 'contenidos/crear.html', {'formulario': formulario, 'categorias': categorias})
 
 
 #@permission_required('Contenidos.can_modify', raise_exception=True)
@@ -40,3 +41,7 @@ def eliminar_contenido(request, pk):
         messages.success(request, 'Contenido eliminado con éxito.')
         return redirect('contenidos')  # Redirige a la lista de contenidos
     return render(request, 'contenidos/confirmar_eliminacion.html', {'contenido': contenido})
+
+def visualizar_contenido(request, pk):
+    contenido = get_object_or_404(Contenidos, pk=pk)
+    return render(request, 'contenidos/visualizar.html', {'contenido': contenido})

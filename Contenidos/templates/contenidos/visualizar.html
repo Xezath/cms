@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block contenido %} <!-- Asegúrate de que el bloque coincide con la plantilla base -->
+  <div class="container mt-4">
+    <!-- Título del contenido -->
+    <h1>{{ contenido.titulo }}</h1>
+
+    <!-- Cuerpo del contenido (con CKEditor y formato HTML si es necesario) -->
+    <div class="mt-3 mb-5">
+      {{ contenido.contenido|safe }}
+    </div>
+
+  
+    <div class="text-muted">
+      <p><strong>Autor:</strong> {{ contenido.autor }}</p>
+      <p><strong>Fecha de creación:</strong> {{ contenido.fecha_creacion }}</p>
+    </div>
+
+    <!-- Botón para volver a la lista de contenidos -->
+    <a class="btn btn-secondary mt-2" href="{% url 'contenidos' %}">Volver a la lista</a>
+  </div>
+{% endblock %}
