@@ -1,4 +1,4 @@
-from .models import Contenidos, Categoria
+from .models import Contenidos, Categoria, Plantilla
 from .forms import ContenidosForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
@@ -44,4 +44,9 @@ def eliminar_contenido(request, pk):
 
 def visualizar_contenido(request, pk):
     contenido = get_object_or_404(Contenidos, pk=pk)
-    return render(request, 'contenidos/visualizar.html', {'contenido': contenido})
+    plantilla = contenido.plantilla
+    return render(request, 'contenidos/visualizar.html', {
+        'contenido': contenido,
+        'plantilla': plantilla
+    })
+

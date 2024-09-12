@@ -36,6 +36,15 @@
 
                 <!-- Incluye el campo de categoría si es necesario -->
                 
+                <div class="mb-3">
+                    <label for="plantilla" class="form-label">Selecciona una plantilla:</label>
+                    <select id="plantilla" name="plantilla" class="form-control">
+                        <option value="">Ninguna</option>
+                        {% for plantilla in form.plantilla.field.queryset %}
+                            <option value="{{ plantilla.id }}">{{ plantilla.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
                 <button type="submit" class="btn btn-primary">Crear</button>
             </form>

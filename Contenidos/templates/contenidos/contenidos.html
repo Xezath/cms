@@ -15,9 +15,8 @@
             <table class="table table-primary">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
+                        <th scope="col"></th>
                         <th scope="col">Título</th>
-                        <th scope="col">Tipo</th>
                         <th scope="col">Fecha de creación</th>
                       {% if perms.Contenidos.can_modify and perms.Contenidos.can_delete %}
                             <th>Acciones</th>
@@ -31,7 +30,6 @@
                         <td>
                             <a href="{% url 'visualizar_contenido' contenido.id %}">{{ contenido.titulo }}</a> <!-- Enlace al detalle del contenido -->
                         </td>
-                        <td>{{ contenido.get_tipo_display }}</td>
                         <td>{{ contenido.fecha_creacion }}</td>
                         <td>
                             {% if perms.Contenidos.can_modify %}
