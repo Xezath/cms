@@ -155,7 +155,7 @@ WSGI_APPLICATION = 'cms.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cms',
+        'NAME': 'cms_2',
         'USER': 'postgres',  
         'PASSWORD': 'password',
         'HOST': 'localhost',

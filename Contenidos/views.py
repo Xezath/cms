@@ -14,11 +14,12 @@ def crear_contenido(request):
         return redirect('contenidos')  
     return render(request, 'contenidos/crear.html', {'formulario': formulario})
 
-def editar_contenido(request):
-    #contenido =get_object_or_404(Contenidos, pk=pk)
-    formulario = EditarContenidosForm(request.POST or None)
+def editar_contenido(request, id):
+    contenido = Contenidos.objects.get(id=id)
+    formulario = EditarContenidosForm(request.POST or None,instance=contenido)
     if formulario.is_valid and request.POST:
         formulario.save()
+        return redirect('contenidos')
     return render(request, 'contenidos/editar.html',{'formulario': formulario})
 
 def eliminar_contenido(request, pk):
@@ -29,10 +30,8 @@ def eliminar_contenido(request, pk):
         return redirect('contenidos')
     return render(request, 'contenidos/confirmar_eliminacion.html', {'contenido': contenido})
 
-def visualizar_contenido(request, pk):
-    contenido = get_object_or_404(Contenidos, pk=pk)
-    plantilla = contenido.plantilla
+def visualizar_contenido(request, id):
+    contenido = Contenidos.objects.get(id=id)
     return render(request, 'contenidos/visualizar.html', {
-        'contenido': contenido,
-        'plantilla': plantilla
+        'contenido': contenido
     })
