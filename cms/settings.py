@@ -142,6 +142,13 @@ LOGOUT_REDIRECT_URL = '/'
 # settings.py
 
 SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '',
+            'secret': '',
+            'key': ''
+        }
+    },
     'github': {
 
         'APP': {
@@ -151,6 +158,7 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
 
 
 
