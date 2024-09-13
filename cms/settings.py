@@ -147,7 +147,14 @@ SOCIALACCOUNT_PROVIDERS = {
             'client_id': '',
             'secret': '',
             'key': ''
-        }
+        },
+        'AUTH_PARAMS': {
+            'access_type': 'offline',
+        },
+        'SCOPE': [
+            'profile',
+            'email'
+        ],
     },
     'github': {
 
