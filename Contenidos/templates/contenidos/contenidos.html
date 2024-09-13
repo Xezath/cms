@@ -5,9 +5,7 @@
 {% block contenido %}
 <div class="card">
     <div class="card-header">
-        {% if perms.Contenidos.can_add %}
-         <a class="btn btn-success" href="{% url 'crear_contenido' %}" role="button">Nuevo Contenido</a> <!-- para crear contenido-->
-        {% endif %}
+        <a class="btn btn-success" href="{% url 'crear_contenido' %}" role="button">Nuevo Contenido</a> <!-- para crear contenido-->
     </div>
     <div class="card-body">
         <h4 class="card-title">Contenidos</h4>
@@ -15,13 +13,12 @@
             <table class="table table-primary">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
+                        <th scope="col"></th>
                         <th scope="col">Título</th>
-                        <th scope="col">Tipo</th>
                         <th scope="col">Fecha de creación</th>
-                      {% if perms.Contenidos.can_modify and perms.Contenidos.can_delete %}
+                        <th scope="col">Categoria</th>
+                        <th scope="col"> Plantilla</th>
                             <th>Acciones</th>
-                         {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -31,15 +28,12 @@
                         <td>
                             <a href="{% url 'visualizar_contenido' contenido.id %}">{{ contenido.titulo }}</a> <!-- Enlace al detalle del contenido -->
                         </td>
-                        <td>{{ contenido.get_tipo_display }}</td>
                         <td>{{ contenido.fecha_creacion }}</td>
+                        <td> {{contenido.categoria}} </td>
+                        <td>{{contenido.plantilla}}</td>
                         <td>
-                            {% if perms.Contenidos.can_modify %}
                             <a class="btn btn-info" href="{% url 'editar_contenido' contenido.id %}" role="button">Editar</a>
-                            {% endif %}
-                            {% if perms.Contenidos.can_delete %}
                             <a class="btn btn-danger" href="{% url 'eliminar_contenido' contenido.id %}" role="button">Eliminar</a>
-                            {% endif %}
                         </td>
                     </tr>
                     {% empty %}
