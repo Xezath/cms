@@ -69,23 +69,23 @@ def registrar(request):
         form = CustomUserCreationForm(request.POST) 
         if form.is_valid():
             # Si el formulario es válido, guarda el nuevo usuario en la base de datos.
-            print("Datos recibidos (POST):", request.POST)  # Muestra los datos del formulario recibidos en la solicitud POST.
+            #print("Datos recibidos (POST):", request.POST)  # Muestra los datos del formulario recibidos en la solicitud POST.
             user=form.save()
 
             # Comprobar si este es el primer usuario registrado
             if User.objects.count() == 1:
                 # Asignar el grupo "Administrador" si es el primer usuario
-                admin_group = Group.objects.get(name='Administrador')
+                admin_group, created = Group.objects.get_or_create(name='Administrador')
                 user.groups.add(admin_group)
             else:
                 # Asignar el grupo "Suscriptor" a los demás usuarios
-                suscriptor_group = Group.objects.get(name='Suscriptor')
+                suscriptor_group, created = Group.objects.get_or_create(name='Suscriptor')
                 user.groups.add(suscriptor_group)
                 
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
             email = form.cleaned_data.get('email')
-            print("Datos validados y limpios:", form.cleaned_data)  # Muestra los datos validados y limpios del formulario.
+            #print("Datos validados y limpios:", form.cleaned_data)  # Muestra los datos validados y limpios del formulario.
             user = authenticate(username=username, password=password, email=email) # Autentica al usuario
             login(request, user)    # Inicia sesión automáticamente al usuario recién registrado.
 
@@ -98,7 +98,7 @@ def registrar(request):
     else:
         # Si la solicitud es GET, se renderiza un formulario vacío para el registro.
         form = CustomUserCreationForm()
-        print("Datos recibidos (GET):", request.GET) # Muestra los datos recibidos en la solicitud GET, aunque no deberían haber datos en GET para el registro.
+        #print("Datos recibidos (GET):", request.GET) # Muestra los datos recibidos en la solicitud GET, aunque no deberían haber datos en GET para el registro.
     
     # Renderiza la plantilla del formulario de registro con el formulario en el contexto.
     return render(request, 'registrar.html', {'form': form})

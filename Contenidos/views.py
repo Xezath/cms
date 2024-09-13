@@ -18,6 +18,7 @@ def crear_contenido(request):
         return redirect('contenidos')  
     return render(request, 'contenidos/crear.html', {'formulario': formulario})
 
+@permission_required('Contenidos.change_contenidos',raise_exception=True)
 def editar_contenido(request, id):
     contenido = Contenidos.objects.get(id=id)
     formulario = EditarContenidosForm(request.POST or None,instance=contenido)
@@ -26,6 +27,7 @@ def editar_contenido(request, id):
         return redirect('contenidos')
     return render(request, 'contenidos/editar.html',{'formulario': formulario, 'contenido':contenido})
 
+@permission_required('Contenidos.delete_contenidos',raise_exception=True)
 def eliminar_contenido(request, pk):
     contenido = get_object_or_404(Contenidos, pk=pk)
     if request.method == 'POST':
@@ -34,6 +36,7 @@ def eliminar_contenido(request, pk):
         return redirect('contenidos')
     return render(request, 'contenidos/confirmar_eliminacion.html', {'contenido': contenido})
 
+@permission_required('Contenidos.view_contenidos',raise_exception=True)
 def visualizar_contenido(request, id):
     contenido = Contenidos.objects.get(id=id)
     formulario = VisualizarContenidoForm(request.POST or None,instance=contenido)

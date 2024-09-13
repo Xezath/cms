@@ -171,7 +171,7 @@
                         {% endif %}
                     </li>
                     <li class="nav-item">
-                        {% if perms.Categoria.view_plantilla%}
+                        {% if perms.Plantilla.view_plantilla%}
                         <a class="nav-link {% if request.path == '/plantillas/' %}active{% endif %}" href="{% url 'plantillas' %}">Plantillas</a>
                         {% endif %}
                     </li>
