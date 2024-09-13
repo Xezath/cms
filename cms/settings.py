@@ -144,7 +144,7 @@ LOGOUT_REDIRECT_URL = '/'
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id': 'a',
+            'client_id': '',
             'secret': 's',
             'key': ''
         },
