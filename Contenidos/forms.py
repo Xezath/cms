@@ -1,6 +1,8 @@
 from django import forms
 from ckeditor.widgets import CKEditorWidget
-from .models import Contenidos, Categoria, Plantilla
+from Categoria.models import Categoria
+from Plantilla.models import Plantilla
+from .models import Contenidos
 
 class ContenidosForm(forms.ModelForm):
     categoria = forms.ModelChoiceField(

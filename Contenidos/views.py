@@ -1,4 +1,4 @@
-from .models import Contenidos, Categoria, Plantilla
+from .models import Contenidos
 from .forms import ContenidosForm, EditarContenidosForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -14,9 +14,9 @@ def crear_contenido(request):
         return redirect('contenidos')  
     return render(request, 'contenidos/crear.html', {'formulario': formulario})
 
-def editar_contenido(request, pk):
-    contenido =get_object_or_404(Contenidos, pk=pk)
-    formulario = EditarContenidosForm(request.POST or None, instance= contenido)
+def editar_contenido(request):
+    #contenido =get_object_or_404(Contenidos, pk=pk)
+    formulario = EditarContenidosForm(request.POST or None)
     if formulario.is_valid and request.POST:
         formulario.save()
     return render(request, 'contenidos/editar.html',{'formulario': formulario})
