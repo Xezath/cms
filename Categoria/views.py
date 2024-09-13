@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import permission_required
 def inicio(request):
     return render(request, 'paginas/inicio.html')
 
+@permission_required('Categoria.view_categoria', raise_exception=True)
 def categorias(request):
     categorias = Categoria.objects.all()
     #print(categorias)

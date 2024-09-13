@@ -167,6 +167,12 @@
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/plantillas/' %}active{% endif %}" href="{% url 'plantillas' %}">Plantillas</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/roles_listar/' %}active{% endif %}" href="{% url 'roles_listar' %}">Roles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/lista_usuarios/' %}active{% endif %}" href="{% url 'lista_usuarios' %}">Usuarios</a>
+                    </li>
                     {% endif %}
                     {% if user.is_authenticated %}
                     <li class="nav-item">

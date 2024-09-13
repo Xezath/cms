@@ -2,12 +2,7 @@ from django.db import models
 from ckeditor.fields import RichTextField
 from django.utils import timezone
 from django.contrib.auth.models import User
-
-class Categoria(models.Model):
-    nombre = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.nombre
+from Categoria.models import Categoria
 
 class Contenidos(models.Model):
     titulo = models.CharField(max_length=255)
