@@ -12,16 +12,19 @@ class Plantilla(models.Model):
         return self.nombre
 
 class Categoria(models.Model):
-    nombre = models.CharField(max_length=100)
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=50)
+    descripcion = models.TextField(verbose_name="Descripcion", null=True)
 
     def __str__(self):
-        return self.nombre
+        fila = self.nombre
+        return fila
         
 class Contenidos(models.Model):
     titulo = models.CharField(max_length=255)
     contenido = RichTextField(default='')
     fecha_creacion = models.DateTimeField(default=timezone.now, editable=False)
-    categoria = models.ForeignKey(Categoria, null=True, blank=True, on_delete=models.SET_NULL)
+    categoria = models.ForeignKey(Categoria, related_name="contenido", blank=True, null=True, on_delete=models.CASCADE)
     plantilla = models.ForeignKey(Plantilla, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):

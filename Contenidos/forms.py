@@ -3,16 +3,36 @@ from ckeditor.widgets import CKEditorWidget
 from .models import Contenidos, Categoria, Plantilla
 
 class ContenidosForm(forms.ModelForm):
+    categoria = forms.ModelChoiceField(
+        queryset=Categoria.objects.all(),  # Aquí defines el queryset con las opciones
+        widget=forms.Select,               # Esto asegura que se renderice como un <select>
+        empty_label="Seleccione una categoría",  # Etiqueta para el valor vacío
+        label="Categoría"            # Cambia la etiqueta si lo necesitas
+    )
+    plantilla = forms.ModelChoiceField(
+        queryset=Plantilla.objects.all(), 
+        required=False,
+        widget=forms.Select,               # Esto asegura que se renderice como un <select>
+        empty_label="Seleccione una plantilla",  # Etiqueta para el valor vacío
+        label="Plantilla"
+        )
     class Meta:
         model = Contenidos
-        fields = ['titulo', 'contenido', 'categoria','plantilla']
-        widgets = {
-            'contenido': forms.Textarea(attrs={'rows': 4}),
-        }
-        plantilla = forms.ModelChoiceField(queryset=Plantilla.objects.all(), required=False)
-
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['categoria'].queryset = Categoria.objects.all()  # Cargar las categorías existentes
-
+        fields = '__all__'  
+class EditarContenidosForm(forms.ModelForm):
+    categoria = forms.ModelChoiceField(
+        queryset=Categoria.objects.all(),  # Aquí defines el queryset con las opciones
+        widget=forms.Select,               # Esto asegura que se renderice como un <select>
+        empty_label="Seleccione una categoría",  # Etiqueta para el valor vacío
+        label="Categoría"            # Cambia la etiqueta si lo necesitas
+    )
+    plantilla = forms.ModelChoiceField(
+        queryset=Plantilla.objects.all(), 
+        required=False,
+        widget=forms.Select,               # Esto asegura que se renderice como un <select>
+        empty_label="Seleccione una plantilla",  # Etiqueta para el valor vacío
+        label="Plantilla"
+        )
+    class Meta:
+        model = Contenidos
+        fields = '__all__'

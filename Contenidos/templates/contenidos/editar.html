@@ -1,89 +1,11 @@
-{% extends 'base.html' %}
-
-{% block contenido %}
-<div class="container">
-    <h2>Editar Contenido</h2>
-
-    <div class="card mb-3">
-        <div class="card-header">Actualice los datos:</div>
-        <div class="card-body">
-            <form method="post" action="{% url 'editar_contenido' pk=form.instance.pk %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                
-                <!-- Campos del formulario -->
-                <div class="mb-3">
-                    <label for="titulo" class="form-label">Título:</label>
-                    <input type="text" id="titulo" name="titulo" class="form-control" value="{{ form.instance.titulo }}" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="contenido" class="form-label">Contenido:</label>
-                    
-                    <!-- Editor de texto con opciones de formato -->
-                    <div id="toolbar">
-                        <button type="button" onclick="formatText('bold')"><b>Negrita</b></button>
-                        <button type="button" onclick="formatText('italic')"><i>Cursiva</i></button>
-                        <button type="button" onclick="formatText('underline')"><u>Subrayado</u></button>
-                        <button type="button" onclick="saveText()">Guardar</button>
-                        <input type="file" id="fileInput" />
-                        <button type="button" onclick="loadFromFile()">Cargar</button>
-                    </div>
-
-                    <div id="editor" contenteditable="true" class="form-control" style="height: 300px;">
-                        {{ form.instance.contenido|safe }}
-                    </div>
-
-                    <!-- Campo oculto para el contenido del editor -->
-                    <input type="hidden" id="editorContent" name="contenido" />
-                </div>
-
-                <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                <a href="{% url 'contenidos' %}" class="btn btn-secondary">Cancelar</a>
-            </form>
-        </div>
+{% extends "base.html" %}
+{% block Titulo %} Editar Contenido{% endblock %} 
+{% block contenido %} 
+<div class="card">
+    <div class="card-header">Editar el contenido</div> 
+    <div class="card-body">
+        <h4 class="card-title">Datos del contenido</h4> 
+        {% include 'contenidos/form.html' %}
     </div>
 </div>
-
-<style>
-    /* Ajusta el tamaño del editor de texto */
-    #editor {
-        width: 100%;
-        min-height: 400px;  
-        border: 1px solid #ccc; 
-        padding: 10px; 
-    }
-</style>
-
-<script>
-    function formatText(command) {
-        document.execCommand(command, false, null);
-    }
-
-    function saveText() {
-        const text = document.getElementById("editor").innerHTML;
-        localStorage.setItem("text", text);
-        alert("Texto guardado");
-    }
-
-    function loadFromFile() {
-        const fileInput = document.getElementById("fileInput");
-        const file = fileInput.files[0];
-
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const content = e.target.result;
-                document.getElementById("editor").innerHTML = content;
-            };
-            reader.readAsText(file);
-        } else {
-            alert("Por favor selecciona un archivo");
-        }
-    }
-
-    document.querySelector('form').addEventListener('submit', function() {
-        const editorContent = document.getElementById('editor').innerHTML;
-        document.getElementById('editorContent').value = editorContent;
-    });
-</script>
 {% endblock %}
