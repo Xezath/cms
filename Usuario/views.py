@@ -103,7 +103,7 @@ def registrar(request):
     # Renderiza la plantilla del formulario de registro con el formulario en el contexto.
     return render(request, 'registrar.html', {'form': form})
 
-#@permission_required('Contenidos.view_contenidos',raise_exception=True)
+@permission_required('auth.add_group',raise_exception=True)
 def crear_rol(request):
     if request.method == 'POST':
         form = GroupForm(request.POST)
@@ -114,7 +114,7 @@ def crear_rol(request):
         form = GroupForm()
     return render(request, 'crear_rol.html', {'form': form})
 
-#@permission_required('Contenidos.view_contenidos',raise_exception=True)
+@permission_required('auth.change_group',raise_exception=True)
 def editar_rol(request, pk):
     group = get_object_or_404(Group, pk=pk)
     if request.method == 'POST':
@@ -126,7 +126,7 @@ def editar_rol(request, pk):
         form = GroupEditForm(instance=group)
     return render(request, 'editar_rol.html', {'form': form})
 
-#@permission_required('Contenidos.view_contenidos',raise_exception=True)
+@permission_required('auth.delete_group',raise_exception=True)
 def eliminar_rol(request, pk):
     group = get_object_or_404(Group, pk=pk)
     if request.method == 'POST':
@@ -134,29 +134,29 @@ def eliminar_rol(request, pk):
         return redirect('roles_listar')
     return render(request, 'eliminar_rol.html', {'group': group})
 
-#@permission_required('Contenidos.view_contenidos',raise_exception=True)
+@permission_required('auth.view_group',raise_exception=True)
 def roles_listar(request):
     roles = Group.objects.all()
     return render(request, 'roles_listar.html', {'roles': roles})
 
-#@permission_required('Contenidos.view_contenidos',raise_exception=True)
+@permission_required('auth.view_user',raise_exception=True)
 def ver_usuarios(request):
     usuarios = User.objects.all()
     return render(request, 'ver_usuarios.html', {'usuarios': usuarios})
 
-#@permission_required('Contenidos.view_contenidos',raise_exception=True)
+@permission_required('auth.view_group',raise_exception=True)
 def ver_roles(request):
     roles = Group.objects.all()
     return render(request, 'ver_roles.html', {'roles': roles})
 
-#@permission_required('Contenidos.view_contenidos',raise_exception=True)
+@permission_required('auth.view_user',raise_exception=True)
 def lista_usuarios(request):
     # Obtener todos los usuarios registrados
     usuarios = User.objects.all()
     return render(request, 'lista_usuarios.html', {'usuarios': usuarios})
 
 # Nueva vista para editar los roles de un usuario
-#@permission_required('Contenidos.view_contenidos',raise_exception=True)
+@permission_required('auth.change_user',raise_exception=True)
 def cambiar_rol_usuario(request, pk):
     usuario = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
@@ -169,7 +169,7 @@ def cambiar_rol_usuario(request, pk):
     return render(request, 'cambiar_rol_usuario.html', {'form': form, 'usuario': usuario})
 
 # Nueva vista para eliminar un usuario
-#@permission_required('Contenidos.view_contenidos',raise_exception=True)
+@permission_required('auth.delete_user',raise_exception=True)
 def eliminar_usuario(request, pk):
     usuario = get_object_or_404(User, pk=pk)
     if request.method == 'POST':

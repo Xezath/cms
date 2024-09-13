@@ -16,7 +16,7 @@ class Command(BaseCommand):
             administracion.permissions.add(permiso)
 
         roles = {
-            'Suscriptor': ['add_categoria', 'change_categoria', 'delete_categoria','add_contenidos','change_contenidos','delete_contenidos'],
+            'Suscriptor': ['view_contenidos'],
             'Autor': ['add_contenidos', 'change_contenidos', 'delete_contenidos'],  # Permisos CRUD para Contenido
             'Editor': ['add_contenidos', 'change_contenidos', 'delete_contenidos', 'change_categoria'],
             'Publicador': ['add_contenidos', 'change_contenidos', 'delete_contenidos', 'change_categoria'],

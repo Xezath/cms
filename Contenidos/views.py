@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.decorators import login_required
 
-#@permission_required('Contenidos.view_contenidos',raise_exception=True)
+@permission_required('Contenidos.view_contenidos',raise_exception=True)
 def contenidos(request):
     contenidos = Contenidos.objects.all()
     return render(request, 'contenidos/contenidos.html', {'contenidos': contenidos})
