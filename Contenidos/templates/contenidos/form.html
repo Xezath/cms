@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Contenido</title>
+    <style>
+        /* Asegúrate de que el editor tenga un alto fijo y permita el desplazamiento */
+        #editor {
+            height: 300px; /* Ajusta la altura según tus necesidades */
+            overflow-y: auto; /* Añade una barra de desplazamiento vertical si es necesario */
+            border: 1px solid #ccc; /* Opcional: Añade un borde para una mejor visualización */
+            padding: 10px; /* Opcional: Añade un relleno para el contenido */
+        }
+        #toolbar {
+            margin-bottom: 10px; /* Espacio entre la barra de herramientas y el editor */
+        }
+    </style>
 </head>
 <body>
     <h1>Editar Contenido</h1>
@@ -38,7 +50,7 @@
                 <input type="file" id="fileInput" />
                 <button type="button" onclick="loadFromFile()">Cargar</button>
             </div>
-            <div id="editor" contenteditable="true" class="form-control" style="height: 300px;">
+            <div id="editor" contenteditable="true">
                 {{ formulario.instance.contenido|safe }}  <!-- Mostrar el contenido existente si es necesario -->
             </div>
             <input type="hidden" id="editorContent" name="contenido" />
