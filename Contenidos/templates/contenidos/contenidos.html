@@ -17,6 +17,7 @@
                         <th scope="col">Título</th>
                         <th scope="col">Fecha de creación</th>
                         <th scope="col">Categoria</th>
+                        <th scope="col"> Plantilla</th>
                             <th>Acciones</th>
                     </tr>
                 </thead>
@@ -29,6 +30,7 @@
                         </td>
                         <td>{{ contenido.fecha_creacion }}</td>
                         <td> {{contenido.categoria}} </td>
+                        <td>{{contenido.plantilla}}</td>
                         <td>
                             <a class="btn btn-info" href="{% url 'editar_contenido' contenido.id %}" role="button">Editar</a>
                             <a class="btn btn-danger" href="{% url 'eliminar_contenido' contenido.id %}" role="button">Eliminar</a>

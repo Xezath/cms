@@ -1,5 +1,5 @@
 from .models import Contenidos
-from .forms import ContenidosForm, EditarContenidosForm
+from .forms import ContenidosForm, EditarContenidosForm, VisualizarContenidoForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
@@ -20,7 +20,7 @@ def editar_contenido(request, id):
     if formulario.is_valid and request.POST:
         formulario.save()
         return redirect('contenidos')
-    return render(request, 'contenidos/editar.html',{'formulario': formulario})
+    return render(request, 'contenidos/editar.html',{'formulario': formulario, 'contenido':contenido})
 
 def eliminar_contenido(request, pk):
     contenido = get_object_or_404(Contenidos, pk=pk)
@@ -32,6 +32,7 @@ def eliminar_contenido(request, pk):
 
 def visualizar_contenido(request, id):
     contenido = Contenidos.objects.get(id=id)
-    return render(request, 'contenidos/visualizar.html', {
-        'contenido': contenido
-    })
+    formulario = VisualizarContenidoForm(request.POST or None,instance=contenido)
+    if formulario.is_valid and request.POST:
+        formulario.save()
+    return render(request, 'contenidos/visualizar.html',{'formulario': formulario, 'contenido':contenido})

@@ -38,3 +38,15 @@ class EditarContenidosForm(forms.ModelForm):
     class Meta:
         model = Contenidos
         fields = '__all__'
+
+class VisualizarContenidoForm(forms.ModelForm):
+    plantilla = forms.ModelChoiceField(
+        queryset=Plantilla.objects.all(), 
+        required=False,
+        widget=forms.Select,               # Esto asegura que se renderice como un <select>
+        empty_label="Seleccione una plantilla",  # Etiqueta para el valor vacío
+        label="Plantilla"
+        )
+    class Meta:
+        model = Contenidos
+        fields = '__all__'
