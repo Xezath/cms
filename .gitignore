@@ -42,6 +42,8 @@ coverage.xml
 .pytest_cache/
 cover/
 
+# Ignorar el archivo de configuración con claves sensibles
+cms/settings.py
 
 # Environments
 .env

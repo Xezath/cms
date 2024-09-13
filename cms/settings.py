@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.openid_connect',
     "crispy_forms",
     "crispy_bootstrap5",
@@ -155,9 +156,9 @@ WSGI_APPLICATION = 'cms.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cms_2',
+        'NAME': 'cms',
         'USER': 'postgres',  
-        'PASSWORD': 'password',
+        'PASSWORD': 'admin',
         'HOST': 'localhost',
         'PORT': '5432',  # puerto por defecto de PostgreSQL
     }
