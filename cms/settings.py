@@ -134,15 +134,23 @@ TEMPLATES = [
 
 
 # Provider specific settings
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+
+# settings.py
+
 SOCIALACCOUNT_PROVIDERS = {
-    'openid_connect': {
-        'SERVER_URL': 'http://localhost:8080/auth/realms/sso-login',
-        'CLIENT_ID': 'sso-login-django',
-        'CLIENT_SECRET': 'yAPWogweSFGNoC7trXNA0jR0wtr1z5WZ',
-        'KEY': 'openid_connect',  # Asegúrate de que coincida con el proveedor
+    'github': {
+
+        'APP': {
+            'client_id': 'Ov23li8dMzjZDjBi8NWh',
+            'secret': 'd1737349fcd0751ce89bf4ac9ab6eb219db8a1ba',
+            'key': ''
+        }
     }
 }
-
 
 
 
