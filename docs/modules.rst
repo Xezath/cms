@@ -6,6 +6,7 @@ cms
 
    Categoria
    Plantilla
+   Contenidos
    Usuario
    cms
    manage

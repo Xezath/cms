@@ -3,11 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-CMS documentation
+Documentacion del CMS
 =================
-
-Welcome to the CMS documentation. Here you'll find detailed information about
-how to use and develop the CMS.
 
 
 .. toctree::
@@ -15,3 +12,10 @@ how to use and develop the CMS.
    :caption: Contents:
 
    modules
+
+   Índices y tablas
+================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

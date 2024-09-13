@@ -15,13 +15,14 @@
             <table class="table table-primary">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
+                        <th scope="col"></th>
                         <th scope="col">Título</th>
-                        <th scope="col">Tipo</th>
                         <th scope="col">Fecha de creación</th>
-                      {% if perms.Contenidos.change_contenidos and perms.Contenidos.delete_contenidos %}
+                        <th scope="col">Categoria</th>
+                        <th scope="col"> Plantilla</th>
+                        {% if perms.Contenidos.change_contenidos and perms.Contenidos.delete_contenidos %}
                             <th>Acciones</th>
-                         {% endif %}
+                        {%endif%}
                     </tr>
                 </thead>
                 <tbody>
@@ -31,15 +32,16 @@
                         <td>
                             <a href="{% url 'visualizar_contenido' contenido.id %}">{{ contenido.titulo }}</a> <!-- Enlace al detalle del contenido -->
                         </td>
-                        <td>{{ contenido.get_tipo_display }}</td>
                         <td>{{ contenido.fecha_creacion }}</td>
+                        <td> {{contenido.categoria}} </td>
+                        <td>{{contenido.plantilla}}</td>
                         <td>
                             {% if perms.Contenidos.change_contenidos %}
                             <a class="btn btn-info" href="{% url 'editar_contenido' contenido.id %}" role="button">Editar</a>
                             {% endif %}
                             {% if perms.Contenidos.delete_contenidos %}
                             <a class="btn btn-danger" href="{% url 'eliminar_contenido' contenido.id %}" role="button">Eliminar</a>
-                            {% endif %}
+                            {%endif%}
                         </td>
                     </tr>
                     {% empty %}

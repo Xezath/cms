@@ -1,13 +1,89 @@
-{% extends 'base.html' %}
-
-{% block content %}
-<div class="container">
-    <h2>{% if form.instance.pk %}Editar{% else %}Crear{% endif %} Contenido</h2>
-
-    <form method="post" action="{% if form.instance.pk %}{% url 'editar_contenido' form.instance.pk %}{% else %}{% url 'crear_contenido' %}{% endif %}">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Contenido</title>
+</head>
+<body>
+    <h1>Editar Contenido</h1>
+    
+    <!-- Asegúrate de que el table esté dentro del body y tenga la clase adecuada -->
+    <table class="table-background">
+        <!-- Aquí puedes agregar las filas y columnas de la tabla -->
+    </table>
+    
+    <form enctype="multipart/form-data" method="post" onsubmit="return confirmarEnvio();">
         {% csrf_token %}
-        {{ form.as_p }}
+
+        <!-- Otros campos del formulario -->
+        {% for campo in formulario %}
+            {% if campo.name != 'contenido' %}  <!-- Excluir el campo 'contenido' que genera el cuadro adicional -->
+            <div class="mb-3">
+                <label for="{{ campo.id_for_label }}" class="form-label">{{ campo.label }}</label>
+                {{ campo }}  <!-- Renderiza otros campos automáticamente -->
+            </div>
+            <div class="col-12 help-text">{{ campo.errors }}</div>
+            {% endif %}
+        {% endfor %}
+
+        <!-- Editor de texto con opciones de formato -->
+        <div class="mb-3 contenido-editor">
+            <label for="contenido" class="form-label">Contenido:</label>
+            <div id="toolbar">
+                <button type="button" onclick="formatText('bold')"><b>Negrita</b></button>
+                <button type="button" onclick="formatText('italic')"><i>Cursiva</i></button>
+                <button type="button" onclick="formatText('underline')"><u>Subrayado</u></button>
+                <button type="button" onclick="saveText()">Guardar</button>
+                <input type="file" id="fileInput" />
+                <button type="button" onclick="loadFromFile()">Cargar</button>
+            </div>
+            <div id="editor" contenteditable="true" class="form-control" style="height: 300px;">
+                {{ formulario.instance.contenido|safe }}  <!-- Mostrar el contenido existente si es necesario -->
+            </div>
+            <input type="hidden" id="editorContent" name="contenido" />
+        </div>
+
+        <!-- Botones de acción -->
         <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-secondary" href="{% url 'contenidos' %}" role="button">Cancelar</a>
+
+        <script>
+            function confirmarEnvio() {
+                return confirm("¿Estás seguro de que deseas realizar esta acción?");
+            }
+
+            function formatText(command) {
+                document.execCommand(command, false, null);
+            }
+
+            function saveText() {
+                const text = document.getElementById("editor").innerHTML;
+                localStorage.setItem("text", text);
+                alert("Texto guardado");
+            }
+
+            function loadFromFile() {
+                const fileInput = document.getElementById("fileInput");
+                const file = fileInput.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const content = e.target.result;
+                        document.getElementById("editor").innerHTML = content;
+                    };
+                    reader.readAsText(file);
+                } else {
+                    alert("Por favor selecciona un archivo");
+                }
+            }
+
+            document.querySelector('form').addEventListener('submit', function() {
+                const editorContent = document.getElementById('editor').innerHTML;
+                document.getElementById('editorContent').value = editorContent;
+            });
+        </script>
     </form>
-</div>
-{% endblock %}
+</body>
+</html>
