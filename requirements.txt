@@ -1,7 +1,6 @@
 psycopg2==2.9.7 #para usar postgres
 django==5.1
 crispy-bootstrap5==2024.2
-
 anyio==4.4.0
 asgiref==3.8.1
 cached-property==1.5.2
