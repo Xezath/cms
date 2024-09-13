@@ -156,16 +156,34 @@
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
+                        {% if perms.Contenidos.view_contenidos%}
                         <a class="nav-link {%if request.path == '/contenidos/'  %}active{% endif %}" href="{% url 'contenidos' %}">Contenidos</a> 
+                        {% endif %}
                     </li>
                     <li class="nav-item">
+                        {% if perms.Categoria.view_categoria%}
                         <a class="nav-link {% if request.path == '/categorias/' %}active{% endif %}" href="{% url 'categorias' %}">Categorías</a>
+                        {% endif %}
                     </li>
                     <li class="nav-item">
+                        {% if perms.Categoria.view_subcategoria%}
                         <a class="nav-link {% if request.path == '/subcategorias/' %}active{% endif %}" href="{% url 'subcategorias' %}">Subcategorías</a>
+                        {% endif %}
                     </li>
                     <li class="nav-item">
+                        {% if perms.Plantilla.view_plantilla%}
                         <a class="nav-link {% if request.path == '/plantillas/' %}active{% endif %}" href="{% url 'plantillas' %}">Plantillas</a>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item">
+                        {% if perms.auth.view_group%}
+                        <a class="nav-link {% if request.path == '/roles_listar/' %}active{% endif %}" href="{% url 'roles_listar' %}">Roles</a>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item">
+                        {% if perms.auth.view_user%}
+                        <a class="nav-link {% if request.path == '/lista_usuarios/' %}active{% endif %}" href="{% url 'lista_usuarios' %}">Usuarios</a>
+                        {% endif %}
                     </li>
                     {% endif %}
                     {% if user.is_authenticated %}

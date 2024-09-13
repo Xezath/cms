@@ -5,7 +5,9 @@
 {% block contenido %}
 <div class="card">
     <div class="card-header">
-        <a class="btn btn-success" href="{% url 'crear_contenido' %}" role="button">Nuevo Contenido</a> <!-- para crear contenido-->
+        {% if perms.Contenidos.add_contenidos %}
+         <a class="btn btn-success" href="{% url 'crear_contenido' %}" role="button">Nuevo Contenido</a> <!-- para crear contenido-->
+        {% endif %}
     </div>
     <div class="card-body">
         <h4 class="card-title">Contenidos</h4>
@@ -18,7 +20,9 @@
                         <th scope="col">Fecha de creación</th>
                         <th scope="col">Categoria</th>
                         <th scope="col"> Plantilla</th>
+                        {% if perms.Contenidos.change_contenidos and perms.Contenidos.delete_contenidos %}
                             <th>Acciones</th>
+                        {%endif%}
                     </tr>
                 </thead>
                 <tbody>
@@ -32,8 +36,12 @@
                         <td> {{contenido.categoria}} </td>
                         <td>{{contenido.plantilla}}</td>
                         <td>
+                            {% if perms.Contenidos.change_contenidos %}
                             <a class="btn btn-info" href="{% url 'editar_contenido' contenido.id %}" role="button">Editar</a>
+                            {% endif %}
+                            {% if perms.Contenidos.delete_contenidos %}
                             <a class="btn btn-danger" href="{% url 'eliminar_contenido' contenido.id %}" role="button">Eliminar</a>
+                            {%endif%}
                         </td>
                     </tr>
                     {% empty %}

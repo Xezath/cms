@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.openid_connect',
+    'mozilla_django_oidc',
     "crispy_forms",
     "crispy_bootstrap5",
     'ckeditor',
@@ -183,7 +184,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'cms',
         'USER': 'postgres',  
-        'PASSWORD': 'admin',
+        'PASSWORD': '1234',
         'HOST': 'localhost',
         'PORT': '5432',  # puerto por defecto de PostgreSQL
     }
