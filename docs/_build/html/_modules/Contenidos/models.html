@@ -76,17 +76,38 @@
 <span class="kn">from</span> <span class="nn">ckeditor.fields</span> <span class="kn">import</span> <span class="n">RichTextField</span>
 <span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
 <span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
-<span class="kn">from</span> <span class="nn">Categoria.models</span> <span class="kn">import</span> <span class="n">Categoria</span>
+<span class="kn">from</span> <span class="nn">Categoria.models</span> <span class="kn">import</span> <span class="n">Categoria</span><span class="p">,</span><span class="n">Subcategoria</span>
 <span class="kn">from</span> <span class="nn">Plantilla.models</span> <span class="kn">import</span> <span class="n">Plantilla</span>
+
         
 <div class="viewcode-block" id="Contenidos">
 <a class="viewcode-back" href="../../Contenidos.html#Contenidos.models.Contenidos">[documentos]</a>
 <span class="k">class</span> <span class="nc">Contenidos</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Modelo que representa un contenido en el sistema.</span>
+
+<span class="sd">    Atributos:</span>
+<span class="sd">        titulo (str): El título del contenido.</span>
+
+<span class="sd">        contenido (RichTextField): El contenido en formato enriquecido.</span>
+
+<span class="sd">        fecha_creacion (DateTimeField): La fecha de creación del contenido.</span>
+
+<span class="sd">        categoria (ForeignKey): La categoría asociada al contenido.</span>
+
+<span class="sd">        subcategoria (ForeignKey): La subcategoría asociada al contenido.</span>
+
+<span class="sd">        plantilla (ForeignKey): La plantilla utilizada para el contenido.</span>
+<span class="sd">        </span>
+<span class="sd">        autor (ForeignKey): El usuario que creó el contenido.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">titulo</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
     <span class="n">contenido</span> <span class="o">=</span> <span class="n">RichTextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
     <span class="n">fecha_creacion</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">categoria</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Categoria</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">subcategoria</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Subcategoria</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">plantilla</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Plantilla</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">autor</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">titulo</span>
@@ -98,6 +119,7 @@
             <span class="p">(</span><span class="s2">&quot;can_modify&quot;</span><span class="p">,</span> <span class="s2">&quot;Puede editar contenido&quot;</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;can_delete&quot;</span><span class="p">,</span> <span class="s2">&quot;Puede eliminar contenido&quot;</span><span class="p">),</span>
         <span class="p">]</span></div>
+
 
 </pre></div>
 

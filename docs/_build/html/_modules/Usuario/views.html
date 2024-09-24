@@ -42,8 +42,11 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">cms</a></li>
+</ul>
+
         </div>
       </div>
     </nav>
@@ -70,79 +73,225 @@
              
   <h1>Código fuente para Usuario.views</h1><div class="highlight"><pre>
 <span></span>
-<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">redirect</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span>  <span class="n">get_object_or_404</span>
 <span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">login</span><span class="p">,</span><span class="n">logout</span><span class="p">,</span> <span class="n">authenticate</span>
-<span class="kn">from</span> <span class="nn">.forms</span> <span class="kn">import</span> <span class="n">CustomUserCreationForm</span>
 <span class="kn">from</span> <span class="nn">django.contrib.auth.forms</span> <span class="kn">import</span> <span class="n">AuthenticationForm</span>
-<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">redirect</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span><span class="p">,</span><span class="n">Group</span>
+<span class="kn">from</span> <span class="nn">.forms</span> <span class="kn">import</span> <span class="n">CustomUserCreationForm</span><span class="p">,</span> <span class="n">CustomAdminUserChangeForm</span><span class="p">,</span> <span class="n">GroupForm</span><span class="p">,</span> <span class="n">GroupEditForm</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">reverse_lazy</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">messages</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span> <span class="kn">import</span> <span class="n">permission_required</span>
 
 <span class="c1"># Create your views here.</span>
 <div class="viewcode-block" id="home">
 <a class="viewcode-back" href="../../Usuario.html#Usuario.views.home">[documentos]</a>
 <span class="k">def</span> <span class="nf">home</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-   <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;home.html&#39;</span><span class="p">)</span></div>
+    <span class="c1"># Renderiza la página de inicio</span>
+    <span class="c1"># La función &#39;render&#39; toma el objeto &#39;request&#39; y la plantilla &#39;home.html&#39; para generar la respuesta HTTP.</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;home.html&#39;</span><span class="p">)</span></div>
+
 
 
 <div class="viewcode-block" id="exito">
 <a class="viewcode-back" href="../../Usuario.html#Usuario.views.exito">[documentos]</a>
 <span class="k">def</span> <span class="nf">exito</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># Renderiza la página de éxito, que podría mostrar un mensaje de éxito</span>
+    <span class="c1"># después de que el usuario complete una acción como el registro o el inicio de sesión.</span>
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;exito.html&#39;</span><span class="p">)</span></div>
+
 
 
 <div class="viewcode-block" id="cerrar_sesion">
 <a class="viewcode-back" href="../../Usuario.html#Usuario.views.cerrar_sesion">[documentos]</a>
 <span class="k">def</span> <span class="nf">cerrar_sesion</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># Cierra la sesión del usuario actual utilizando la función &#39;logout&#39;.</span>
+    <span class="c1"># Luego redirige a la página de inicio.</span>
     <span class="n">logout</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">redirect</span> <span class="p">(</span><span class="s1">&#39;home&#39;</span><span class="p">)</span></div>
+
 
 
 <div class="viewcode-block" id="Iniciar_Sesion">
 <a class="viewcode-back" href="../../Usuario.html#Usuario.views.Iniciar_Sesion">[documentos]</a>
 <span class="k">def</span> <span class="nf">Iniciar_Sesion</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># Maneja el proceso de inicio de sesión.</span>
+    <span class="c1"># Si la solicitud es GET, se muestra el formulario de inicio de sesión.</span>
+    <span class="c1"># Si la solicitud es POST, se intenta autenticar al usuario con las credenciales proporcionadas.</span>
     <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;GET&#39;</span><span class="p">:</span>
+        <span class="c1"># Si la solicitud es GET, se muestra el formulario de inicio de sesión.</span>
+        <span class="c1"># Si la solicitud es POST, se intenta autenticar al usuario con las credenciales proporcionadas.</span>
         <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Iniciar_Sesion.html&#39;</span><span class="p">,{</span>
-            <span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="n">AuthenticationForm</span>
+            <span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="n">AuthenticationForm</span>  <span class="c1"># Crea una instancia del formulario de autenticación</span>
         <span class="p">})</span>
     <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Si la solicitud es POST, intenta autenticar al usuario con el nombre de usuario y la contraseña recibidos.</span>
         <span class="n">user</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span>
-            <span class="n">request</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">],</span> <span class="n">password</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span>
-            <span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">])</span>
+            <span class="n">request</span><span class="p">,</span> 
+            <span class="n">username</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">],</span> 
+            <span class="n">password</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Si la autenticación falla, se renderiza de nuevo el formulario con un mensaje de error.</span>
             <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Iniciar_Sesion.html&#39;</span><span class="p">,{</span>
-                <span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="n">AuthenticationForm</span><span class="p">,</span>
-                <span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Username or password is incorrect&#39;</span>
+                <span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="n">AuthenticationForm</span><span class="p">,</span> <span class="c1"># Vuelve a crear una instancia del formulario</span>
+                <span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Username or password is incorrect&#39;</span>    <span class="c1"># Mensaje de error que se mostrará al usuario.</span>
             <span class="p">})</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Si la autenticación es exitosa, se inicia la sesión del usuario.</span>
+            <span class="c1"># Luego se redirige a la página de inicio.</span>
             <span class="n">login</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+
+            <span class="c1"># Obtener el nombre del rol del usuario</span>
+            <span class="n">user_groups</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+            <span class="n">user_roles</span> <span class="o">=</span> <span class="p">[</span><span class="n">group</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">user_groups</span><span class="p">]</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;roles&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_roles</span>  <span class="c1"># Guardar roles en la sesión</span>
             <span class="k">return</span> <span class="n">redirect</span> <span class="p">(</span><span class="s1">&#39;home&#39;</span><span class="p">)</span></div>
-
-
-     
-
 
 
 <div class="viewcode-block" id="registrar">
 <a class="viewcode-back" href="../../Usuario.html#Usuario.views.registrar">[documentos]</a>
 <span class="k">def</span> <span class="nf">registrar</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># Maneja el registro de nuevos usuarios</span>
+    <span class="c1"># Si la solicitud es POST, procesa el formulario de registro con los datos proporcionados.</span>
     <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
-        <span class="n">form</span> <span class="o">=</span> <span class="n">CustomUserCreationForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">CustomUserCreationForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span> 
         <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Datos recibidos (POST):&quot;</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>  <span class="c1"># Ver datos enviados en POST</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="c1"># Si el formulario es válido, guarda el nuevo usuario en la base de datos.</span>
+            <span class="c1">#print(&quot;Datos recibidos (POST):&quot;, request.POST)  # Muestra los datos del formulario recibidos en la solicitud POST.</span>
+            <span class="n">user</span><span class="o">=</span><span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+            <span class="c1"># Comprobar si este es el primer usuario registrado</span>
+            <span class="k">if</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># Asignar el grupo &quot;Administrador&quot; si es el primer usuario</span>
+                <span class="n">admin_group</span><span class="p">,</span> <span class="n">created</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Administrador&#39;</span><span class="p">)</span>
+                <span class="n">user</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">admin_group</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Asignar el grupo &quot;Suscriptor&quot; a los demás usuarios</span>
+                <span class="n">suscriptor_group</span><span class="p">,</span> <span class="n">created</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Suscriptor&#39;</span><span class="p">)</span>
+                <span class="n">user</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">suscriptor_group</span><span class="p">)</span>
+                
             <span class="n">username</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">)</span>
             <span class="n">password</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;password1&#39;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Datos validados y limpios:&quot;</span><span class="p">,</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">)</span>  <span class="c1"># Ver datos limpios</span>
-            <span class="n">user</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
-            <span class="n">login</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+            <span class="n">email</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">)</span>
+            <span class="c1">#print(&quot;Datos validados y limpios:&quot;, form.cleaned_data)  # Muestra los datos validados y limpios del formulario.</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">)</span> <span class="c1"># Autentica al usuario</span>
+            <span class="n">login</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>    <span class="c1"># Inicia sesión automáticamente al usuario recién registrado.</span>
 
-            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;exito&#39;</span><span class="p">)</span>  <span class="c1"># Redirige a la página que desees</span>
+            <span class="c1"># Redirige al usuario a la página de éxito después del registro.</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;exito&#39;</span><span class="p">)</span>  
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Errores de formulario:&quot;</span><span class="p">,</span> <span class="n">form</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span>  <span class="c1"># Ver errores de validación   </span>
+            <span class="c1"># Si el formulario no es válido, se muestran los errores en la consola para depuración.</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Errores de formulario:&quot;</span><span class="p">,</span> <span class="n">form</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span>  
         
     <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Si la solicitud es GET, se renderiza un formulario vacío para el registro.</span>
         <span class="n">form</span> <span class="o">=</span> <span class="n">CustomUserCreationForm</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Datos recibidos (GET):&quot;</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="p">)</span>  <span class="c1"># Ver datos enviados en GET</span>
+        <span class="c1">#print(&quot;Datos recibidos (GET):&quot;, request.GET) # Muestra los datos recibidos en la solicitud GET, aunque no deberían haber datos en GET para el registro.</span>
+    
+    <span class="c1"># Renderiza la plantilla del formulario de registro con el formulario en el contexto.</span>
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;registrar.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="crear_rol">
+<a class="viewcode-back" href="../../Usuario.html#Usuario.views.crear_rol">[documentos]</a>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;auth.add_group&#39;</span><span class="p">,</span><span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">crear_rol</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">GroupForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;roles_listar&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">GroupForm</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;crear_rol.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="editar_rol">
+<a class="viewcode-back" href="../../Usuario.html#Usuario.views.editar_rol">[documentos]</a>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;auth.change_group&#39;</span><span class="p">,</span><span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">editar_rol</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">pk</span><span class="p">):</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Group</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">GroupEditForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">instance</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;roles_listar&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">GroupEditForm</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;editar_rol.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="eliminar_rol">
+<a class="viewcode-back" href="../../Usuario.html#Usuario.views.eliminar_rol">[documentos]</a>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;auth.delete_group&#39;</span><span class="p">,</span><span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">eliminar_rol</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">pk</span><span class="p">):</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Group</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">group</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;roles_listar&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;eliminar_rol.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="n">group</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="roles_listar">
+<a class="viewcode-back" href="../../Usuario.html#Usuario.views.roles_listar">[documentos]</a>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;auth.view_group&#39;</span><span class="p">,</span><span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">roles_listar</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">roles</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;roles_listar.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;roles&#39;</span><span class="p">:</span> <span class="n">roles</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="ver_usuarios">
+<a class="viewcode-back" href="../../Usuario.html#Usuario.views.ver_usuarios">[documentos]</a>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;auth.view_user&#39;</span><span class="p">,</span><span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">ver_usuarios</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">usuarios</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;ver_usuarios.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;usuarios&#39;</span><span class="p">:</span> <span class="n">usuarios</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="ver_roles">
+<a class="viewcode-back" href="../../Usuario.html#Usuario.views.ver_roles">[documentos]</a>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;auth.view_group&#39;</span><span class="p">,</span><span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">ver_roles</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">roles</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;ver_roles.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;roles&#39;</span><span class="p">:</span> <span class="n">roles</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="lista_usuarios">
+<a class="viewcode-back" href="../../Usuario.html#Usuario.views.lista_usuarios">[documentos]</a>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;auth.view_user&#39;</span><span class="p">,</span><span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">lista_usuarios</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># Obtener todos los usuarios registrados</span>
+    <span class="n">usuarios</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;lista_usuarios.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;usuarios&#39;</span><span class="p">:</span> <span class="n">usuarios</span><span class="p">})</span></div>
+
+
+<span class="c1"># Nueva vista para editar los roles de un usuario</span>
+<div class="viewcode-block" id="cambiar_rol_usuario">
+<a class="viewcode-back" href="../../Usuario.html#Usuario.views.cambiar_rol_usuario">[documentos]</a>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;auth.change_user&#39;</span><span class="p">,</span><span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">cambiar_rol_usuario</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">pk</span><span class="p">):</span>
+    <span class="n">usuario</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">CustomAdminUserChangeForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">instance</span><span class="o">=</span><span class="n">usuario</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>  <span class="c1"># Guardar los cambios del rol</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;lista_usuarios&#39;</span><span class="p">)</span>  <span class="c1"># Redirigir de nuevo a la lista de usuarios</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">CustomAdminUserChangeForm</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="n">usuario</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;cambiar_rol_usuario.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span> <span class="s1">&#39;usuario&#39;</span><span class="p">:</span> <span class="n">usuario</span><span class="p">})</span></div>
+
+
+<span class="c1"># Nueva vista para eliminar un usuario</span>
+<div class="viewcode-block" id="eliminar_usuario">
+<a class="viewcode-back" href="../../Usuario.html#Usuario.views.eliminar_usuario">[documentos]</a>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;auth.delete_user&#39;</span><span class="p">,</span><span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">eliminar_usuario</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">pk</span><span class="p">):</span>
+    <span class="n">usuario</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">usuario</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>  <span class="c1"># Eliminar el usuario</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;lista_usuarios&#39;</span><span class="p">)</span>  <span class="c1"># Redirigir a la lista de usuarios</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;eliminar_usuario.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;usuario&#39;</span><span class="p">:</span> <span class="n">usuario</span><span class="p">})</span></div>
+
 
 </pre></div>
 

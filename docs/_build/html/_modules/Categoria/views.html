@@ -42,8 +42,11 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">cms</a></li>
+</ul>
+
         </div>
       </div>
     </nav>
@@ -69,51 +72,116 @@
            <div itemprop="articleBody">
              
   <h1>Código fuente para Categoria.views</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">redirect</span>
 <span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
 <span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Categoria</span>
-<span class="c1"># Create your views here.</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Subcategoria</span>
+<span class="kn">from</span> <span class="nn">.forms</span> <span class="kn">import</span> <span class="n">CategoriaForm</span><span class="p">,</span> <span class="n">SubcategoriaForm</span><span class="p">,</span> <span class="n">EditarCategoriaForm</span><span class="p">,</span> <span class="n">EditarSubcategoriaForm</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span> <span class="kn">import</span> <span class="n">login_required</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span> <span class="kn">import</span> <span class="n">permission_required</span>
 
+<span class="c1"># Create your views here.</span>
 <div class="viewcode-block" id="inicio">
 <a class="viewcode-back" href="../../Categoria.html#Categoria.views.inicio">[documentos]</a>
+<span class="nd">@login_required</span>
 <span class="k">def</span> <span class="nf">inicio</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;paginas/inicio.html&#39;</span><span class="p">)</span></div>
 
+
 <div class="viewcode-block" id="categorias">
 <a class="viewcode-back" href="../../Categoria.html#Categoria.views.categorias">[documentos]</a>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Categoria.view_categoria&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">categorias</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="n">categorias</span> <span class="o">=</span> <span class="n">Categoria</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
     <span class="c1">#print(categorias)</span>
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;categorias/index.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;categorias&#39;</span><span class="p">:</span> <span class="n">categorias</span><span class="p">})</span></div>
 
+
 <div class="viewcode-block" id="crear_cat">
 <a class="viewcode-back" href="../../Categoria.html#Categoria.views.crear_cat">[documentos]</a>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Categoria.add_categoria&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">crear_cat</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;categorias/crear.html&#39;</span><span class="p">)</span></div>
+    <span class="n">formulario</span> <span class="o">=</span> <span class="n">CategoriaForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">formulario</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+        <span class="n">formulario</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/categoria/mensajeExito&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;categorias/crear.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;formulario&#39;</span><span class="p">:</span> <span class="n">formulario</span><span class="p">})</span></div>
+
 
 <div class="viewcode-block" id="editar_cat">
 <a class="viewcode-back" href="../../Categoria.html#Categoria.views.editar_cat">[documentos]</a>
-<span class="k">def</span> <span class="nf">editar_cat</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;categorias/editar.html&#39;</span><span class="p">)</span></div>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Categoria.change_categoria&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">editar_cat</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+    <span class="n">categoria</span> <span class="o">=</span> <span class="n">Categoria</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+    <span class="n">formulario</span> <span class="o">=</span> <span class="n">EditarCategoriaForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">,</span> <span class="n">instance</span><span class="o">=</span><span class="n">categoria</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">formulario</span><span class="o">.</span><span class="n">is_valid</span> <span class="ow">and</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">:</span>
+        <span class="n">formulario</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/categoria/mensajeExito&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;categorias/editar.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;formulario&#39;</span><span class="p">:</span> <span class="n">formulario</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="borrar_cat">
+<a class="viewcode-back" href="../../Categoria.html#Categoria.views.borrar_cat">[documentos]</a>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Categoria.delete_categoria&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">borrar_cat</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+    <span class="n">categoria</span> <span class="o">=</span> <span class="n">Categoria</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+    <span class="n">categoria</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/categoria/mensajeExito&#39;</span><span class="p">)</span></div>
 
 
 <span class="c1">#Subcategorias</span>
 <div class="viewcode-block" id="subcategorias">
 <a class="viewcode-back" href="../../Categoria.html#Categoria.views.subcategorias">[documentos]</a>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Categoria.view_subcategoria&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">subcategorias</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="c1">#subcategorias = Subcategorias.objects.all()</span>
-    <span class="c1">#print(categorias)</span>
+    <span class="n">subcategorias</span> <span class="o">=</span> <span class="n">Subcategoria</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="c1">#print(subcategorias)</span>
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;subcategorias/index.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;subcategorias&#39;</span><span class="p">:</span> <span class="n">subcategorias</span><span class="p">})</span></div>
+
 
 <div class="viewcode-block" id="crear_sub">
 <a class="viewcode-back" href="../../Categoria.html#Categoria.views.crear_sub">[documentos]</a>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Categoria.add_subcategoria&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">crear_sub</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;subcategorias/crear.html&#39;</span><span class="p">)</span></div>
+    <span class="n">formulario</span> <span class="o">=</span> <span class="n">SubcategoriaForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">formulario</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+        <span class="n">formulario</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/categoria/mensajeExito_sub&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;subcategorias/crear.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;formulario&#39;</span><span class="p">:</span> <span class="n">formulario</span><span class="p">})</span></div>
+
 
 <div class="viewcode-block" id="editar_sub">
 <a class="viewcode-back" href="../../Categoria.html#Categoria.views.editar_sub">[documentos]</a>
-<span class="k">def</span> <span class="nf">editar_sub</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;subcategorias/editar.html&#39;</span><span class="p">)</span></div>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Categoria.change_subcategoria&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">editar_sub</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+    <span class="n">subcategoria</span> <span class="o">=</span> <span class="n">Subcategoria</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+    <span class="n">formulario</span> <span class="o">=</span> <span class="n">EditarSubcategoriaForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">,</span> <span class="n">instance</span><span class="o">=</span><span class="n">subcategoria</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">formulario</span><span class="o">.</span><span class="n">is_valid</span> <span class="ow">and</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">:</span>
+        <span class="n">formulario</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/categoria/mensajeExito_sub&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;subcategorias/editar.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;formulario&#39;</span><span class="p">:</span> <span class="n">formulario</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="borrar_sub">
+<a class="viewcode-back" href="../../Categoria.html#Categoria.views.borrar_sub">[documentos]</a>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Categoria.delete_subcategoria&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">borrar_sub</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+    <span class="n">subcategoria</span> <span class="o">=</span> <span class="n">Subcategoria</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+    <span class="n">subcategoria</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/categoria/mensajeExito_sub&#39;</span><span class="p">)</span></div>
+
+
+<span class="c1">#Exito de cambios</span>
+<div class="viewcode-block" id="mensajeExito">
+<a class="viewcode-back" href="../../Categoria.html#Categoria.views.mensajeExito">[documentos]</a>
+<span class="k">def</span> <span class="nf">mensajeExito</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;categorias/mensajeExito.html&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="mensajeExito_sub">
+<a class="viewcode-back" href="../../Categoria.html#Categoria.views.mensajeExito_sub">[documentos]</a>
+<span class="k">def</span> <span class="nf">mensajeExito_sub</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;subcategorias/mensajeExito.html&#39;</span><span class="p">)</span></div>
 
 </pre></div>
 
