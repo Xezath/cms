@@ -19,7 +19,9 @@
                         <th scope="col">Título</th>
                         <th scope="col">Fecha de creación</th>
                         <th scope="col">Categoria</th>
+                        <th scope="col">Subcategoria</th>
                         <th scope="col"> Plantilla</th>
+                        <th scope="col"> Autor</th>
                         {% if perms.Contenidos.change_contenidos and perms.Contenidos.delete_contenidos %}
                             <th>Acciones</th>
                         {%endif%}
@@ -34,7 +36,9 @@
                         </td>
                         <td>{{ contenido.fecha_creacion }}</td>
                         <td> {{contenido.categoria}} </td>
+                        <td>{{contenido.subcategoria}}</td>
                         <td>{{contenido.plantilla}}</td>
+                        <td>{{contenido.autor}}</td>
                         <td>
                             {% if perms.Contenidos.change_contenidos %}
                             <a class="btn btn-info" href="{% url 'editar_contenido' contenido.id %}" role="button">Editar</a>
