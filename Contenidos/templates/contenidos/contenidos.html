@@ -10,6 +10,40 @@
         {% endif %}
     </div>
     <div class="card-body">
+        <h4 class="card-title">Filtrar contenidos por:</h4>
+        <form method="GET" class="mb-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="categoria">Categoría:</label>
+                    <select name="categoria" id="categoria" class="form-control">
+                        <option value="">Todas</option>
+                        {% for categoria in categorias %}
+                        <option value="{{ categoria.id }}"{% if categoria.id == request.GET.categoria %} selected {% endif %}>{{ categoria.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="subcategoria">Subcategoría:</label>
+                    <select name="subcategoria" id="subcategoria" class="form-control">
+                        <option value="">Todas</option>
+                        {% for subcategoria in subcategorias %}
+                        <option value="{{ subcategoria.id }}"{% if subcategoria.id == request.GET.subcategoria %} selected {% endif %}>{{ subcategoria.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="autor">Autor:</label>
+                    <select name="autor" id="autor" class="form-control">
+                        <option value="">Todos</option>
+                        {% for autor in autores %}
+                        <option value="{{ autor.id }}"{% if autor.id == request.GET.autor %} selected {% endif %}>{{ autor.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Filtrar</button>
+        </form>
+
         <h4 class="card-title">Contenidos</h4>
         <div class="table-responsive">
             <table class="table table-primary">
@@ -18,11 +52,13 @@
                         <th scope="col"></th>
                         <th scope="col">Título</th>
                         <th scope="col">Fecha de creación</th>
-                        <th scope="col">Categoria</th>
-                        <th scope="col"> Plantilla</th>
+                        <th scope="col">Categoría</th>
+                        <th scope="col">Subcategoría</th>
+                        <th scope="col">Plantilla</th>
+                        <th scope="col">Autor</th>
                         {% if perms.Contenidos.change_contenidos and perms.Contenidos.delete_contenidos %}
                             <th>Acciones</th>
-                        {%endif%}
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -33,20 +69,22 @@
                             <a href="{% url 'visualizar_contenido' contenido.id %}">{{ contenido.titulo }}</a> <!-- Enlace al detalle del contenido -->
                         </td>
                         <td>{{ contenido.fecha_creacion }}</td>
-                        <td> {{contenido.categoria}} </td>
-                        <td>{{contenido.plantilla}}</td>
+                        <td>{{ contenido.categoria }}</td>
+                        <td>{{ contenido.subcategoria }}</td>
+                        <td>{{ contenido.plantilla }}</td>
+                        <td>{{ contenido.autor }}</td>
                         <td>
                             {% if perms.Contenidos.change_contenidos %}
                             <a class="btn btn-info" href="{% url 'editar_contenido' contenido.id %}" role="button">Editar</a>
                             {% endif %}
                             {% if perms.Contenidos.delete_contenidos %}
                             <a class="btn btn-danger" href="{% url 'eliminar_contenido' contenido.id %}" role="button">Eliminar</a>
-                            {%endif%}
+                            {% endif %}
                         </td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="5">No hay contenidos disponibles.</td> <!-- en caso de que no se hayan creado contenidos-->
+                        <td colspan="7">No hay contenidos disponibles.</td> <!-- en caso de que no se hayan creado contenidos -->
                     </tr>
                     {% endfor %}
                 </tbody>

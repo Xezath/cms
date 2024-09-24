@@ -42,8 +42,11 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">cms</a></li>
+</ul>
+
         </div>
       </div>
     </nav>
@@ -69,27 +72,59 @@
            <div itemprop="articleBody">
              
   <h1>Código fuente para Plantilla.views</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">redirect</span>
 <span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
 <span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Plantilla</span>
+<span class="kn">from</span> <span class="nn">.forms</span> <span class="kn">import</span> <span class="n">EditarPlantillaForm</span><span class="p">,</span> <span class="n">CrearPlantillaForm</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span> <span class="kn">import</span> <span class="n">permission_required</span>
 
 <span class="c1"># Create your views here.</span>
 <div class="viewcode-block" id="plantillas">
 <a class="viewcode-back" href="../../Plantilla.html#Plantilla.views.plantillas">[documentos]</a>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Plantilla.view_plantilla&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">plantillas</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="n">plantillas</span> <span class="o">=</span> <span class="n">Plantilla</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
     <span class="c1">#print(categorias)</span>
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;plantillas/index.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;plantillas&#39;</span><span class="p">:</span> <span class="n">plantillas</span><span class="p">})</span></div>
 
+
 <div class="viewcode-block" id="crear_plantilla">
 <a class="viewcode-back" href="../../Plantilla.html#Plantilla.views.crear_plantilla">[documentos]</a>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Plantilla.add_plantilla&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">crear_plantilla</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;plantillas/crear.html&#39;</span><span class="p">)</span></div>
+    <span class="n">formulario</span> <span class="o">=</span> <span class="n">CrearPlantillaForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">formulario</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+        <span class="n">formulario</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/plantilla/mensajeExito_plantilla&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;plantillas/crear.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;formulario&#39;</span><span class="p">:</span> <span class="n">formulario</span><span class="p">})</span></div>
+
 
 <div class="viewcode-block" id="editar_plantilla">
 <a class="viewcode-back" href="../../Plantilla.html#Plantilla.views.editar_plantilla">[documentos]</a>
-<span class="k">def</span> <span class="nf">editar_plantilla</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;plantillas/editar.html&#39;</span><span class="p">)</span></div>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Plantilla.change_plantilla&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">editar_plantilla</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+    <span class="n">plantilla</span> <span class="o">=</span> <span class="n">Plantilla</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+    <span class="n">formulario</span> <span class="o">=</span> <span class="n">EditarPlantillaForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">,</span> <span class="n">instance</span><span class="o">=</span><span class="n">plantilla</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">formulario</span><span class="o">.</span><span class="n">is_valid</span> <span class="ow">and</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">:</span>
+        <span class="n">formulario</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/plantilla/mensajeExito_plantilla&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;plantillas/editar.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;formulario&#39;</span><span class="p">:</span> <span class="n">formulario</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="borrar_plantilla">
+<a class="viewcode-back" href="../../Plantilla.html#Plantilla.views.borrar_plantilla">[documentos]</a>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Plantilla.delete_plantilla&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">borrar_plantilla</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+    <span class="n">plantilla</span> <span class="o">=</span> <span class="n">Plantilla</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+    <span class="n">plantilla</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/plantilla/mensajeExito_plantilla&#39;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="mensajeExito_plantilla">
+<a class="viewcode-back" href="../../Plantilla.html#Plantilla.views.mensajeExito_plantilla">[documentos]</a>
+<span class="k">def</span> <span class="nf">mensajeExito_plantilla</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;plantillas/mensajeExito.html&#39;</span><span class="p">)</span></div>
 
 </pre></div>
 

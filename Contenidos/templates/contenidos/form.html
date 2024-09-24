@@ -7,12 +7,12 @@
     <style>
         #editor {
             height: 300px; 
-            overflow-y: auto; /* Añade una barra de desplazamiento vertical si es necesario */
-            border: 1px solid #ccc; /* Opcional: Añade un borde para una mejor visualización */
-            padding: 10px; /* Opcional: Añade un relleno para el contenido */
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
         }
         #toolbar {
-            margin-bottom: 10px; /* Espacio entre la barra de herramientas y el editor */
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -20,23 +20,22 @@
     <h1></h1>
     
     <table class="table-background">
-
     </table>
     
     <form enctype="multipart/form-data" method="post" onsubmit="return confirmarEnvio();">
         {% csrf_token %}
-
+        
         <!-- Otros campos del formulario -->
         {% for campo in formulario %}
-            {% if campo.name != 'contenido' %}  <!-- Excluir el campo 'contenido' que genera el cuadro adicional -->
+            {% if campo.name != 'contenido' %}
             <div class="mb-3">
                 <label for="{{ campo.id_for_label }}" class="form-label">{{ campo.label }}</label>
-                {{ campo }}  <!-- Renderiza otros campos automáticamente -->
+                {{ campo }}
             </div>
             <div class="col-12 help-text">{{ campo.errors }}</div>
             {% endif %}
         {% endfor %}
-
+        
         <!-- Editor de texto con opciones de formato -->
         <div class="mb-3 contenido-editor">
             <label for="contenido" class="form-label">Contenido:</label>
@@ -49,11 +48,11 @@
                 <button type="button" onclick="loadFromFile()">Cargar</button>
             </div>
             <div id="editor" contenteditable="true">
-                {{ formulario.instance.contenido|safe }}  <!-- Mostrar el contenido existente si es necesario -->
+                {{ formulario.instance.contenido|safe }}
             </div>
             <input type="hidden" id="editorContent" name="contenido" />
         </div>
-
+        
         <!-- Botones de acción -->
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a class="btn btn-secondary" href="{% url 'contenidos' %}" role="button">Cancelar</a>
@@ -93,6 +92,52 @@
                 const editorContent = document.getElementById('editor').innerHTML;
                 document.getElementById('editorContent').value = editorContent;
             });
+
+            // Cargar subcategorías cuando cambie la categoría seleccionada
+            document.getElementById('categoria-select').addEventListener('change', function() {
+                cargarSubcategorias(this.value);
+            });
+
+            // Función para cargar las subcategorías
+            function cargarSubcategorias(categoriaId) {
+                var url = "{% url 'ajax_load_subcategorias' %}?categoria_id=" + categoriaId;
+                var subcategoriaSelect = document.getElementById('subcategoria-select');
+
+                // Limpiar las opciones existentes antes de cargar las nuevas
+                subcategoriaSelect.innerHTML = '';
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Crear una opción vacía por defecto
+                        var defaultOption = document.createElement('option');
+                        defaultOption.value = '';
+                        defaultOption.text = 'Selecciona una subcategoría';
+                        subcategoriaSelect.appendChild(defaultOption);
+
+                        // Añadir las nuevas opciones
+                        data.forEach(function(subcategoria) {
+                            var option = document.createElement('option');
+                            option.value = subcategoria.id;
+                            option.text = subcategoria.nombre;
+                            subcategoriaSelect.appendChild(option);
+                        });
+
+                        // Si ya había una subcategoría seleccionada, restaurar la selección
+                        var subcategoriaSeleccionada = "{{ formulario.instance.subcategoria.id }}";
+                        if (subcategoriaSeleccionada) {
+                            subcategoriaSelect.value = subcategoriaSeleccionada;
+                        }
+                    });
+            }
+
+            // Verificar si hay una categoría seleccionada al cargar la página
+            window.onload = function() {
+                var categoriaSeleccionada = "{{ formulario.instance.categoria.id }}";
+                if (categoriaSeleccionada) {
+                    cargarSubcategorias(categoriaSeleccionada); // Cargar subcategorías de la categoría seleccionada
+                }
+            };
         </script>
     </form>
 </body>
