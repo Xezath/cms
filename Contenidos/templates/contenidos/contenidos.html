@@ -3,92 +3,94 @@
 {% block Titulo %} Todos los Contenidos {% endblock %}
 
 {% block contenido %}
-<div class="card">
-    <div class="card-header">
-        {% if perms.Contenidos.add_contenidos %}
-        <a class="btn btn-success" href="{% url 'crear_contenido' %}" role="button">Nuevo Contenido</a> <!-- para crear contenido-->
-        {% endif %}
-    </div>
-    <div class="card-body">
-        <h4 class="card-title">Filtrar contenidos por:</h4>
-        <form method="GET" class="mb-4">
-            <div class="row">
-                <div class="col-md-4">
-                    <label for="categoria">Categoría:</label>
-                    <select name="categoria" id="categoria" class="form-control">
-                        <option value="">Todas</option>
-                        {% for categoria in categorias %}
-                        <option value="{{ categoria.id }}"{% if categoria.id == request.GET.categoria %} selected {% endif %}>{{ categoria.nombre }}</option>
-                        {% endfor %}
-                    </select>
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            {% if perms.Contenidos.add_contenidos %}
+            <a class="btn btn-success" href="{% url 'crear_contenido' %}" role="button">Nuevo Contenido</a>
+            {% endif %}
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">Filtrar contenidos por:</h4>
+            <form method="GET" class="mb-4">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="categoria">Categoría:</label>
+                        <select name="categoria" id="categoria" class="form-control">
+                            <option value="">Todas</option>
+                            {% for categoria in categorias %}
+                            <option value="{{ categoria.id }}"{% if categoria.id == request.GET.categoria %} selected {% endif %}>{{ categoria.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="subcategoria">Subcategoría:</label>
+                        <select name="subcategoria" id="subcategoria" class="form-control">
+                            <option value="">Todas</option>
+                            {% for subcategoria in subcategorias %}
+                            <option value="{{ subcategoria.id }}"{% if subcategoria.id == request.GET.subcategoria %} selected {% endif %}>{{ subcategoria.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="autor">Autor:</label>
+                        <select name="autor" id="autor" class="form-control">
+                            <option value="">Todos</option>
+                            {% for autor in autores %}
+                            <option value="{{ autor.id }}"{% if autor.id == request.GET.autor %} selected {% endif %}>{{ autor.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <label for="subcategoria">Subcategoría:</label>
-                    <select name="subcategoria" id="subcategoria" class="form-control">
-                        <option value="">Todas</option>
-                        {% for subcategoria in subcategorias %}
-                        <option value="{{ subcategoria.id }}"{% if subcategoria.id == request.GET.subcategoria %} selected {% endif %}>{{ subcategoria.nombre }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label for="autor">Autor:</label>
-                    <select name="autor" id="autor" class="form-control">
-                        <option value="">Todos</option>
-                        {% for autor in autores %}
-                        <option value="{{ autor.id }}"{% if autor.id == request.GET.autor %} selected {% endif %}>{{ autor.username }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary mt-3">Filtrar</button>
-        </form>
+                <button type="submit" class="btn btn-primary mt-3">Filtrar</button>
+            </form>
 
-        <h4 class="card-title">Contenidos</h4>
-        <div class="table-responsive">
-            <table class="table table-primary">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Título</th>
-                        <th scope="col">Fecha de creación</th>
-                        <th scope="col">Categoría</th>
-                        <th scope="col">Subcategoría</th>
-                        <th scope="col">Plantilla</th>
-                        <th scope="col">Autor</th>
-                        {% if perms.Contenidos.change_contenidos and perms.Contenidos.delete_contenidos %}
-                            <th>Acciones</th>
+            <h4 class="card-title">Todos los contenidos</h4>
+            <div class="row">
+                {% for contenido in contenidos %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        {% if contenido.imagen %}
+                        <img src="{{ contenido.imagen.url }}" class="card-img-top" alt="{{ contenido.titulo }}">
                         {% endif %}
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for contenido in contenidos %}
-                    <tr>
-                        <td>{{ contenido.id }}</td>
-                        <td>
-                            <a href="{% url 'visualizar_contenido' contenido.id %}">{{ contenido.titulo }}</a> <!-- Enlace al detalle del contenido -->
-                        </td>
-                        <td>{{ contenido.fecha_creacion }}</td>
-                        <td>{{ contenido.categoria }}</td>
-                        <td>{{ contenido.subcategoria }}</td>
-                        <td>{{ contenido.plantilla }}</td>
-                        <td>{{ contenido.autor }}</td>
-                        <td>
-                            {% if perms.Contenidos.change_contenidos %}
-                            <a class="btn btn-info" href="{% url 'editar_contenido' contenido.id %}" role="button">Editar</a>
+                        <div class="card-body">
+                            <!-- Categoría arriba del título -->
+                            <p class="card-text text-uppercase text-muted" style="font-size: 0.8rem;">
+                                {{ contenido.categoria.nombre }}
+                            </p>
+                             <!-- Subcategoría debajo -->
+                             <p class="card-text text-muted" style="font-size: 0.8rem;">
+                                {{ contenido.subcategoria.nombre }}
+                            </p>
+                            <p class="card-text">
+                                {{ contenido.descripcion|truncatewords:20 }}
+                            </p>
+                            <!-- Título del contenido -->
+                            <h5 class="card-title">{{ contenido.titulo }}</h5>
+                           
+                            <a href="{% url 'visualizar_contenido' contenido.id %}" class="btn btn-primary">Leer más</a>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Creado por {{ contenido.autor }} el {{ contenido.fecha_creacion }}</small>
+                            {% if perms.Contenidos.change_contenidos or perms.Contenidos.delete_contenidos %}
+                            <div class="mt-2">
+                                {% if perms.Contenidos.change_contenidos %}
+                                <a class="btn btn-info" href="{% url 'editar_contenido' contenido.id %}" role="button">Editar</a>
+                                {% endif %}
+                                {% if perms.Contenidos.delete_contenidos %}
+                                <a class="btn btn-danger" href="{% url 'eliminar_contenido' contenido.id %}" role="button">Eliminar</a>
+                                {% endif %}
+                            </div>
                             {% endif %}
-                            {% if perms.Contenidos.delete_contenidos %}
-                            <a class="btn btn-danger" href="{% url 'eliminar_contenido' contenido.id %}" role="button">Eliminar</a>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="7">No hay contenidos disponibles.</td> <!-- en caso de que no se hayan creado contenidos -->
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <p>No hay contenidos disponibles.</p>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>

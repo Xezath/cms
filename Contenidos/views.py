@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required, login_required
 from django.http import JsonResponse
-from django.contrib.auth.models import User  # Asegúrate de importar User
+from django.contrib.auth.models import User  
 
 @permission_required('Contenidos.view_contenidos', raise_exception=True)
 def contenidos(request):
@@ -33,7 +33,7 @@ def contenidos(request):
     # Obtener listas para los filtros
     categorias = Categoria.objects.all()
     subcategorias = Subcategoria.objects.all()
-    autores = User.objects.all()  # Asegúrate de que puedes acceder a los usuarios
+    autores = User.objects.all() 
 
     return render(request, 'contenidos/contenidos.html', {
         'contenidos': contenidos,
@@ -67,7 +67,7 @@ def editar_contenido(request, id):
             formulario.save()
             return redirect('contenidos')
         else:
-            print(formulario.errors)  # Muestra los errores en la consola para depuración
+            print(formulario.errors) 
     else:
         formulario = EditarContenidosForm(instance=contenido)
 
@@ -86,6 +86,7 @@ def eliminar_contenido(request, pk):
 def visualizar_contenido(request, id):
     contenido = Contenidos.objects.get(id=id)
     formulario = VisualizarContenidoForm(request.POST or None, instance=contenido)
+    
     if formulario.is_valid() and request.POST:
         formulario.save()
     return render(request, 'contenidos/visualizar.html', {'formulario': formulario, 'contenido': contenido})
