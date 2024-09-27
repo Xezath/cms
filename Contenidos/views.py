@@ -1,6 +1,6 @@
-from .models import Contenidos
+from .models import Contenidos, Comentario
 from Categoria.models import Categoria, Subcategoria
-from .forms import ContenidosForm, EditarContenidosForm, VisualizarContenidoForm
+from .forms import ContenidosForm, EditarContenidosForm, VisualizarContenidoForm, ComentarioForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required, login_required
@@ -84,12 +84,25 @@ def eliminar_contenido(request, pk):
 
 @permission_required('Contenidos.view_contenidos', raise_exception=True)
 def visualizar_contenido(request, id):
-    contenido = Contenidos.objects.get(id=id)
-    formulario = VisualizarContenidoForm(request.POST or None, instance=contenido)
-    
-    if formulario.is_valid() and request.POST:
-        formulario.save()
-    return render(request, 'contenidos/visualizar.html', {'formulario': formulario, 'contenido': contenido})
+    contenido = get_object_or_404(Contenidos, id=id)
+    comentarios = contenido.comentarios.all()  # Recuperar los comentarios relacionados con el contenido
+
+    if request.method == 'POST':
+        comentario_form = ComentarioForm(request.POST)
+        if comentario_form.is_valid():
+            comentario = comentario_form.save(commit=False)
+            comentario.usuario = request.user  # Asignar el usuario autenticado
+            comentario.contenido = contenido   # Relacionar el comentario con el contenido actual
+            comentario.save()
+            return redirect('visualizar_contenido', id=contenido.id)
+    else:
+        comentario_form = ComentarioForm()
+
+    return render(request, 'contenidos/visualizar.html', {
+        'contenido': contenido,
+        'comentarios': comentarios,
+        'comentario_form': comentario_form
+    })
 
 def cargar_subcategorias(request):
     categoria_id = request.GET.get('categoria_id')
@@ -101,3 +114,13 @@ def cargar_subcategorias(request):
         subcategorias = []  # Si no hay una categoría válida, devolver una lista vacía.
 
     return JsonResponse(list(subcategorias.values('id', 'nombre')), safe=False)
+
+def eliminar_comentario(request, comentario_id):
+    comentario = get_object_or_404(Comentario, id=comentario_id, usuario=request.user)
+
+    if request.method == 'POST':
+        comentario.delete()
+        messages.success(request, 'Comentario eliminado exitosamente.')
+        return redirect('visualizar_contenido', id=comentario.contenido.id)
+
+    return render(request, 'contenidos/confirmar_eliminacion_comentario.html', {'comentario': comentario})

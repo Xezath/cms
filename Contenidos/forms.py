@@ -2,7 +2,7 @@ from django import forms
 from ckeditor.widgets import CKEditorWidget
 from Categoria.models import Categoria, Subcategoria
 from Plantilla.models import Plantilla
-from .models import Contenidos
+from .models import Contenidos, Comentario
 
 class ContenidosForm(forms.ModelForm):
     categoria = forms.ModelChoiceField(
@@ -69,7 +69,7 @@ class EditarContenidosForm(forms.ModelForm):
     class Meta:
         model = Contenidos
         fields = '__all__'
- 
+
         def __init__(self, *args, **kwargs):
             
             super().__init__(*args, **kwargs)
@@ -104,3 +104,14 @@ class VisualizarContenidoForm(forms.ModelForm):
                 pass  # Valor inválido de categoría, ignora y usa el queryset vacío
         elif self.instance.pk:
             self.fields['subcategoria'].queryset = self.instance.categoria.subcategorias.order_by('nombre')
+
+class ComentarioForm(forms.ModelForm):
+    class Meta:
+        model = Comentario
+        fields = ['comentario']
+        widgets = {
+            'comentario': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Escribe tu comentario aquí...'}),
+        }
+        labels = {
+            'comentario': '',
+        }

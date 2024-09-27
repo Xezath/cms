@@ -44,3 +44,14 @@ class Contenidos(models.Model):
             ("can_delete", "Puede eliminar contenido"),
         ]
 
+class Comentario(models.Model):
+    """
+    Modelo que representa un comentario sobre un contenido.
+    """
+    comentario = models.TextField()
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)  # Relaciona el comentario con el usuario
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    contenido = models.ForeignKey(Contenidos, related_name='comentarios', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Comentario de {self.usuario} en {self.fecha_creacion}'
