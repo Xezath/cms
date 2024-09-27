@@ -32,7 +32,9 @@
                         <p>{{ comentario.comentario }}</p>
                         <p class="text-muted">{{ comentario.fecha_creacion }}</p>
                         <div class="d-flex justify-content-end">
-                            {% if comentario.usuario == request.user %}
+                            {% if perms.Contenidos.delete_comentario %}
+                                <a href="{% url 'eliminar_comentario' comentario.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                            {%elif comentario.usuario == request.user %}
                                 <a href="{% url 'eliminar_comentario' comentario.id %}" class="btn btn-danger btn-sm">Eliminar</a>
                             {% endif %}
                         </div>
