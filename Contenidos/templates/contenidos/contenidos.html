@@ -58,8 +58,8 @@
                             <p class="card-text text-uppercase text-muted" style="font-size: 0.8rem;">
                                 {{ contenido.categoria.nombre }}
                             </p>
-                             <!-- Subcategoría debajo -->
-                             <p class="card-text text-muted" style="font-size: 0.8rem;">
+                            <!-- Subcategoría debajo -->
+                            <p class="card-text text-muted" style="font-size: 0.8rem;">
                                 {{ contenido.subcategoria.nombre }}
                             </p>
                             <p class="card-text">
@@ -67,7 +67,7 @@
                             </p>
                             <!-- Título del contenido -->
                             <h5 class="card-title">{{ contenido.titulo }}</h5>
-                           
+                        
                             <a href="{% url 'visualizar_contenido' contenido.id %}" class="btn btn-primary">Leer más</a>
                         </div>
                         <div class="card-footer">

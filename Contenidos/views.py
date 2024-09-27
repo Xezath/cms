@@ -124,3 +124,4 @@ def eliminar_comentario(request, comentario_id):
         return redirect('visualizar_contenido', id=comentario.contenido.id)
 
     return render(request, 'contenidos/confirmar_eliminacion_comentario.html', {'comentario': comentario})
+
