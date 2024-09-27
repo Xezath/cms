@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Editor de Contenido</title>
     <style>
         #editor {
             height: 300px; 
@@ -14,13 +14,15 @@
         #toolbar {
             margin-bottom: 10px;
         }
+        img {
+            max-width: 100%; /* Asegura que la imagen no se desborde */
+            height: auto; /* Mantiene la relación de aspecto */
+            display: block; /* Hace que la imagen esté en una nueva línea */
+        }
     </style>
 </head>
 <body>
     <h1></h1>
-    
-    <table class="table-background">
-    </table>
     
     <form enctype="multipart/form-data" method="post" onsubmit="return confirmarEnvio();">
         {% csrf_token %}
@@ -44,7 +46,7 @@
                 <button type="button" onclick="formatText('italic')"><i>Cursiva</i></button>
                 <button type="button" onclick="formatText('underline')"><u>Subrayado</u></button>
                 <button type="button" onclick="saveText()">Guardar</button>
-                <input type="file" id="fileInput" />
+                <input type="file" id="fileInput" accept="image/*,text/plain" />
                 <button type="button" onclick="loadFromFile()">Cargar</button>
             </div>
             <div id="editor" contenteditable="true">
@@ -54,7 +56,7 @@
         </div>
         
         <!-- Botones de acción -->
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="btn btn-primary" onclick="updateEditorContent()">Guardar</button>
         <a class="btn btn-secondary" href="{% url 'contenidos' %}" role="button">Cancelar</a>
 
         <script>
@@ -78,20 +80,34 @@
 
                 if (file) {
                     const reader = new FileReader();
+
                     reader.onload = function(e) {
                         const content = e.target.result;
-                        document.getElementById("editor").innerHTML = content;
+                        const fileType = file.type;
+
+                        if (fileType.startsWith('image/')) {
+                            // Si es una imagen, crear un elemento <img>
+                            const img = document.createElement('img');
+                            img.src = content;
+                            document.getElementById("editor").appendChild(img);
+                        } else if (fileType === 'text/plain') {
+                            // Si es un archivo de texto
+                            document.getElementById("editor").innerText = content;
+                        } else {
+                            alert("Tipo de archivo no soportado.");
+                        }
                     };
-                    reader.readAsText(file);
+
+                    reader.readAsDataURL(file); // Cargar la imagen
                 } else {
                     alert("Por favor selecciona un archivo");
                 }
             }
 
-            document.querySelector('form').addEventListener('submit', function() {
-                const editorContent = document.getElementById('editor').innerHTML;
-                document.getElementById('editorContent').value = editorContent;
-            });
+            function updateEditorContent() {
+                const editorContent = document.getElementById("editor").innerHTML;
+                document.getElementById("editorContent").value = editorContent; // Actualiza el contenido oculto
+            }
 
             // Cargar subcategorías cuando cambie la categoría seleccionada
             document.getElementById('categoria-select').addEventListener('change', function() {
