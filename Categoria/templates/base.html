@@ -190,6 +190,9 @@
                         <a class="nav-link {% if request.path == '/lista_usuarios/' %}active{% endif %}" href="{% url 'lista_usuarios' %}">Usuarios</a>
                         {% endif %}
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/tablero_kanban/tablero/1/' %}active{% endif %}" href="{% url 'kanban:tablero_kanban' tablero_id=1 %}">Tablero Kanban</a>
+                    </li>                               
                     {% endif %}
                     {% if user.is_authenticated %}
                     <li class="nav-item">

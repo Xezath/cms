@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Tablero Kanban
+{% endblock %}
+
+{% block contenido %}
+    <h1>Tablero Kanban</h1>
+    <div class="row">
+        <!-- Columna Activo -->
+        <div class="col-md-4">
+            <h2>Activo</h2>
+            <div class="kanban-column">
+                {% for tarjeta in tarjetas_por_estado.Activas %}
+                    <div class="kanban-tarjeta card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ tarjeta.titulo }}</h5>
+                            <p class="card-text">{{ tarjeta.descripcion }}</p>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No hay tarjetas activas.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Columna Inactivo -->
+        <div class="col-md-4">
+            <h2>Inactivo</h2>
+            <div class="kanban-column">
+                {% for tarjeta in tarjetas_por_estado.Inactivas %}
+                    <div class="kanban-tarjeta card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ tarjeta.titulo }}</h5>
+                            <p class="card-text">{{ tarjeta.descripcion }}</p>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No hay tarjetas inactivas.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Columna Borrador -->
+        <div class="col-md-4">
+            <h2>Borrador</h2>
+            <div class="kanban-column">
+                {% for tarjeta in tarjetas_por_estado.Borrador %}
+                    <div class="kanban-tarjeta card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ tarjeta.titulo }}</h5>
+                            <p class="card-text">{{ tarjeta.descripcion }}</p>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No hay tarjetas en borrador.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
