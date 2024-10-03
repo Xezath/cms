@@ -17,11 +17,6 @@ class Columna(models.Model):
     tablero = models.ForeignKey(Tablero, on_delete=models.CASCADE, related_name='columnas')  # relacion uno a muchos
     orden = models.PositiveIntegerField()  # orden de la columna en el tablero
 
-    class Meta:
-        indexes = [
-            models.Index(fields=['orden']),
-        ]
-
     def __str__(self):
         return f"{self.nombre} ({self.tablero.nombre})"
 
@@ -39,11 +34,6 @@ class Tarjeta(models.Model):
     descripcion = models.TextField(blank=True, null=True)
     orden = models.PositiveIntegerField()  # Para controlar el orden de las tarjetas dentro de la columna
     estado = models.CharField(max_length=10, choices=ESTADO_CHOICES, default='activo')  # Nuevo campo estado
-
-    class Meta:
-        indexes = [
-            models.Index(fields=['orden']),
-        ]
 
     def __str__(self):
         return f"{self.titulo} ({self.columna.nombre})"

@@ -32,6 +32,7 @@ class Contenidos(models.Model):
     subcategoria = models.ForeignKey(Subcategoria, on_delete=models.SET_NULL, null=True, blank=True)
     plantilla = models.ForeignKey(Plantilla, on_delete=models.SET_NULL, null=True, blank=True)
     autor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    estado = models.CharField(max_length=10, default='activo')
 
     def __str__(self):
         return self.titulo
