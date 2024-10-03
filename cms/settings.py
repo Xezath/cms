@@ -67,7 +67,8 @@ INSTALLED_APPS = [
     'Usuario',
     'Categoria',
     'Plantilla',
-    'Contenidos'
+    'Contenidos',
+    'TableroKanban'
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -182,7 +183,7 @@ WSGI_APPLICATION = 'cms.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cms_prueba',
+        'NAME': 'cms',
         'USER': 'postgres',  
         'PASSWORD': 'password',
         'HOST': 'localhost',
