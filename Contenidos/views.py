@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import permission_required, login_required
 from django.http import JsonResponse
 from django.contrib.auth.models import User  
 from TableroKanban.models import Tablero, Tarjeta
-from bs4 import BeautifulSoup
 
 
 @permission_required('Contenidos.view_contenidos', raise_exception=True)
