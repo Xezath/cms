@@ -182,9 +182,9 @@ WSGI_APPLICATION = 'cms.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cms',
+        'NAME': 'cms_prueba',
         'USER': 'postgres',  
-        'PASSWORD': '1234',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '5432',  # puerto por defecto de PostgreSQL
     }
