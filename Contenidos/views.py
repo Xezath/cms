@@ -116,7 +116,11 @@ def cargar_subcategorias(request):
     return JsonResponse(list(subcategorias.values('id', 'nombre')), safe=False)
 
 def eliminar_comentario(request, comentario_id):
-    comentario = get_object_or_404(Comentario, id=comentario_id, usuario=request.user)
+    comentario = get_object_or_404(Comentario, id=comentario_id)
+
+    # Verificar si el usuario es el propietario del comentario o tiene permiso para eliminarlo
+    if comentario.usuario != request.user and not request.user.has_perm('Contenidos.delete_comentario'):
+        return HttpResponseForbidden("No tienes permiso para eliminar este comentario.")
 
     if request.method == 'POST':
         comentario.delete()
