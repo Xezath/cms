@@ -8,6 +8,9 @@ from Plantilla.models import Plantilla
 class Estado(models.Model):
     id = models.AutoField(primary_key=True)
     descripcion = models.CharField(max_length=50)
+
+    def __str__(self) -> str:
+        return str(self.descripcion)
         
 class Contenidos(models.Model):
     """
@@ -46,6 +49,7 @@ class Contenidos(models.Model):
             ("can_add", "Puede agregar contenido"),
             ("can_modify", "Puede editar contenido"),
             ("can_delete", "Puede eliminar contenido"),
+            ("can_viewInactive", "Puede ver contenido inactivo"),
         ]
 
 class Comentario(models.Model):
