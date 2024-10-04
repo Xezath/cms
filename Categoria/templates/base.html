@@ -183,16 +183,16 @@
         
         <nav class="navbar navbar-expand-lg navbar-custom">
             <a class="navbar-brand" href="{% url 'inicio' %}">CMS</a>
+            <!-- Botón para cambiar a modo oscuro -->
+            <button
+                id="modoOscuro"
+                type="button"
+                class="btn btn-disabled"
+                data-bs-toggle="button"
+                aria-pressed="false"
+                autocomplete="off"
+            >⛯</button>
             <div id="fechaActual" class="text-white"></div>
-                <!-- Botón para cambiar a modo oscuro -->
-       <button
-            id="modoOscuro"
-            type="button"
-            class="btn btn-disabled"
-            data-bs-toggle="button"
-            aria-pressed="false"
-            autocomplete="off"
-        >⛯</button>
 
         <script>
             // Comprobar el estado del modo oscuro en localStorage al cargar la página

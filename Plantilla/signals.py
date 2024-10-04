@@ -1,6 +1,6 @@
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
-from .models import Margenes, Color
+from .models import Margenes, Color, Plantilla
 
 @receiver(post_migrate)
 def create_initial_data(sender, **kwargs):
@@ -15,3 +15,16 @@ def create_initial_data(sender, **kwargs):
             Color.objects.create(nombre='Blanco', codigo='#ffffff')
             Color.objects.create(nombre='Beige', codigo='#f5f5dc')
             Color.objects.create(nombre='Celeste', codigo='#00eaff')
+
+            # Crear objetos Plantillas si no existen
+        if not Plantilla.objects.exists():
+            # Re-obteniendo los colores por si el `post_migrate` se ha ejecutado previamente
+            blanco = Color.objects.get(nombre='Blanco')
+            beige = Color.objects.get(nombre='Beige')
+            celeste = Color.objects.get(nombre='Celeste')
+
+            normal = Margenes.objects.get(izq=10.00)
+
+            Plantilla.objects.create(nombre='Predeterminado', descripcion='Blanco de fondo', colorFondo=blanco, margenes=normal, disposicionHorizontal=False)
+            Plantilla.objects.create(nombre='Beige', descripcion='Beige de fondo', colorFondo=beige, margenes=normal, disposicionHorizontal=False)
+            Plantilla.objects.create(nombre='Cielo', descripcion='Celeste de fondo', colorFondo=celeste, margenes=normal, disposicionHorizontal=False)
