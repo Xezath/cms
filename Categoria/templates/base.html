@@ -101,7 +101,7 @@
             }
 
             .form-control:focus {
-                border-color: #80bdff;
+                border-color: #ff8080;
                 box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
             }
 
@@ -142,7 +142,40 @@
                 background-color: #5a6268;
                 border-color: #545b62;
             }
-            
+
+            /* Estilos para el modo oscuro */
+            .modo-oscuro {
+                background-color: #ffffff;
+                color: #02333b;
+            }
+
+            .modo-oscuro .navbar-custom {
+                background-color: #02333b;
+            }
+
+            .modo-oscuro .navbar-custom .navbar-nav .nav-link {
+                color: #ffffff;
+            }
+
+            .modo-oscuro .card-header {
+                background-color: #02333b;
+            }
+
+            .modo-oscuro .btn {
+                background-color: #444444;
+                color: #ffffff;
+            }
+
+            .modo-oscuro .btn-success {
+                background-color: #218838;
+            }
+
+            .modo-oscuro .btn-secondary {
+                background-color: #5a6268;
+            }
+
+            /* Otros elementos que quieres cambiar en modo oscuro */
+
 
         </style>
     </head>
@@ -151,6 +184,44 @@
         <nav class="navbar navbar-expand-lg navbar-custom">
             <a class="navbar-brand" href="{% url 'inicio' %}">CMS</a>
             <div id="fechaActual" class="text-white"></div>
+                <!-- Botón para cambiar a modo oscuro -->
+       <button
+            id="modoOscuro"
+            type="button"
+            class="btn btn-disabled"
+            data-bs-toggle="button"
+            aria-pressed="false"
+            autocomplete="off"
+        >⛯</button>
+
+        <script>
+            // Comprobar el estado del modo oscuro en localStorage al cargar la página
+            document.addEventListener("DOMContentLoaded", function () {
+                if (localStorage.getItem("modoOscuro") === "true") {
+                    document.body.classList.add("modo-oscuro");
+                    document.getElementById("modoOscuro").classList.add("btn-dark");
+                    document.getElementById("modoOscuro").classList.remove("btn-secondary");
+                    document.getElementById("modoOscuro").setAttribute("aria-pressed", "true");
+                }
+            });
+        
+            document.getElementById("modoOscuro").addEventListener("click", function () {
+                // Alternar la clase "modo-oscuro" en el body
+                document.body.classList.toggle("modo-oscuro");
+        
+                // Cambiar el estado del botón y su clase
+                let isDarkMode = document.body.classList.contains("modo-oscuro");
+                this.classList.toggle("btn-dark", isDarkMode);
+                this.classList.toggle("btn-disabled", !isDarkMode);
+        
+                // Actualizar el aria-pressed para accesibilidad
+                this.setAttribute("aria-pressed", isDarkMode);
+        
+                // Guardar el estado en localStorage
+                localStorage.setItem("modoOscuro", isDarkMode);
+            });
+        </script>
+        
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
