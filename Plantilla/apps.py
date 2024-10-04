@@ -6,4 +6,4 @@ class PlantillaConfig(AppConfig):
     name = 'Plantilla'
 
     def ready(self):
-        import Plantilla.signals  # Asegúrate de que 'tu_app_name' es correcto
+        import Plantilla.signals  # Señal que crea los posibles margenes y colores
