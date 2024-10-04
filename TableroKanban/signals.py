@@ -5,7 +5,6 @@ from .models import Tablero, Columna, Estado
 @receiver(post_migrate)
 def create_board_columns(sender, **kwargs):
     if sender.name == 'TableroKanban':
-        print("Ejecutando la señal para crear el tablero y columnas.")
         # Crear un tablero predeterminado si no existe
         if not Tablero.objects.exists():
             tablero = Tablero.objects.create(
@@ -20,8 +19,6 @@ def create_board_columns(sender, **kwargs):
                 'Borrador': Estado.objects.get_or_create(descripcion='Borrador')[0],
                 
             }
-            for estado_nombre, estado in estados.items():
-                print(f"Estado {estado_nombre}: {estado.id}")
 
             # Crear columnas predeterminadas si no existen
             if not Columna.objects.exists():
