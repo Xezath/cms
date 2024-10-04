@@ -47,25 +47,31 @@ def contenidos(request):
 @permission_required('Contenidos.add_contenidos', raise_exception=True)
 def crear_contenido(request):
     formulario = ContenidosForm(request.POST or None)
+    
     if formulario.is_valid():
         contenido = formulario.save(commit=False)  # Guarda el contenido, pero no en la base de datos todavía
         contenido.autor = request.user  # Asigna el autor al contenido
         contenido.save()  # Guarda el contenido en la base de datos
 
         tablero = Tablero.objects.first()  # Obtener el tablero por defecto
-        columna_activa = tablero.columnas.filter(nombre='Activo').first()  # Obtener la columna "Activo"
+
+        # Buscar la columna que coincida con el estado del contenido recién creado
+        columna_correspondiente = tablero.columnas.filter(estado=contenido.estado).first()
+
+        if not columna_correspondiente:
+            raise ValueError(f"No se encontró una columna para el estado {contenido.estado.descripcion}.")
 
         # Crear una tarjeta asociada al contenido recién creado
         Tarjeta.objects.create(
             contenido=contenido,
-            columna=columna_activa,
+            columna=columna_correspondiente,
             titulo=contenido.titulo,  # Usa el título del contenido
             descripcion=contenido.autor,  
             orden=0,  # Establecer un orden inicial
-            estado='activo'  # Establecer el estado de la tarjeta como 'activo'
         )
 
         return redirect('contenidos')
+    
     return render(request, 'contenidos/crear.html', {'formulario': formulario})
 
 

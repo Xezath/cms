@@ -7,7 +7,7 @@ def create_initial_data(sender, **kwargs):
     if sender.name == 'Contenidos':
         # Crear objetos Margenes si no existen
         if not Estado.objects.exists():
-            Estado.objects.create(id=1, descripcion='activo')
-            Estado.objects.create(id=2, descripcion='inactivo')
-            Estado.objects.create(id=3, descripcion='borrador')
+            Estado.objects.create(id=1, descripcion='Activo')
+            Estado.objects.create(id=2, descripcion='Inactivo')
+            Estado.objects.create(id=3, descripcion='Borrador')
         
