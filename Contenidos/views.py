@@ -4,7 +4,7 @@ from .forms import ContenidosForm, EditarContenidosForm, VisualizarContenidoForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required, login_required
-from django.http import JsonResponse
+from django.http import HttpResponseForbidden, JsonResponse
 from django.contrib.auth.models import User  
 from TableroKanban.models import Tablero, Tarjeta
 
