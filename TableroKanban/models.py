@@ -1,5 +1,7 @@
 from django.db import models
 from Contenidos.models import Contenidos, Estado
+from django.contrib.auth.models import User
+
 
 class Tablero(models.Model):
     id = models.AutoField(primary_key=True)
@@ -22,6 +24,7 @@ class Columna(models.Model):
 class Tarjeta(models.Model):
     id = models.AutoField(primary_key=True)
     contenido = models.ForeignKey(Contenidos, on_delete=models.CASCADE)  # Relacionado con el contenido del CMS
+    autor = models.ForeignKey(User, on_delete=models.CASCADE)  # Relacionado con el autor del contenido
     columna = models.ForeignKey(Columna, on_delete=models.CASCADE, related_name='tarjetas')
     titulo = models.CharField(max_length=100)
     descripcion = models.TextField(blank=True, null=True)
@@ -39,3 +42,8 @@ class Tarjeta(models.Model):
 
     def __str__(self):
         return f"{self.titulo} ({self.columna.nombre})"
+    
+    class Meta:
+        permissions = [
+            ("visualiza su contenido", "Puede ver solo su propio contenido"),
+        ]    

@@ -64,6 +64,7 @@ def crear_contenido(request):
         # Crear una tarjeta asociada al contenido recién creado
         Tarjeta.objects.create(
             contenido=contenido,
+            autor=request.user,
             columna=columna_correspondiente,
             titulo=contenido.titulo,  # Usa el título del contenido
             descripcion=contenido.autor,  
