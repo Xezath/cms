@@ -1,7 +1,6 @@
 from django.db import models
 from Contenidos.models import Contenidos, Estado
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import permission_required, login_required
 
 
 class Tablero(models.Model):
@@ -30,16 +29,18 @@ class Tarjeta(models.Model):
     autor = models.ForeignKey(User, on_delete=models.CASCADE)  # Relacionado con el autor del contenido
     columna = models.ForeignKey(Columna, on_delete=models.CASCADE, related_name='tarjetas')
     titulo = models.CharField(max_length=100)
+    estado = models.ForeignKey(Estado, on_delete=models.CASCADE)  # Nuevo campo de estado
     descripcion = models.TextField(blank=True, null=True)
     orden = models.PositiveIntegerField()  # Para controlar el orden de las tarjetas dentro de la columna
 
     def save(self, *args, **kwargs):
-        if self.contenido and self.contenido.estado:
+        # Al guardar, movemos la tarjeta a la columna correcta según el estado
+        if self.estado:
             try:
-                # Asigna la tarjeta a la columna correspondiente según el estado del contenido
-                self.columna = Columna.objects.get(estado=self.contenido.estado)
+                # Busca la columna correspondiente al estado
+                self.columna = Columna.objects.get(estado=self.estado)
             except Columna.DoesNotExist:
-                raise ValueError(f"No se encontró una columna para el estado {self.contenido.estado}.")
+                raise ValueError(f"No se encontró una columna para el estado {self.estado}.")
         
         super(Tarjeta, self).save(*args, **kwargs)
 

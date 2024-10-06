@@ -2,9 +2,9 @@ from django.core.management.base import BaseCommand
 from django.contrib.auth.models import Group, Permission
 
 
-
 class Command(BaseCommand):
     help = 'Carga datos iniciales de Usuarios, Grupos, Categorías y Contenidos'
+
     def handle(self, *args, **kwargs):
         self.stdout.write('Cargando datos iniciales...')
 
@@ -17,9 +17,9 @@ class Command(BaseCommand):
 
         roles = {
             'Suscriptor': ['view_contenidos'],
-            'Autor': ['add_contenidos', 'change_contenidos', 'delete_contenidos','view_tablero','ver_propio_tablero','view_columna'],  # Permisos CRUD para Contenido
-            'Editor': ['change_categoria'],
-            'Publicador': ['change_subcategoria'],
+            'Autor': ['add_contenidos', 'view_tablero', 'ver_propio_tablero', 'view_columna'],  
+            'Editor': ['change_contenidos', 'change_categoria'],
+            'Publicador': ['delete_contenidos', 'change_subcategoria'],
         }
 
         # Crea o obtiene los grupos y asigna permisos

@@ -67,6 +67,7 @@ def crear_contenido(request):
             autor=request.user,
             columna=columna_correspondiente,
             titulo=contenido.titulo,  # Usa el título del contenido
+            estado=contenido.estado,
             descripcion=contenido.autor,  
             orden=0,  # Establecer un orden inicial
         )
@@ -79,56 +80,43 @@ def crear_contenido(request):
 @permission_required('Contenidos.change_contenidos', raise_exception=True)
 def editar_contenido(request, id):
     contenido = get_object_or_404(Contenidos, id=id)
-
-    # Verifica si el usuario es el autor o tiene un rol que le permite editar
-    if contenido.autor != request.user and not request.user.groups.filter(name__in=['Editor', 'Publicador', 'Administrador']).exists():
-        messages.error(request, 'No tienes permiso para editar este contenido.')
-        return redirect('contenidos')  # Redirige a la lista de contenidos
+    tarjeta = Tarjeta.objects.filter(contenido=contenido).first()  # Buscar la tarjeta relacionada con el contenido
 
     if request.method == 'POST':
         formulario = EditarContenidosForm(request.POST, instance=contenido)
-
+        
         # Actualiza el queryset de subcategorías basadas en la categoría seleccionada
         categoria_id = request.POST.get('categoria')
         if categoria_id:
             formulario.fields['subcategoria'].queryset = Subcategoria.objects.filter(categoriaPadre_id=categoria_id)
 
         if formulario.is_valid():
-            formulario.save()
-            messages.success(request, 'Contenido editado con éxito.')
+            nuevo_estado = formulario.cleaned_data['estado']  # Obtener el nuevo estado del contenido
+            contenido = formulario.save()  # Guarda el contenido
+
+            # Actualizar el estado y la columna de la tarjeta
+            if tarjeta:
+                tarjeta.estado = nuevo_estado  # Actualiza el estado de la tarjeta
+                tarjeta.save()  # Mueve la tarjeta a la columna correcta
+
             return redirect('contenidos')
         else:
             print(formulario.errors) 
     else:
         formulario = EditarContenidosForm(instance=contenido)
-        
+
     return render(request, 'contenidos/editar.html', {'formulario': formulario})
+
 
 
 @permission_required('Contenidos.delete_contenidos', raise_exception=True)
 def eliminar_contenido(request, pk):
     contenido = get_object_or_404(Contenidos, pk=pk)
-
-    # Verificar si el usuario es un administrador
-    if request.user.groups.filter(name='Administrador').exists():
-        # Los administradores pueden eliminar cualquier contenido
-        if request.method == 'POST':
-            contenido.delete()
-            messages.success(request, 'Contenido eliminado con éxito.')
-            return redirect('contenidos')
-    else:
-        # Los demás usuarios solo pueden eliminar su propio contenido
-        if contenido.autor == request.user:
-            if request.method == 'POST':
-                contenido.delete()
-                messages.success(request, 'Contenido eliminado con éxito.')
-                return redirect('contenidos')
-        else:
-            messages.error(request, 'No tienes permiso para eliminar este contenido.')
-            return redirect('contenidos')
-
+    if request.method == 'POST':
+        contenido.delete()
+        messages.success(request, 'Contenido eliminado con éxito.')
+        return redirect('contenidos')
     return render(request, 'contenidos/confirmar_eliminacion.html', {'contenido': contenido})
-
 
 @permission_required('Contenidos.view_contenidos', raise_exception=True)
 def visualizar_contenido(request, id):

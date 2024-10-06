@@ -81,13 +81,13 @@
                             <small class="text-muted">Creado por {{ contenido.autor }} el {{ contenido.fecha_creacion }}</small>
                             {% if perms.Contenidos.change_contenidos or perms.Contenidos.delete_contenidos %}
                             <div class="mt-2">
-                                {% if perms.Contenidos.change_contenidos or contenido.autor == request.user %}
-                                    <a class="btn btn-info" href="{% url 'editar_contenido' contenido.id %}" role="button">Editar</a>
+                                {% if perms.Contenidos.change_contenidos %}
+                                <a class="btn btn-info" href="{% url 'editar_contenido' contenido.id %}" role="button">Editar</a>
                                 {% endif %}
-                                {% if perms.Contenidos.delete_contenidos or contenido.autor == request.user %}
-                                    <a class="btn btn-danger" href="{% url 'eliminar_contenido' contenido.id %}" role="button">Eliminar</a>
+                                {% if perms.Contenidos.delete_contenidos %}
+                                <a class="btn btn-danger" href="{% url 'eliminar_contenido' contenido.id %}" role="button">Eliminar</a>
                                 {% endif %}
-                            </div>                            
+                            </div>
                             {% endif %}
                         </div>
                     </div>
