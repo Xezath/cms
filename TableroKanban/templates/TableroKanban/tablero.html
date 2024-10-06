@@ -5,6 +5,19 @@
 {% endblock %}
 
 {% block contenido %}
+<style>
+    .kanban-tarjeta {
+        background-color: #e0f7fa; /* Celeste claro */
+        border: 1px solid #b2ebf2;
+        border-radius: 8px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        margin-bottom: 15px;
+    }
+    .kanban-tarjeta .card-body {
+        padding: 10px;
+    }
+</style>
+
 <div class="card">
     <div class="card-header">
         <h4 class="card-title">Tablero Kanban</h4>
