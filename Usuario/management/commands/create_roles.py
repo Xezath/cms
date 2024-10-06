@@ -17,9 +17,9 @@ class Command(BaseCommand):
 
         roles = {
             'Suscriptor': ['view_contenidos'],
-            'Autor': ['add_contenidos', 'change_contenidos', 'delete_contenidos'],  # Permisos CRUD para Contenido
-            'Editor': ['add_contenidos', 'change_contenidos', 'delete_contenidos', 'change_categoria'],
-            'Publicador': ['add_contenidos', 'change_contenidos', 'delete_contenidos', 'change_categoria'],
+            'Autor': ['add_contenidos', 'change_contenidos', 'delete_contenidos','view_tablero','ver_propio_tablero','view_columna'],  # Permisos CRUD para Contenido
+            'Editor': ['change_categoria'],
+            'Publicador': ['change_subcategoria'],
         }
 
         # Crea o obtiene los grupos y asigna permisos
@@ -32,5 +32,20 @@ class Command(BaseCommand):
                     group.permissions.add(perm)
                 except Permission.DoesNotExist:
                     self.stdout.write(self.style.ERROR(f'Permiso no encontrado: {perm_code}'))
+
+        # Herencia de permisos
+        autor = Group.objects.get(name='Autor')
+        suscriptor = Group.objects.get(name='Suscriptor')
+        editor = Group.objects.get(name='Editor')
+        publicador = Group.objects.get(name='Publicador')
+
+        # Asignar permisos del Suscriptor al Autor
+        autor.permissions.add(*suscriptor.permissions.all())
+        
+        # Asignar permisos del Autor al Editor
+        editor.permissions.add(*autor.permissions.all())
+        
+        # Asignar permisos del Editor al Publicador
+        publicador.permissions.add(*editor.permissions.all())
 
         self.stdout.write(self.style.SUCCESS('Roles y permisos asignados correctamente.'))

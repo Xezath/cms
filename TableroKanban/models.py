@@ -1,6 +1,7 @@
 from django.db import models
 from Contenidos.models import Contenidos, Estado
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import permission_required, login_required
 
 
 class Tablero(models.Model):
@@ -11,6 +12,7 @@ class Tablero(models.Model):
     def __str__(self):
         return self.nombre
 
+
 class Columna(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
@@ -20,6 +22,7 @@ class Columna(models.Model):
 
     def __str__(self):
         return f"{self.nombre} ({self.tablero.nombre})"
+
 
 class Tarjeta(models.Model):
     id = models.AutoField(primary_key=True)
@@ -45,5 +48,5 @@ class Tarjeta(models.Model):
     
     class Meta:
         permissions = [
-            ("visualiza su contenido", "Puede ver solo su propio contenido"),
+            ("ver_propio_tablero", "Puede ver solo su propio contenido"),
         ]    

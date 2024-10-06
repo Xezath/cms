@@ -80,9 +80,14 @@ def crear_contenido(request):
 def editar_contenido(request, id):
     contenido = get_object_or_404(Contenidos, id=id)
 
+    # Verifica si el usuario es el autor o tiene un rol que le permite editar
+    if contenido.autor != request.user and not request.user.groups.filter(name__in=['Editor', 'Publicador', 'Administrador']).exists():
+        messages.error(request, 'No tienes permiso para editar este contenido.')
+        return redirect('contenidos')  # Redirige a la lista de contenidos
+
     if request.method == 'POST':
         formulario = EditarContenidosForm(request.POST, instance=contenido)
-        
+
         # Actualiza el queryset de subcategorías basadas en la categoría seleccionada
         categoria_id = request.POST.get('categoria')
         if categoria_id:
@@ -90,22 +95,40 @@ def editar_contenido(request, id):
 
         if formulario.is_valid():
             formulario.save()
+            messages.success(request, 'Contenido editado con éxito.')
             return redirect('contenidos')
         else:
             print(formulario.errors) 
     else:
         formulario = EditarContenidosForm(instance=contenido)
-
+        
     return render(request, 'contenidos/editar.html', {'formulario': formulario})
+
 
 @permission_required('Contenidos.delete_contenidos', raise_exception=True)
 def eliminar_contenido(request, pk):
     contenido = get_object_or_404(Contenidos, pk=pk)
-    if request.method == 'POST':
-        contenido.delete()
-        messages.success(request, 'Contenido eliminado con éxito.')
-        return redirect('contenidos')
+
+    # Verificar si el usuario es un administrador
+    if request.user.groups.filter(name='Administrador').exists():
+        # Los administradores pueden eliminar cualquier contenido
+        if request.method == 'POST':
+            contenido.delete()
+            messages.success(request, 'Contenido eliminado con éxito.')
+            return redirect('contenidos')
+    else:
+        # Los demás usuarios solo pueden eliminar su propio contenido
+        if contenido.autor == request.user:
+            if request.method == 'POST':
+                contenido.delete()
+                messages.success(request, 'Contenido eliminado con éxito.')
+                return redirect('contenidos')
+        else:
+            messages.error(request, 'No tienes permiso para eliminar este contenido.')
+            return redirect('contenidos')
+
     return render(request, 'contenidos/confirmar_eliminacion.html', {'contenido': contenido})
+
 
 @permission_required('Contenidos.view_contenidos', raise_exception=True)
 def visualizar_contenido(request, id):

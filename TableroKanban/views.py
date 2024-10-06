@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Tablero
 
 @login_required
-@permission_required('TableroKanban.view_tablero', raise_exception=True)
+@permission_required('TableroKanban.ver_propio_tablero', raise_exception=True)
 def tablero_kanban(request, tablero_id):
     tablero = get_object_or_404(Tablero, id=tablero_id)
     columnas = tablero.columnas.prefetch_related('tarjetas').all()
