@@ -5,6 +5,20 @@
 {% endblock %}
 
 {% block contenido %}
+<style>
+    .kanban-tarjeta {
+        background-color: #B2E0E6; /* Color celeste claro mate */
+        border: 1px solid #A4D6E1; /* Puedes ajustar el borde si lo deseas */
+        border-radius: 5px; /* Esquinas redondeadas */
+        margin-bottom: 10px; /* Espaciado entre tarjetas */
+        box-shadow: none; /* Sin sombra para un acabado mate */
+    }
+
+    .kanban-tarjeta:hover {
+        background-color: #A1D2D6; /* Color al pasar el mouse (opcional) */
+    }
+</style>
+
 <div class="card">
     <div class="card-header">
         <h4 class="card-title">Tablero Kanban</h4>
@@ -107,7 +121,6 @@
         });
     }
 
-
     // Función para obtener el token CSRF
     function getCookie(name) {
         let cookieValue = null;
@@ -124,7 +137,5 @@
         }
         return cookieValue;
     }
-
 </script>
 {% endblock %}
-
