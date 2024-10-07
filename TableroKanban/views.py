@@ -20,7 +20,7 @@ def tablero_kanban(request, tablero_id):
     }
 
     for columna in columnas:
-        if request.user.groups.filter(name='Administrador').exists():
+        if request.user.groups.filter(name__in=['Administrador', 'Publicador']).exists():
             tarjetas = columna.tarjetas.all()
         else:
             tarjetas = columna.tarjetas.filter(autor=request.user)
