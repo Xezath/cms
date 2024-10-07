@@ -72,8 +72,9 @@ def crear_contenido(request):
             orden=0,  # Establecer un orden inicial
         )
 
-        return redirect('contenidos')
+        return redirect('contenidos')  # Redirige a la lista de contenidos después de guardar
     
+    # Si el formulario no es válido, se vuelve a mostrar con los errores
     return render(request, 'contenidos/crear.html', {'formulario': formulario})
 
 
