@@ -93,7 +93,11 @@ def editar_contenido(request, id):
 
         if formulario.is_valid():
             nuevo_estado = formulario.cleaned_data['estado']  # Obtener el nuevo estado del contenido
-            contenido = formulario.save()  # Guarda el contenido
+            contenido.autor = request.user
+
+        
+            contenido.save()  # Guarda el contenido modificado
+            
 
             # Actualizar el estado y la columna de la tarjeta
             if tarjeta:

@@ -116,8 +116,10 @@
 
             function updateEditorContent() {
                 const editorContent = document.getElementById("editor").innerHTML;
-                document.getElementById("editorContent").value = editorContent; // Actualiza el contenido oculto
+                document.getElementById("editorContent").value = editorContent;  // Copia el contenido editable al campo oculto
             }
+
+            
 
             // Cargar subcategorías cuando cambie la categoría seleccionada
             document.getElementById('categoria-select').addEventListener('change', function() {
