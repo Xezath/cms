@@ -26,11 +26,11 @@
     <div class="card-body">
         <div class="row">
             <!-- Columna Activo -->
-            <div class="col-md-4" ondrop="drop(event, 'Activo')" ondragover="allowDrop(event)">
+            <div class="col-md-4" {% if puede_cambiar_estado %} ondrop="drop(event, 'Activo')" ondragover="allowDrop(event)" {% endif %}>
                 <h2 style="font-size: 1.5em;">Activo</h2>
                 <div class="kanban-column">
                     {% for tarjeta in tarjetas_por_estado.Activas %}
-                        <div class="kanban-tarjeta card" draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')">
+                        <div class="kanban-tarjeta card" {% if puede_cambiar_estado %} draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')" {% endif %}>
                             <div class="card-body">
                                 <h5 class="card-title">
                                     <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
@@ -43,13 +43,13 @@
                     {% endfor %}
                 </div>
             </div>
-
+        
             <!-- Columna Borrador -->
-            <div class="col-md-4" ondrop="drop(event, 'Borrador')" ondragover="allowDrop(event)">
+            <div class="col-md-4" {% if puede_cambiar_estado %} ondrop="drop(event, 'Borrador')" ondragover="allowDrop(event)" {% endif %}>
                 <h2 style="font-size: 1.5em;">Borrador</h2>
                 <div class="kanban-column">
                     {% for tarjeta in tarjetas_por_estado.Borrador %}
-                        <div class="kanban-tarjeta card" draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')">
+                        <div class="kanban-tarjeta card" {% if puede_cambiar_estado %} draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')" {% endif %}>
                             <div class="card-body">
                                 <h5 class="card-title">
                                     <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
@@ -62,13 +62,13 @@
                     {% endfor %}
                 </div>
             </div>
-
+        
             <!-- Columna Inactivo -->
-            <div class="col-md-4" ondrop="drop(event, 'Inactivo')" ondragover="allowDrop(event)">
+            <div class="col-md-4" {% if puede_cambiar_estado %} ondrop="drop(event, 'Inactivo')" ondragover="allowDrop(event)" {% endif %}>
                 <h2 style="font-size: 1.5em;">Inactivo</h2>
                 <div class="kanban-column">
                     {% for tarjeta in tarjetas_por_estado.Inactivas %}
-                        <div class="kanban-tarjeta card" draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')">
+                        <div class="kanban-tarjeta card" {% if puede_cambiar_estado %} draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')" {% endif %}>
                             <div class="card-body">
                                 <h5 class="card-title">
                                     <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
@@ -81,7 +81,7 @@
                     {% endfor %}
                 </div>
             </div>
-        </div>
+        </div>        
     </div>
 </div>
 

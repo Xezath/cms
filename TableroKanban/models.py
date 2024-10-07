@@ -50,4 +50,5 @@ class Tarjeta(models.Model):
     class Meta:
         permissions = [
             ("ver_propio_tablero", "Puede ver solo su propio contenido"),
+            ("cambiar_estado_tarjeta", "Puede cambiar el estado de una tarjeta"),
         ]    
