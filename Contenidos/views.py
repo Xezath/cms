@@ -4,8 +4,10 @@ from .forms import ContenidosForm, EditarContenidosForm, VisualizarContenidoForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required, login_required
-from django.http import JsonResponse
+from django.http import HttpResponseForbidden, JsonResponse
 from django.contrib.auth.models import User  
+from TableroKanban.models import Tablero, Tarjeta
+
 
 @permission_required('Contenidos.view_contenidos', raise_exception=True)
 def contenidos(request):
@@ -45,15 +47,40 @@ def contenidos(request):
 @permission_required('Contenidos.add_contenidos', raise_exception=True)
 def crear_contenido(request):
     formulario = ContenidosForm(request.POST or None)
+    
     if formulario.is_valid():
-        contenidos.autor = request.user
-        formulario.save()
-        return redirect('contenidos')  
+        contenido = formulario.save(commit=False)  # Guarda el contenido, pero no en la base de datos todavía
+        contenido.autor = request.user  # Asigna el autor al contenido
+        contenido.save()  # Guarda el contenido en la base de datos
+
+        tablero = Tablero.objects.first()  # Obtener el tablero por defecto
+
+        # Buscar la columna que coincida con el estado del contenido recién creado
+        columna_correspondiente = tablero.columnas.filter(estado=contenido.estado).first()
+
+        if not columna_correspondiente:
+            raise ValueError(f"No se encontró una columna para el estado {contenido.estado.descripcion}.")
+
+        # Crear una tarjeta asociada al contenido recién creado
+        Tarjeta.objects.create(
+            contenido=contenido,
+            autor=request.user,
+            columna=columna_correspondiente,
+            titulo=contenido.titulo,  # Usa el título del contenido
+            estado=contenido.estado,
+            descripcion=contenido.autor,  
+            orden=0,  # Establecer un orden inicial
+        )
+
+        return redirect('contenidos')
+    
     return render(request, 'contenidos/crear.html', {'formulario': formulario})
+
 
 @permission_required('Contenidos.change_contenidos', raise_exception=True)
 def editar_contenido(request, id):
     contenido = get_object_or_404(Contenidos, id=id)
+    tarjeta = Tarjeta.objects.filter(contenido=contenido).first()  # Buscar la tarjeta relacionada con el contenido
 
     if request.method == 'POST':
         formulario = EditarContenidosForm(request.POST, instance=contenido)
@@ -64,7 +91,14 @@ def editar_contenido(request, id):
             formulario.fields['subcategoria'].queryset = Subcategoria.objects.filter(categoriaPadre_id=categoria_id)
 
         if formulario.is_valid():
-            formulario.save()
+            nuevo_estado = formulario.cleaned_data['estado']  # Obtener el nuevo estado del contenido
+            contenido = formulario.save()  # Guarda el contenido
+
+            # Actualizar el estado y la columna de la tarjeta
+            if tarjeta:
+                tarjeta.estado = nuevo_estado  # Actualiza el estado de la tarjeta
+                tarjeta.save()  # Mueve la tarjeta a la columna correcta
+
             return redirect('contenidos')
         else:
             print(formulario.errors) 
@@ -72,6 +106,8 @@ def editar_contenido(request, id):
         formulario = EditarContenidosForm(instance=contenido)
 
     return render(request, 'contenidos/editar.html', {'formulario': formulario})
+
+
 
 @permission_required('Contenidos.delete_contenidos', raise_exception=True)
 def eliminar_contenido(request, pk):

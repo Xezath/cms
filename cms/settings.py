@@ -67,7 +67,8 @@ INSTALLED_APPS = [
     'Usuario',
     'Categoria',
     'Plantilla',
-    'Contenidos'
+    'Contenidos',
+    'TableroKanban'
 ]
 
 AUTHENTICATION_BACKENDS = (

@@ -4,7 +4,13 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from Categoria.models import Categoria,Subcategoria
 from Plantilla.models import Plantilla
+    
+class Estado(models.Model):
+    id = models.AutoField(primary_key=True)
+    descripcion = models.CharField(max_length=50)
 
+    def __str__(self) -> str:
+        return str(self.descripcion)
         
 class Contenidos(models.Model):
     """
@@ -32,6 +38,7 @@ class Contenidos(models.Model):
     subcategoria = models.ForeignKey(Subcategoria, on_delete=models.SET_NULL, null=True, blank=True)
     plantilla = models.ForeignKey(Plantilla, on_delete=models.SET_NULL, null=True, blank=True)
     autor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    estado = models.ForeignKey(Estado, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.titulo
@@ -42,6 +49,7 @@ class Contenidos(models.Model):
             ("can_add", "Puede agregar contenido"),
             ("can_modify", "Puede editar contenido"),
             ("can_delete", "Puede eliminar contenido"),
+            ("can_viewInactive", "Puede ver contenido inactivo"),
         ]
 
 class Comentario(models.Model):

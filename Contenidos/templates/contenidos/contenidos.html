@@ -48,6 +48,8 @@
             <h4 class="card-title">Todos los contenidos</h4>
             <div class="row">
                 {% for contenido in contenidos %}
+                {% if contenido.estado.id != 2 or perms.Contenidos.can_viewInactive %}
+                {% if contenido.estado.id != 3 or contenido.autor.id == user.id %}
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
                         {% if contenido.imagen %}
@@ -66,8 +68,13 @@
                                 {{ contenido.descripcion|truncatewords:20 }}
                             </p>
                             <!-- Título del contenido -->
-                            <h5 class="card-title">{{ contenido.titulo }}</h5>
-                        
+                            {% if contenido.estado.id == 2 %}
+                                <h5 class="card-title" style="color: red;">{{ contenido.titulo }} (inactivo)</h5>
+                            {% elif contenido.estado.id == 3 %}
+                                <h5 class="card-title" style="color: brown;">{{ contenido.titulo }} (borrador)</h5>
+                            {% else %}
+                                <h5 class="card-title">{{ contenido.titulo }}</h5>
+                            {% endif %}
                             <a href="{% url 'visualizar_contenido' contenido.id %}" class="btn btn-primary">Leer más</a>
                         </div>
                         <div class="card-footer">
@@ -85,6 +92,8 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
+                {% endif %}
                 {% empty %}
                 <div class="col-12">
                     <p>No hay contenidos disponibles.</p>
