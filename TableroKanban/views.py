@@ -6,26 +6,23 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
+
 @login_required
 @permission_required('TableroKanban.ver_propio_tablero', raise_exception=True)
 def tablero_kanban(request, tablero_id):
     tablero = get_object_or_404(Tablero, id=tablero_id)
     columnas = tablero.columnas.prefetch_related('tarjetas').all()
 
-    # Crear un diccionario para almacenar tarjetas por estado
     tarjetas_por_estado = {
         'Activas': [],
         'Inactivas': [],
         'Borrador': []
     }
 
-    # Llenar el diccionario con tarjetas de cada columna
     for columna in columnas:
         if request.user.groups.filter(name='Administrador').exists():
-            # Si el usuario es administrador, muestra todas las tarjetas
             tarjetas = columna.tarjetas.all()
         else:
-            # Si el usuario no es administrador, solo muestra sus tarjetas
             tarjetas = columna.tarjetas.filter(autor=request.user)
 
         for tarjeta in tarjetas:
@@ -36,13 +33,18 @@ def tablero_kanban(request, tablero_id):
             elif tarjeta.columna.estado.descripcion == 'Borrador':
                 tarjetas_por_estado['Borrador'].append(tarjeta)
 
+    # Verificar si el usuario tiene el permiso de cambiar estado de las tarjetas
+    puede_cambiar_estado = request.user.has_perm('TableroKanban.cambiar_estado_tarjeta')
+
     return render(request, 'TableroKanban/tablero.html', {
         'tablero': tablero,
-        'tarjetas_por_estado': tarjetas_por_estado
+        'tarjetas_por_estado': tarjetas_por_estado,
+        'puede_cambiar_estado': puede_cambiar_estado
     })
 
 
 @csrf_exempt
+@permission_required('TableroKanban.cambiar_estado_tarjeta', raise_exception=True)
 def actualizar_estado(request, tarjeta_id, nuevo_estado):
     if request.method == 'POST':
         try:
@@ -77,3 +79,4 @@ def actualizar_estado(request, tarjeta_id, nuevo_estado):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=500)  # Manejo de errores genéricos
     return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
+
