@@ -53,6 +53,9 @@
                 {{ formulario.instance.contenido|safe }}
             </div>
             <input type="hidden" id="editorContent" name="contenido" />
+            <!-- para mostrar errores despues de enviar el formulario-->
+            <div class="text-danger">{{ formulario.contenido.errors }}</div>
+
         </div>
         
         <!-- Botones de acción -->
@@ -75,34 +78,41 @@
             }
 
             function loadFromFile() {
-                const fileInput = document.getElementById("fileInput");
-                const file = fileInput.files[0];
+    const fileInput = document.getElementById("fileInput");
+    const file = fileInput.files[0];
 
-                if (file) {
-                    const reader = new FileReader();
+    if (file) {
+        const reader = new FileReader();
 
-                    reader.onload = function(e) {
-                        const content = e.target.result;
-                        const fileType = file.type;
+        reader.onload = function(e) {
+            const content = e.target.result; // Contenido del archivo leído
+            const fileType = file.type; // Tipo de archivo
 
-                        if (fileType.startsWith('image/')) {
-                            // Si es una imagen, crear un elemento <img>
-                            const img = document.createElement('img');
-                            img.src = content;
-                            document.getElementById("editor").appendChild(img);
-                        } else if (fileType === 'text/plain') {
-                            // Si es un archivo de texto
-                            document.getElementById("editor").innerText = content;
-                        } else {
-                            alert("Tipo de archivo no soportado.");
-                        }
-                    };
-
-                    reader.readAsDataURL(file); // Cargar la imagen
-                } else {
-                    alert("Por favor selecciona un archivo");
-                }
+            if (fileType.startsWith('image/')) {
+                // Si es una imagen, crear un elemento <img>
+                const img = document.createElement('img');
+                img.src = content;
+                document.getElementById("editor").appendChild(img);
+            } else if (fileType === 'text/plain') {
+                // Si es un archivo de texto
+                document.getElementById("editor").innerText = content; // Actualiza el editor con el contenido de texto
+            } else {
+                alert("Tipo de archivo no soportado.");
             }
+        };
+
+        // Cargar archivo según su tipo
+        if (file.type.startsWith('image/')) {
+            reader.readAsDataURL(file); // Cargar imagen
+        } else if (file.type === 'text/plain') {
+            reader.readAsText(file); // Cargar archivo de texto
+        } else {
+            alert("Por favor selecciona un archivo de imagen o texto."); // Mensaje si el tipo no es soportado
+        }
+    } else {
+        alert("Por favor selecciona un archivo"); // Mensaje si no hay archivo seleccionado
+    }
+}
 
             function updateEditorContent() {
                 const editorContent = document.getElementById("editor").innerHTML;

@@ -43,6 +43,12 @@ class ContenidosForm(forms.ModelForm):
             # Si no hay datos enviados o es una nueva instancia
             self.fields['subcategoria'].queryset = Subcategoria.objects.none()
 
+def clean_contenido(self):
+        contenido = self.cleaned_data.get('contenido')
+        if not contenido or contenido.strip() == '':
+            raise forms.ValidationError('El campo "contenido" no puede estar vacío.')
+        return contenido
+
 
 class EditarContenidosForm(forms.ModelForm):
     categoria = forms.ModelChoiceField(
