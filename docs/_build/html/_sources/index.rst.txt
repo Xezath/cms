@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Documentacion del CMS
-=================
+=====================
 
 
 .. toctree::
@@ -14,8 +14,7 @@ Documentacion del CMS
    modules
 
    Índices y tablas
-================
-
+===================
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`

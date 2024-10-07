@@ -76,50 +76,109 @@
 <span class="kn">from</span> <span class="nn">ckeditor.fields</span> <span class="kn">import</span> <span class="n">RichTextField</span>
 <span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
 <span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
-<span class="kn">from</span> <span class="nn">Categoria.models</span> <span class="kn">import</span> <span class="n">Categoria</span><span class="p">,</span><span class="n">Subcategoria</span>
+<span class="kn">from</span> <span class="nn">Categoria.models</span> <span class="kn">import</span> <span class="n">Categoria</span><span class="p">,</span> <span class="n">Subcategoria</span>
 <span class="kn">from</span> <span class="nn">Plantilla.models</span> <span class="kn">import</span> <span class="n">Plantilla</span>
 
-        
+<div class="viewcode-block" id="Estado">
+<a class="viewcode-back" href="../../Contenidos.html#Contenidos.forms.Estado">[documentos]</a>
+<span class="k">class</span> <span class="nc">Estado</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Modelo que representa un estado de un contenido.</span>
+
+<span class="sd">    Atributos:</span>
+<span class="sd">        id (int): Identificador único del estado.</span>
+<span class="sd">        descripcion (str): Descripción del estado.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Identificador único del estado</span>
+    <span class="n">descripcion</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>  <span class="c1"># Descripción del estado</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Devuelve la representación en cadena del estado.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Descripción del estado.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">descripcion</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="Contenidos">
-<a class="viewcode-back" href="../../Contenidos.html#Contenidos.models.Contenidos">[documentos]</a>
+<a class="viewcode-back" href="../../Contenidos.html#Contenidos.forms.Contenidos">[documentos]</a>
 <span class="k">class</span> <span class="nc">Contenidos</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Modelo que representa un contenido en el sistema.</span>
 
 <span class="sd">    Atributos:</span>
 <span class="sd">        titulo (str): El título del contenido.</span>
-
 <span class="sd">        contenido (RichTextField): El contenido en formato enriquecido.</span>
-
 <span class="sd">        fecha_creacion (DateTimeField): La fecha de creación del contenido.</span>
-
 <span class="sd">        categoria (ForeignKey): La categoría asociada al contenido.</span>
-
 <span class="sd">        subcategoria (ForeignKey): La subcategoría asociada al contenido.</span>
-
 <span class="sd">        plantilla (ForeignKey): La plantilla utilizada para el contenido.</span>
-<span class="sd">        </span>
 <span class="sd">        autor (ForeignKey): El usuario que creó el contenido.</span>
+<span class="sd">        estado (ForeignKey): El estado del contenido.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">titulo</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
-    <span class="n">contenido</span> <span class="o">=</span> <span class="n">RichTextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="n">fecha_creacion</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">categoria</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Categoria</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">subcategoria</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Subcategoria</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">plantilla</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Plantilla</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">autor</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">titulo</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>  <span class="c1"># Título del contenido</span>
+    <span class="n">contenido</span> <span class="o">=</span> <span class="n">RichTextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>  <span class="c1"># Contenido en formato enriquecido</span>
+    <span class="n">fecha_creacion</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># Fecha de creación</span>
+    <span class="n">categoria</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Categoria</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Categoría asociada</span>
+    <span class="n">subcategoria</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Subcategoria</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Subcategoría asociada</span>
+    <span class="n">plantilla</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Plantilla</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Plantilla utilizada</span>
+    <span class="n">autor</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Autor del contenido</span>
+    <span class="n">estado</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Estado</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>  <span class="c1"># Estado del contenido</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Devuelve el título del contenido.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Título del contenido.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">titulo</span>
 
-<span class="c1">#permisos para realizar ciertas acciones</span>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Metadatos para el modelo Contenidos.</span>
+
+<span class="sd">        Permisos personalizados para la gestión de contenidos:</span>
+<span class="sd">            can_add: Permiso para agregar contenido.</span>
+<span class="sd">            can_modify: Permiso para editar contenido.</span>
+<span class="sd">            can_delete: Permiso para eliminar contenido.</span>
+<span class="sd">            can_viewInactive: Permiso para ver contenido inactivo.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">permissions</span> <span class="o">=</span> <span class="p">[</span>
             <span class="p">(</span><span class="s2">&quot;can_add&quot;</span><span class="p">,</span> <span class="s2">&quot;Puede agregar contenido&quot;</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;can_modify&quot;</span><span class="p">,</span> <span class="s2">&quot;Puede editar contenido&quot;</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;can_delete&quot;</span><span class="p">,</span> <span class="s2">&quot;Puede eliminar contenido&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;can_viewInactive&quot;</span><span class="p">,</span> <span class="s2">&quot;Puede ver contenido inactivo&quot;</span><span class="p">),</span>
         <span class="p">]</span></div>
 
+
+<div class="viewcode-block" id="Comentario">
+<a class="viewcode-back" href="../../Contenidos.html#Contenidos.forms.Comentario">[documentos]</a>
+<span class="k">class</span> <span class="nc">Comentario</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Modelo que representa un comentario sobre un contenido.</span>
+
+<span class="sd">    Atributos:</span>
+<span class="sd">        comentario (str): Texto del comentario.</span>
+<span class="sd">        usuario (ForeignKey): El usuario que realizó el comentario.</span>
+<span class="sd">        fecha_creacion (DateTimeField): Fecha de creación del comentario.</span>
+<span class="sd">        contenido (ForeignKey): Contenido relacionado con el comentario.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">comentario</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>  <span class="c1"># Texto del comentario</span>
+    <span class="n">usuario</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>  <span class="c1"># Relaciona el comentario con el usuario</span>
+    <span class="n">fecha_creacion</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Fecha de creación del comentario</span>
+    <span class="n">contenido</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Contenidos</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;comentarios&#39;</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>  <span class="c1"># Contenido relacionado</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Devuelve una representación en cadena del comentario.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Resumen del comentario que incluye el usuario y la fecha de creación.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Comentario de </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">usuario</span><span class="si">}</span><span class="s1"> en </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fecha_creacion</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 </pre></div>
 

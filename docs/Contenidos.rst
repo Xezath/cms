@@ -5,9 +5,8 @@ Subpackages
 -----------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 7
 
-   Contenidos.migrations
 
 Submodules
 ----------
@@ -21,13 +20,13 @@ Contenidos.apps module
    :show-inheritance:
 
 Contenidos.forms module
---------------------
+-----------------------
 
 .. automodule:: Contenidos.forms
    :members:
    :undoc-members:
    :show-inheritance:
-   
+
 Contenidos.models module
 ------------------------
 

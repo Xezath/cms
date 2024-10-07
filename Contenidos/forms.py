@@ -5,6 +5,7 @@ from Plantilla.models import Plantilla
 from .models import Contenidos, Comentario
 
 class ContenidosForm(forms.ModelForm):
+
     categoria = forms.ModelChoiceField(
         queryset=Categoria.objects.all(),
         widget=forms.Select(attrs={'id': 'categoria-select'}),

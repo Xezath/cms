@@ -1,5 +1,5 @@
-Categoria package
-=================
+Categoria Package
+==================
 
 Subpackages
 -----------
@@ -12,40 +12,32 @@ Subpackages
 Submodules
 ----------
 
-Categoria.admin module
-----------------------
-
-.. automodule:: Categoria.admin
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Categoria.apps module
----------------------
+----------------------
 
 .. automodule:: Categoria.apps
    :members:
    :undoc-members:
    :show-inheritance:
 
-Categoria.models module
+Categoria.forms module
 -----------------------
+
+.. automodule:: Categoria.forms
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Categoria.models module
+------------------------
 
 .. automodule:: Categoria.models
    :members:
    :undoc-members:
    :show-inheritance:
 
-Categoria.tests module
-----------------------
-
-.. automodule:: Categoria.tests
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Categoria.urls module
----------------------
+----------------------
 
 .. automodule:: Categoria.urls
    :members:
@@ -53,7 +45,7 @@ Categoria.urls module
    :show-inheritance:
 
 Categoria.views module
-----------------------
+-----------------------
 
 .. automodule:: Categoria.views
    :members:

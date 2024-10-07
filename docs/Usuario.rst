@@ -1,5 +1,5 @@
-Usuario package
-===============
+Usuario Package
+==================
 
 Subpackages
 -----------
@@ -12,16 +12,8 @@ Subpackages
 Submodules
 ----------
 
-Usuario.admin module
---------------------
-
-.. automodule:: Usuario.admin
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Usuario.apps module
--------------------
+----------------------
 
 .. automodule:: Usuario.apps
    :members:
@@ -29,7 +21,7 @@ Usuario.apps module
    :show-inheritance:
 
 Usuario.forms module
---------------------
+-----------------------
 
 .. automodule:: Usuario.forms
    :members:
@@ -37,23 +29,15 @@ Usuario.forms module
    :show-inheritance:
 
 Usuario.models module
----------------------
+------------------------
 
 .. automodule:: Usuario.models
    :members:
    :undoc-members:
    :show-inheritance:
 
-Usuario.tests module
---------------------
-
-.. automodule:: Usuario.tests
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Usuario.views module
---------------------
+-----------------------
 
 .. automodule:: Usuario.views
    :members:
