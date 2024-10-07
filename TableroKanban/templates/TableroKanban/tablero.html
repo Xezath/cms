@@ -7,14 +7,15 @@
 {% block contenido %}
 <style>
     .kanban-tarjeta {
-        background-color: #e0f7fa; /* Celeste claro */
-        border: 1px solid #b2ebf2;
-        border-radius: 8px;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
-        margin-bottom: 15px;
+        background-color: #B2E0E6; /* Color celeste claro mate */
+        border: 1px solid #A4D6E1; /* Puedes ajustar el borde si lo deseas */
+        border-radius: 5px; /* Esquinas redondeadas */
+        margin-bottom: 10px; /* Espaciado entre tarjetas */
+        box-shadow: none; /* Sin sombra para un acabado mate */
     }
-    .kanban-tarjeta .card-body {
-        padding: 10px;
+
+    .kanban-tarjeta:hover {
+        background-color: #A1D2D6; /* Color al pasar el mouse (opcional) */
     }
 </style>
 
@@ -25,11 +26,11 @@
     <div class="card-body">
         <div class="row">
             <!-- Columna Activo -->
-            <div class="col-md-4">
+            <div class="col-md-4" ondrop="drop(event, 'Activo')" ondragover="allowDrop(event)">
                 <h2 style="font-size: 1.5em;">Activo</h2>
                 <div class="kanban-column">
                     {% for tarjeta in tarjetas_por_estado.Activas %}
-                        <div class="kanban-tarjeta card">
+                        <div class="kanban-tarjeta card" draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')">
                             <div class="card-body">
                                 <h5 class="card-title">
                                     <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
@@ -44,11 +45,11 @@
             </div>
 
             <!-- Columna Borrador -->
-            <div class="col-md-4">
+            <div class="col-md-4" ondrop="drop(event, 'Borrador')" ondragover="allowDrop(event)">
                 <h2 style="font-size: 1.5em;">Borrador</h2>
                 <div class="kanban-column">
                     {% for tarjeta in tarjetas_por_estado.Borrador %}
-                        <div class="kanban-tarjeta card">
+                        <div class="kanban-tarjeta card" draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')">
                             <div class="card-body">
                                 <h5 class="card-title">
                                     <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
@@ -63,11 +64,11 @@
             </div>
 
             <!-- Columna Inactivo -->
-            <div class="col-md-4">
+            <div class="col-md-4" ondrop="drop(event, 'Inactivo')" ondragover="allowDrop(event)">
                 <h2 style="font-size: 1.5em;">Inactivo</h2>
                 <div class="kanban-column">
                     {% for tarjeta in tarjetas_por_estado.Inactivas %}
-                        <div class="kanban-tarjeta card">
+                        <div class="kanban-tarjeta card" draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')">
                             <div class="card-body">
                                 <h5 class="card-title">
                                     <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
@@ -83,4 +84,58 @@
         </div>
     </div>
 </div>
+
+<script>
+    function allowDrop(event) {
+        event.preventDefault();
+    }
+
+    function drag(event, tarjetaId) {
+        event.dataTransfer.setData("text", tarjetaId);
+    }
+
+    function drop(event, nuevoEstado) {
+        event.preventDefault();
+        const tarjetaId = event.dataTransfer.getData("text");
+
+        // Construir la URL manualmente
+        const url = `/tablero_kanban/actualizar_estado/${tarjetaId}/${nuevoEstado}/`;
+
+        // Hacer una solicitud AJAX para actualizar el estado de la tarjeta
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')  // Asegúrate de que tengas el token CSRF en el encabezado
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                location.reload(); // Recarga la página para reflejar los cambios
+            } else {
+                alert('Error al actualizar el estado de la tarjeta');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    // Función para obtener el token CSRF
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Comprueba si este es el cookie que buscamos
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
 {% endblock %}
