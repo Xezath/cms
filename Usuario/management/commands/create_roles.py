@@ -17,9 +17,9 @@ class Command(BaseCommand):
 
         roles = {
             'Suscriptor': ['view_contenidos'],
-            'Autor': ['add_contenidos', 'view_tablero', 'ver_propio_tablero', 'view_columna'],  
+            'Autor': ['add_contenidos', 'view_tablero', 'ver_propio_tablero', 'view_columna','change_contenidos', 'delete_contenidos'],  
             'Editor': ['change_contenidos', 'change_categoria'],
-            'Publicador': ['delete_contenidos', 'change_subcategoria'],
+            'Publicador': ['can_viewInactive','delete_contenidos', 'change_subcategoria'],
         }
 
         # Crea o obtiene los grupos y asigna permisos
