@@ -24,6 +24,7 @@ class Estado(models.Model):
             str: Descripción del estado.
         """
         return str(self.descripcion)
+    
 
 class Contenidos(models.Model):
     """
@@ -73,6 +74,7 @@ class Contenidos(models.Model):
             ("can_delete", "Puede eliminar contenido"),
             ("can_viewInactive", "Puede ver contenido inactivo"),
             ("can_viewBorrador", "Puede ver contenido en borrador"),
+            ("can_change_estado", "Puede cambiar estado"),
         ]
 
 class Comentario(models.Model):

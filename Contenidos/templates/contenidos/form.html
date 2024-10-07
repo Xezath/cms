@@ -29,14 +29,29 @@
         
         <!-- Otros campos del formulario -->
         {% for campo in formulario %}
-            {% if campo.name != 'contenido' and  campo.name != 'autor' %}
-                    <div class="mb-3">
-                        <label for="{{ campo.id_for_label }}" class="form-label">{{ campo.label }} {% if campo.label == 'Subcategoría' or campo.label == 'Plantilla' %} (opcional) {% endif %}</label>
+            {% if campo.name != 'contenido' and campo.name != 'autor' %}
+                <div class="mb-3">
+                    <label for="{{ campo.id_for_label }}" class="form-label">
+                        {{ campo.label }} 
+                        {% if campo.label == 'Subcategoría' or campo.label == 'Plantilla' %}
+                            (opcional)
+                        {% endif %}
+                    </label>
+        
+                    {% if campo.name != 'estado' or perms.Contenidos.can_change_estado %}
                         {{ campo }}
-                    </div>
-                    <div class="col-12 help-text">{{ campo.errors }}</div>
+                    {% else %}
+                        <select disabled>
+                            <option value="2" selected>Borrador</option>
+                        </select>  
+                        <!-- Campo oculto para enviar el valor seleccionado del estado -->
+                        <input type="hidden" name="{{ campo.name }}" value="3">
+                    {% endif %}
+                </div>
+                <div class="col-12 help-text">{{ campo.errors }}</div>
             {% endif %}
         {% endfor %}
+    
         
         <!-- Editor de texto con opciones de formato -->
         <div class="mb-3 contenido-editor">
