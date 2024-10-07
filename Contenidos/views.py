@@ -93,7 +93,6 @@ def editar_contenido(request, id):
 
         if formulario.is_valid():
             nuevo_estado = formulario.cleaned_data['estado']  # Obtener el nuevo estado del contenido
-            contenido.autor = request.user
 
         
             contenido.save()  # Guarda el contenido modificado

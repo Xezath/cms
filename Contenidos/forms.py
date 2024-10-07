@@ -74,7 +74,7 @@ class EditarContenidosForm(forms.ModelForm):
 
     class Meta:
         model = Contenidos
-        fields = '__all__'
+        fields = ['titulo','contenido', 'categoria', 'subcategoria', 'estado', 'plantilla']
 
         def __init__(self, *args, **kwargs):
             
