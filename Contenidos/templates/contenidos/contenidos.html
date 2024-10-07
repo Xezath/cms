@@ -49,7 +49,7 @@
             <div class="row">
                 {% for contenido in contenidos %}
                 {% if contenido.estado.id != 2 or perms.Contenidos.can_viewInactive %}
-                {% if contenido.estado.id != 3 or contenido.autor.id == user.id %}
+                {% if contenido.estado.id != 3 or contenido.autor.id == user.id or perms.Contenidos.can_viewBorrador %}
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
                         {% if contenido.imagen %}

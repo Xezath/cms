@@ -59,7 +59,7 @@ class EditarContenidosForm(forms.ModelForm):
         label="Categoría"
     )
     subcategoria = forms.ModelChoiceField(
-        queryset=Subcategoria.objects.none(),
+        queryset=Subcategoria.objects.all(),
         widget=forms.Select(attrs={'id': 'subcategoria-select'}),
         empty_label="Seleccione una subcategoría",
         required=False,

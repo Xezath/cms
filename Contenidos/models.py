@@ -72,6 +72,7 @@ class Contenidos(models.Model):
             ("can_modify", "Puede editar contenido"),
             ("can_delete", "Puede eliminar contenido"),
             ("can_viewInactive", "Puede ver contenido inactivo"),
+            ("can_viewBorrador", "Puede ver contenido en borrador"),
         ]
 
 class Comentario(models.Model):
