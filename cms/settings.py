@@ -56,7 +56,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.openid_connect',
+    'mozilla_django_oidc',
     "crispy_forms",
     "crispy_bootstrap5",
     'ckeditor',
@@ -65,7 +67,8 @@ INSTALLED_APPS = [
     'Usuario',
     'Categoria',
     'Plantilla',
-    'Contenidos'
+    'Contenidos',
+    'TableroKanban'
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -133,12 +136,37 @@ TEMPLATES = [
 
 
 # Provider specific settings
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+
+# settings.py
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'poner aqui el client id'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'poner aqui el secret'
+
 SOCIALACCOUNT_PROVIDERS = {
-    'openid_connect': {
-        'SERVER_URL': 'http://localhost:8080/auth/realms/sso-login',
-        'CLIENT_ID': 'sso-login-django',
-        'CLIENT_SECRET': 'yAPWogweSFGNoC7trXNA0jR0wtr1z5WZ',
-        'KEY': 'openid_connect',  # Asegúrate de que coincida con el proveedor
+    'google': {
+        'APP': {
+            'client_id': SOCIAL_AUTH_GOOGLE_OAUTH2_KEY,
+            'secret': SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET,
+            'key': ''
+        },
+        'AUTH_PARAMS': {
+            'access_type': 'offline',
+        },
+        'SCOPE': [
+            'profile',
+            'email'
+        ],
+    },
+    'github': {
+
+        'APP': {
+            'client_id': 'Ov23li8dMzjZDjBi8NWh',
+            'secret': 'd1737349fcd0751ce89bf4ac9ab6eb219db8a1ba',
+            'key': ''
+        }
     }
 }
 
@@ -155,9 +183,9 @@ WSGI_APPLICATION = 'cms.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cms_2',
+        'NAME': 'cms',
         'USER': 'postgres',  
-        'PASSWORD': 'password',
+        'PASSWORD': 'admin',
         'HOST': 'localhost',
         'PORT': '5432',  # puerto por defecto de PostgreSQL
     }

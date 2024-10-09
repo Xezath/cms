@@ -2,16 +2,58 @@
 
 {% block contenido %}
     <div class="container">
+        <p class="text-uppercase text-muted" style="font-size: 0.8rem;">
+            {{ contenido.categoria.nombre }}
+        </p>
+
         <h2>{{ contenido.titulo }}</h2>
-           <div class="card" style="
-                margin: {{ contenido.plantilla.margenes.izq }}px {{ contenido.plantilla.margenes.der }}px {{ contenido.plantilla.margenes.aba }}px {{ contenido.plantilla.margenes.arr }}px;
-                background-color: {{ contenido.plantilla.colorFondo.codigo }};
-           ">
+        <div class="card" style="
+            margin: {{ contenido.plantilla.margenes.izq }}px {{ contenido.plantilla.margenes.der }}px {{ contenido.plantilla.margenes.aba }}px {{ contenido.plantilla.margenes.arr }}px;
+            background-color: {{ contenido.plantilla.colorFondo.codigo }};
+        ">
             <div class="card-body">
                 <div class="contenido">
                     {{ contenido.contenido|safe }}
                 </div>
             </div>
         </div>
+
+        <div class="mt-3">
+            <p><strong> POR: {{contenido.autor}}</strong></p>
+            <p> {{contenido.fecha_creacion}}</p>
+        </div>
+        <!-- Sección de comentarios -->
+        <div class="comentarios mt-5">
+            <h4>Comentarios ({{ comentarios.count }})</h4>
+            {% for comentario in comentarios %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <strong>{{ comentario.usuario.username }}</strong> comentó:
+                        <p>{{ comentario.comentario }}</p>
+                        <p class="text-muted">{{ comentario.fecha_creacion }}</p>
+                        <div class="d-flex justify-content-end">
+                            {% if perms.Contenidos.delete_comentario %}
+                                <a href="{% url 'eliminar_comentario' comentario.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                            {%elif comentario.usuario == request.user %}
+                                <a href="{% url 'eliminar_comentario' comentario.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No hay comentarios aún. Sé el primero en comentar.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Formulario para agregar un comentario -->
+        <div class="mt-4">
+            <h5>Agregar un comentario</h5>
+            <form method="post">
+                {% csrf_token %}
+                {{ comentario_form.as_p }}
+                <button type="submit" class="btn btn-primary">Comentar</button>
+            </form>
+        </div>
+
     </div>
 {% endblock %}

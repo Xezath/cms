@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plantilla package &mdash; documentación de CMS - 1.0</title>
+  <title>Plantilla Package &mdash; documentación de CMS - 1.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -21,7 +21,9 @@
         <script src="_static/translations.js?v=d190bf04"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="genindex.html" />
-    <link rel="search" title="Búsqueda" href="search.html" /> 
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Plantilla.migrations package" href="Plantilla.migrations.html" />
+    <link rel="prev" title="Categoria.migrations package" href="Categoria.migrations.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,83 +45,51 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Plantilla package</a><ul>
-<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-Plantilla.admin">Plantilla.admin module</a></li>
-<li><a class="reference internal" href="#module-Plantilla.apps">Plantilla.apps module</a><ul>
-<li><a class="reference internal" href="#Plantilla.apps.PlantillaConfig"><code class="docutils literal notranslate"><span class="pre">PlantillaConfig</span></code></a><ul>
-<li><a class="reference internal" href="#Plantilla.apps.PlantillaConfig.default_auto_field"><code class="docutils literal notranslate"><span class="pre">PlantillaConfig.default_auto_field</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.apps.PlantillaConfig.name"><code class="docutils literal notranslate"><span class="pre">PlantillaConfig.name</span></code></a></li>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">cms</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Categoria.html">Categoria Package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Plantilla Package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Plantilla.migrations.html">Plantilla.migrations package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Plantilla.apps">Plantilla.apps module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Plantilla.apps.PlantillaConfig"><code class="docutils literal notranslate"><span class="pre">PlantillaConfig</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Plantilla.forms">Plantilla.forms module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Plantilla.forms.CrearPlantillaForm"><code class="docutils literal notranslate"><span class="pre">CrearPlantillaForm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Plantilla.forms.EditarPlantillaForm"><code class="docutils literal notranslate"><span class="pre">EditarPlantillaForm</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Plantilla.models">Plantilla.models module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Plantilla.models.Color"><code class="docutils literal notranslate"><span class="pre">Color</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Plantilla.models.Margenes"><code class="docutils literal notranslate"><span class="pre">Margenes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Plantilla.models.Plantilla"><code class="docutils literal notranslate"><span class="pre">Plantilla</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Plantilla.urls">Plantilla.urls module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Plantilla.views">Plantilla.views module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Plantilla.views.borrar_plantilla"><code class="docutils literal notranslate"><span class="pre">borrar_plantilla()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Plantilla.views.crear_plantilla"><code class="docutils literal notranslate"><span class="pre">crear_plantilla()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Plantilla.views.editar_plantilla"><code class="docutils literal notranslate"><span class="pre">editar_plantilla()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Plantilla.views.mensajeExito_plantilla"><code class="docutils literal notranslate"><span class="pre">mensajeExito_plantilla()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Plantilla.views.plantillas"><code class="docutils literal notranslate"><span class="pre">plantillas()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Plantilla">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Contenidos.html">Contenidos Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Usuario.html">Usuario Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cms.html">cms package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
 </ul>
 </li>
 </ul>
-</li>
-<li><a class="reference internal" href="#module-Plantilla.models">Plantilla.models module</a><ul>
-<li><a class="reference internal" href="#Plantilla.models.Margenes"><code class="docutils literal notranslate"><span class="pre">Margenes</span></code></a><ul>
-<li><a class="reference internal" href="#Plantilla.models.Margenes.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Margenes.DoesNotExist</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Margenes.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Margenes.MultipleObjectsReturned</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Margenes.aba"><code class="docutils literal notranslate"><span class="pre">Margenes.aba</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Margenes.arr"><code class="docutils literal notranslate"><span class="pre">Margenes.arr</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Margenes.der"><code class="docutils literal notranslate"><span class="pre">Margenes.der</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Margenes.id"><code class="docutils literal notranslate"><span class="pre">Margenes.id</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Margenes.izq"><code class="docutils literal notranslate"><span class="pre">Margenes.izq</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Margenes.objects"><code class="docutils literal notranslate"><span class="pre">Margenes.objects</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Margenes.plantilla_set"><code class="docutils literal notranslate"><span class="pre">Margenes.plantilla_set</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#Plantilla.models.Modulos"><code class="docutils literal notranslate"><span class="pre">Modulos</span></code></a><ul>
-<li><a class="reference internal" href="#Plantilla.models.Modulos.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Modulos.DoesNotExist</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Modulos.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Modulos.MultipleObjectsReturned</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Modulos.id"><code class="docutils literal notranslate"><span class="pre">Modulos.id</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Modulos.objects"><code class="docutils literal notranslate"><span class="pre">Modulos.objects</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Modulos.plantilla_set"><code class="docutils literal notranslate"><span class="pre">Modulos.plantilla_set</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Modulos.tipoMultimedia"><code class="docutils literal notranslate"><span class="pre">Modulos.tipoMultimedia</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#Plantilla.models.Plantilla"><code class="docutils literal notranslate"><span class="pre">Plantilla</span></code></a><ul>
-<li><a class="reference internal" href="#Plantilla.models.Plantilla.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Plantilla.DoesNotExist</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Plantilla.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Plantilla.MultipleObjectsReturned</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Plantilla.colorFondo"><code class="docutils literal notranslate"><span class="pre">Plantilla.colorFondo</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Plantilla.descripcion"><code class="docutils literal notranslate"><span class="pre">Plantilla.descripcion</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Plantilla.disposicion"><code class="docutils literal notranslate"><span class="pre">Plantilla.disposicion</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Plantilla.id"><code class="docutils literal notranslate"><span class="pre">Plantilla.id</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Plantilla.margenes"><code class="docutils literal notranslate"><span class="pre">Plantilla.margenes</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Plantilla.margenes_id"><code class="docutils literal notranslate"><span class="pre">Plantilla.margenes_id</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Plantilla.modulos"><code class="docutils literal notranslate"><span class="pre">Plantilla.modulos</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Plantilla.modulos_id"><code class="docutils literal notranslate"><span class="pre">Plantilla.modulos_id</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Plantilla.nombre"><code class="docutils literal notranslate"><span class="pre">Plantilla.nombre</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Plantilla.objects"><code class="docutils literal notranslate"><span class="pre">Plantilla.objects</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Plantilla.tipografia"><code class="docutils literal notranslate"><span class="pre">Plantilla.tipografia</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Plantilla.tipografia_id"><code class="docutils literal notranslate"><span class="pre">Plantilla.tipografia_id</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#Plantilla.models.Tipografia"><code class="docutils literal notranslate"><span class="pre">Tipografia</span></code></a><ul>
-<li><a class="reference internal" href="#Plantilla.models.Tipografia.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Tipografia.DoesNotExist</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Tipografia.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Tipografia.MultipleObjectsReturned</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Tipografia.estilo"><code class="docutils literal notranslate"><span class="pre">Tipografia.estilo</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Tipografia.id"><code class="docutils literal notranslate"><span class="pre">Tipografia.id</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Tipografia.objects"><code class="docutils literal notranslate"><span class="pre">Tipografia.objects</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.models.Tipografia.plantilla_set"><code class="docutils literal notranslate"><span class="pre">Tipografia.plantilla_set</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-Plantilla.tests">Plantilla.tests module</a></li>
-<li><a class="reference internal" href="#module-Plantilla.urls">Plantilla.urls module</a></li>
-<li><a class="reference internal" href="#module-Plantilla.views">Plantilla.views module</a><ul>
-<li><a class="reference internal" href="#Plantilla.views.crear_plantilla"><code class="docutils literal notranslate"><span class="pre">crear_plantilla()</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.views.editar_plantilla"><code class="docutils literal notranslate"><span class="pre">editar_plantilla()</span></code></a></li>
-<li><a class="reference internal" href="#Plantilla.views.plantillas"><code class="docutils literal notranslate"><span class="pre">plantillas()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-Plantilla">Module contents</a></li>
-</ul>
-</li>
-</ul>
-</div>
+
         </div>
       </div>
     </nav>
@@ -134,7 +104,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Plantilla package</li>
+          <li class="breadcrumb-item"><a href="modules.html">cms</a></li>
+      <li class="breadcrumb-item active">Plantilla Package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/Plantilla.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
       </li>
@@ -145,7 +116,7 @@
            <div itemprop="articleBody">
              
   <section id="plantilla-package">
-<h1>Plantilla package<a class="headerlink" href="#plantilla-package" title="Link to this heading"></a></h1>
+<h1>Plantilla Package<a class="headerlink" href="#plantilla-package" title="Link to this heading"></a></h1>
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
@@ -159,9 +130,6 @@
 </section>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
-</section>
-<section id="module-Plantilla.admin">
-<span id="plantilla-admin-module"></span><h2>Plantilla.admin module<a class="headerlink" href="#module-Plantilla.admin" title="Link to this heading"></a></h2>
 </section>
 <section id="module-Plantilla.apps">
 <span id="plantilla-apps-module"></span><h2>Plantilla.apps module<a class="headerlink" href="#module-Plantilla.apps" title="Link to this heading"></a></h2>
@@ -179,11 +147,157 @@
 <span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Plantilla'</span></em><a class="headerlink" href="#Plantilla.apps.PlantillaConfig.name" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="Plantilla.apps.PlantillaConfig.ready">
+<span class="sig-name descname"><span class="pre">ready</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Plantilla/apps.html#PlantillaConfig.ready"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Plantilla.apps.PlantillaConfig.ready" title="Link to this definition"></a></dt>
+<dd><p>Override this method in subclasses to run code when Django starts.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Plantilla.forms">
+<span id="plantilla-forms-module"></span><h2>Plantilla.forms module<a class="headerlink" href="#module-Plantilla.forms" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Plantilla.forms.CrearPlantillaForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Plantilla.forms.</span></span><span class="sig-name descname"><span class="pre">CrearPlantillaForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Plantilla/forms.html#CrearPlantillaForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Plantilla.forms.CrearPlantillaForm" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="Plantilla.forms.CrearPlantillaForm.Meta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/Plantilla/forms.html#CrearPlantillaForm.Meta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Plantilla.forms.CrearPlantillaForm.Meta" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Plantilla.forms.CrearPlantillaForm.Meta.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'__all__'</span></em><a class="headerlink" href="#Plantilla.forms.CrearPlantillaForm.Meta.fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Plantilla.forms.CrearPlantillaForm.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#Plantilla.forms.CrearPlantillaForm.Meta.model" title="Link to this definition"></a></dt>
+<dd><p>alias de <a class="reference internal" href="#Plantilla.models.Plantilla" title="Plantilla.models.Plantilla"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plantilla</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Plantilla.forms.CrearPlantillaForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'colorFondo':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'descripcion':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'disposicionHorizontal':</span> <span class="pre">&lt;django.forms.fields.BooleanField</span> <span class="pre">object&gt;,</span> <span class="pre">'margenes':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'nombre':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Plantilla.forms.CrearPlantillaForm.base_fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Plantilla.forms.CrearPlantillaForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#Plantilla.forms.CrearPlantillaForm.declared_fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Plantilla.forms.CrearPlantillaForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#Plantilla.forms.CrearPlantillaForm.media" title="Link to this definition"></a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Plantilla.forms.EditarPlantillaForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Plantilla.forms.</span></span><span class="sig-name descname"><span class="pre">EditarPlantillaForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Plantilla/forms.html#EditarPlantillaForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Plantilla.forms.EditarPlantillaForm" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="Plantilla.forms.EditarPlantillaForm.Meta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/Plantilla/forms.html#EditarPlantillaForm.Meta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Plantilla.forms.EditarPlantillaForm.Meta" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Plantilla.forms.EditarPlantillaForm.Meta.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'__all__'</span></em><a class="headerlink" href="#Plantilla.forms.EditarPlantillaForm.Meta.fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Plantilla.forms.EditarPlantillaForm.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#Plantilla.forms.EditarPlantillaForm.Meta.model" title="Link to this definition"></a></dt>
+<dd><p>alias de <a class="reference internal" href="#Plantilla.models.Plantilla" title="Plantilla.models.Plantilla"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plantilla</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Plantilla.forms.EditarPlantillaForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'colorFondo':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'descripcion':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'disposicionHorizontal':</span> <span class="pre">&lt;django.forms.fields.BooleanField</span> <span class="pre">object&gt;,</span> <span class="pre">'margenes':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'nombre':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Plantilla.forms.EditarPlantillaForm.base_fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Plantilla.forms.EditarPlantillaForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#Plantilla.forms.EditarPlantillaForm.declared_fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Plantilla.forms.EditarPlantillaForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#Plantilla.forms.EditarPlantillaForm.media" title="Link to this definition"></a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
 <section id="module-Plantilla.models">
 <span id="plantilla-models-module"></span><h2>Plantilla.models module<a class="headerlink" href="#module-Plantilla.models" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Plantilla.models.Color">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Plantilla.models.</span></span><span class="sig-name descname"><span class="pre">Color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">codigo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Plantilla/models.html#Color"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Plantilla.models.Color" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="Plantilla.models.Color.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#Plantilla.models.Color.DoesNotExist" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="Plantilla.models.Color.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#Plantilla.models.Color.MultipleObjectsReturned" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Plantilla.models.Color.codigo">
+<span class="sig-name descname"><span class="pre">codigo</span></span><a class="headerlink" href="#Plantilla.models.Color.codigo" title="Link to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Plantilla.models.Color.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#Plantilla.models.Color.id" title="Link to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Plantilla.models.Color.nombre">
+<span class="sig-name descname"><span class="pre">nombre</span></span><a class="headerlink" href="#Plantilla.models.Color.nombre" title="Link to this definition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Plantilla.models.Color.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#Plantilla.models.Color.objects" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Plantilla.models.Color.plantilla_set">
+<span class="sig-name descname"><span class="pre">plantilla_set</span></span><a class="headerlink" href="#Plantilla.models.Color.plantilla_set" title="Link to this definition"></a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="Plantilla.models.Margenes">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Plantilla.models.</span></span><span class="sig-name descname"><span class="pre">Margenes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">der</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">izq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aba</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Plantilla/models.html#Margenes"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Plantilla.models.Margenes" title="Link to this definition"></a></dt>
@@ -258,60 +372,8 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="Plantilla.models.Modulos">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Plantilla.models.</span></span><span class="sig-name descname"><span class="pre">Modulos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tipoMultimedia</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Plantilla/models.html#Modulos"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Plantilla.models.Modulos" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
-<dl class="py exception">
-<dt class="sig sig-object py" id="Plantilla.models.Modulos.DoesNotExist">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#Plantilla.models.Modulos.DoesNotExist" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="py exception">
-<dt class="sig sig-object py" id="Plantilla.models.Modulos.MultipleObjectsReturned">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#Plantilla.models.Modulos.MultipleObjectsReturned" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="Plantilla.models.Modulos.id">
-<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#Plantilla.models.Modulos.id" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="Plantilla.models.Modulos.objects">
-<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#Plantilla.models.Modulos.objects" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="Plantilla.models.Modulos.plantilla_set">
-<span class="sig-name descname"><span class="pre">plantilla_set</span></span><a class="headerlink" href="#Plantilla.models.Modulos.plantilla_set" title="Link to this definition"></a></dt>
-<dd><p>Accessor to the related objects manager on the reverse side of a
-many-to-one relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
-<p>Most of the implementation is delegated to a dynamically defined manager
-class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="Plantilla.models.Modulos.tipoMultimedia">
-<span class="sig-name descname"><span class="pre">tipoMultimedia</span></span><a class="headerlink" href="#Plantilla.models.Modulos.tipoMultimedia" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="Plantilla.models.Plantilla">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Plantilla.models.</span></span><span class="sig-name descname"><span class="pre">Plantilla</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descripcion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorFondo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tipografia</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">margenes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disposicion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modulos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Plantilla/models.html#Plantilla"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Plantilla.models.Plantilla" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Plantilla.models.</span></span><span class="sig-name descname"><span class="pre">Plantilla</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descripcion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorFondo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">margenes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disposicionHorizontal</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Plantilla/models.html#Plantilla"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Plantilla.models.Plantilla" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="Plantilla.models.Plantilla.DoesNotExist">
@@ -328,8 +390,34 @@ object the first time, the query is executed.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Plantilla.models.Plantilla.colorFondo">
 <span class="sig-name descname"><span class="pre">colorFondo</span></span><a class="headerlink" href="#Plantilla.models.Plantilla.colorFondo" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Plantilla.models.Plantilla.colorFondo_id">
+<span class="sig-name descname"><span class="pre">colorFondo_id</span></span><a class="headerlink" href="#Plantilla.models.Plantilla.colorFondo_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Plantilla.models.Plantilla.contenidos_set">
+<span class="sig-name descname"><span class="pre">contenidos_set</span></span><a class="headerlink" href="#Plantilla.models.Plantilla.contenidos_set" title="Link to this definition"></a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -340,8 +428,8 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="Plantilla.models.Plantilla.disposicion">
-<span class="sig-name descname"><span class="pre">disposicion</span></span><a class="headerlink" href="#Plantilla.models.Plantilla.disposicion" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="Plantilla.models.Plantilla.disposicionHorizontal">
+<span class="sig-name descname"><span class="pre">disposicionHorizontal</span></span><a class="headerlink" href="#Plantilla.models.Plantilla.disposicionHorizontal" title="Link to this definition"></a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
 </dd></dl>
@@ -372,24 +460,6 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="Plantilla.models.Plantilla.modulos">
-<span class="sig-name descname"><span class="pre">modulos</span></span><a class="headerlink" href="#Plantilla.models.Plantilla.modulos" title="Link to this definition"></a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="Plantilla.models.Plantilla.modulos_id">
-<span class="sig-name descname"><span class="pre">modulos_id</span></span><a class="headerlink" href="#Plantilla.models.Plantilla.modulos_id" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="Plantilla.models.Plantilla.nombre">
 <span class="sig-name descname"><span class="pre">nombre</span></span><a class="headerlink" href="#Plantilla.models.Plantilla.nombre" title="Link to this definition"></a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -401,81 +471,8 @@ object the first time, the query is executed.</p>
 <span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#Plantilla.models.Plantilla.objects" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="Plantilla.models.Plantilla.tipografia">
-<span class="sig-name descname"><span class="pre">tipografia</span></span><a class="headerlink" href="#Plantilla.models.Plantilla.tipografia" title="Link to this definition"></a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="Plantilla.models.Plantilla.tipografia_id">
-<span class="sig-name descname"><span class="pre">tipografia_id</span></span><a class="headerlink" href="#Plantilla.models.Plantilla.tipografia_id" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="Plantilla.models.Tipografia">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Plantilla.models.</span></span><span class="sig-name descname"><span class="pre">Tipografia</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estilo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Plantilla/models.html#Tipografia"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Plantilla.models.Tipografia" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
-<dl class="py exception">
-<dt class="sig sig-object py" id="Plantilla.models.Tipografia.DoesNotExist">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#Plantilla.models.Tipografia.DoesNotExist" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="py exception">
-<dt class="sig sig-object py" id="Plantilla.models.Tipografia.MultipleObjectsReturned">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#Plantilla.models.Tipografia.MultipleObjectsReturned" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="Plantilla.models.Tipografia.estilo">
-<span class="sig-name descname"><span class="pre">estilo</span></span><a class="headerlink" href="#Plantilla.models.Tipografia.estilo" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="Plantilla.models.Tipografia.id">
-<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#Plantilla.models.Tipografia.id" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="Plantilla.models.Tipografia.objects">
-<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#Plantilla.models.Tipografia.objects" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="Plantilla.models.Tipografia.plantilla_set">
-<span class="sig-name descname"><span class="pre">plantilla_set</span></span><a class="headerlink" href="#Plantilla.models.Tipografia.plantilla_set" title="Link to this definition"></a></dt>
-<dd><p>Accessor to the related objects manager on the reverse side of a
-many-to-one relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
-<p>Most of the implementation is delegated to a dynamically defined manager
-class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
-</dd></dl>
-
-</dd></dl>
-
-</section>
-<section id="module-Plantilla.tests">
-<span id="plantilla-tests-module"></span><h2>Plantilla.tests module<a class="headerlink" href="#module-Plantilla.tests" title="Link to this heading"></a></h2>
 </section>
 <section id="module-Plantilla.urls">
 <span id="plantilla-urls-module"></span><h2>Plantilla.urls module<a class="headerlink" href="#module-Plantilla.urls" title="Link to this heading"></a></h2>
@@ -483,13 +480,23 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <section id="module-Plantilla.views">
 <span id="plantilla-views-module"></span><h2>Plantilla.views module<a class="headerlink" href="#module-Plantilla.views" title="Link to this heading"></a></h2>
 <dl class="py function">
+<dt class="sig sig-object py" id="Plantilla.views.borrar_plantilla">
+<span class="sig-prename descclassname"><span class="pre">Plantilla.views.</span></span><span class="sig-name descname"><span class="pre">borrar_plantilla</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Plantilla/views.html#borrar_plantilla"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Plantilla.views.borrar_plantilla" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="Plantilla.views.crear_plantilla">
 <span class="sig-prename descclassname"><span class="pre">Plantilla.views.</span></span><span class="sig-name descname"><span class="pre">crear_plantilla</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Plantilla/views.html#crear_plantilla"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Plantilla.views.crear_plantilla" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Plantilla.views.editar_plantilla">
-<span class="sig-prename descclassname"><span class="pre">Plantilla.views.</span></span><span class="sig-name descname"><span class="pre">editar_plantilla</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Plantilla/views.html#editar_plantilla"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Plantilla.views.editar_plantilla" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Plantilla.views.</span></span><span class="sig-name descname"><span class="pre">editar_plantilla</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Plantilla/views.html#editar_plantilla"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Plantilla.views.editar_plantilla" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Plantilla.views.mensajeExito_plantilla">
+<span class="sig-prename descclassname"><span class="pre">Plantilla.views.</span></span><span class="sig-name descname"><span class="pre">mensajeExito_plantilla</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Plantilla/views.html#mensajeExito_plantilla"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Plantilla.views.mensajeExito_plantilla" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -506,7 +513,10 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="Categoria.migrations.html" class="btn btn-neutral float-left" title="Categoria.migrations package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="Plantilla.migrations.html" class="btn btn-neutral float-right" title="Plantilla.migrations package" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

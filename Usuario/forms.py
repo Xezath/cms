@@ -1,8 +1,9 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Permission
 from django.contrib.auth.models import Group
+
 
 class CustomUserCreationForm(UserCreationForm):
     usable_password=None
@@ -39,4 +40,17 @@ class GroupEditForm(forms.ModelForm):
         model = Group
         fields = ['name', 'permissions']
 
+
+class CustomAdminUserChangeForm(UserChangeForm):
+    password = None
+    groups = forms.ModelMultipleChoiceField(
+        queryset=Group.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=True,
+        help_text="Selecciona los grupos que quieres asignar al usuario.",
+    )
+    
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'groups']
 

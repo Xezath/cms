@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Usuario package &mdash; documentación de CMS - 1.0</title>
+  <title>Usuario Package &mdash; documentación de CMS - 1.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -21,7 +21,9 @@
         <script src="_static/translations.js?v=d190bf04"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="genindex.html" />
-    <link rel="search" title="Búsqueda" href="search.html" /> 
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Usuario.migrations package" href="Usuario.migrations.html" />
+    <link rel="prev" title="TableroKanban Package" href="TableroKanban.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,50 +45,58 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Usuario package</a><ul>
-<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-Usuario.admin">Usuario.admin module</a></li>
-<li><a class="reference internal" href="#module-Usuario.apps">Usuario.apps module</a><ul>
-<li><a class="reference internal" href="#Usuario.apps.UsuarioConfig"><code class="docutils literal notranslate"><span class="pre">UsuarioConfig</span></code></a><ul>
-<li><a class="reference internal" href="#Usuario.apps.UsuarioConfig.default_auto_field"><code class="docutils literal notranslate"><span class="pre">UsuarioConfig.default_auto_field</span></code></a></li>
-<li><a class="reference internal" href="#Usuario.apps.UsuarioConfig.name"><code class="docutils literal notranslate"><span class="pre">UsuarioConfig.name</span></code></a></li>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">cms</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Categoria.html">Categoria Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Plantilla.html">Plantilla Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Contenidos.html">Contenidos Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TableroKanban.html">TableroKanban Package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Usuario Package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Usuario.migrations.html">Usuario.migrations package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Usuario.apps">Usuario.apps module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.apps.UsuarioConfig"><code class="docutils literal notranslate"><span class="pre">UsuarioConfig</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Usuario.forms">Usuario.forms module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.forms.CustomAdminUserChangeForm"><code class="docutils literal notranslate"><span class="pre">CustomAdminUserChangeForm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.forms.CustomUserCreationForm"><code class="docutils literal notranslate"><span class="pre">CustomUserCreationForm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.forms.GroupEditForm"><code class="docutils literal notranslate"><span class="pre">GroupEditForm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.forms.GroupForm"><code class="docutils literal notranslate"><span class="pre">GroupForm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.forms.RoleForm"><code class="docutils literal notranslate"><span class="pre">RoleForm</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Usuario.models">Usuario.models module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Usuario.views">Usuario.views module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.views.Iniciar_Sesion"><code class="docutils literal notranslate"><span class="pre">Iniciar_Sesion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.views.cambiar_rol_usuario"><code class="docutils literal notranslate"><span class="pre">cambiar_rol_usuario()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.views.cerrar_sesion"><code class="docutils literal notranslate"><span class="pre">cerrar_sesion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.views.crear_rol"><code class="docutils literal notranslate"><span class="pre">crear_rol()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.views.editar_rol"><code class="docutils literal notranslate"><span class="pre">editar_rol()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.views.eliminar_rol"><code class="docutils literal notranslate"><span class="pre">eliminar_rol()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.views.eliminar_usuario"><code class="docutils literal notranslate"><span class="pre">eliminar_usuario()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.views.exito"><code class="docutils literal notranslate"><span class="pre">exito()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.views.home"><code class="docutils literal notranslate"><span class="pre">home()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.views.lista_usuarios"><code class="docutils literal notranslate"><span class="pre">lista_usuarios()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.views.registrar"><code class="docutils literal notranslate"><span class="pre">registrar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.views.roles_listar"><code class="docutils literal notranslate"><span class="pre">roles_listar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.views.ver_roles"><code class="docutils literal notranslate"><span class="pre">ver_roles()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Usuario.views.ver_usuarios"><code class="docutils literal notranslate"><span class="pre">ver_usuarios()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Usuario">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cms.html">cms package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
 </ul>
 </li>
 </ul>
-</li>
-<li><a class="reference internal" href="#module-Usuario.forms">Usuario.forms module</a><ul>
-<li><a class="reference internal" href="#Usuario.forms.CustomUserCreationForm"><code class="docutils literal notranslate"><span class="pre">CustomUserCreationForm</span></code></a><ul>
-<li><a class="reference internal" href="#Usuario.forms.CustomUserCreationForm.Meta"><code class="docutils literal notranslate"><span class="pre">CustomUserCreationForm.Meta</span></code></a><ul>
-<li><a class="reference internal" href="#Usuario.forms.CustomUserCreationForm.Meta.fields"><code class="docutils literal notranslate"><span class="pre">CustomUserCreationForm.Meta.fields</span></code></a></li>
-<li><a class="reference internal" href="#Usuario.forms.CustomUserCreationForm.Meta.model"><code class="docutils literal notranslate"><span class="pre">CustomUserCreationForm.Meta.model</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#Usuario.forms.CustomUserCreationForm.base_fields"><code class="docutils literal notranslate"><span class="pre">CustomUserCreationForm.base_fields</span></code></a></li>
-<li><a class="reference internal" href="#Usuario.forms.CustomUserCreationForm.declared_fields"><code class="docutils literal notranslate"><span class="pre">CustomUserCreationForm.declared_fields</span></code></a></li>
-<li><a class="reference internal" href="#Usuario.forms.CustomUserCreationForm.media"><code class="docutils literal notranslate"><span class="pre">CustomUserCreationForm.media</span></code></a></li>
-<li><a class="reference internal" href="#Usuario.forms.CustomUserCreationForm.usable_password"><code class="docutils literal notranslate"><span class="pre">CustomUserCreationForm.usable_password</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-Usuario.models">Usuario.models module</a></li>
-<li><a class="reference internal" href="#module-Usuario.tests">Usuario.tests module</a></li>
-<li><a class="reference internal" href="#module-Usuario.views">Usuario.views module</a><ul>
-<li><a class="reference internal" href="#Usuario.views.Iniciar_Sesion"><code class="docutils literal notranslate"><span class="pre">Iniciar_Sesion()</span></code></a></li>
-<li><a class="reference internal" href="#Usuario.views.cerrar_sesion"><code class="docutils literal notranslate"><span class="pre">cerrar_sesion()</span></code></a></li>
-<li><a class="reference internal" href="#Usuario.views.exito"><code class="docutils literal notranslate"><span class="pre">exito()</span></code></a></li>
-<li><a class="reference internal" href="#Usuario.views.home"><code class="docutils literal notranslate"><span class="pre">home()</span></code></a></li>
-<li><a class="reference internal" href="#Usuario.views.registrar"><code class="docutils literal notranslate"><span class="pre">registrar()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-Usuario">Module contents</a></li>
-</ul>
-</li>
-</ul>
-</div>
+
         </div>
       </div>
     </nav>
@@ -101,7 +111,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Usuario package</li>
+          <li class="breadcrumb-item"><a href="modules.html">cms</a></li>
+      <li class="breadcrumb-item active">Usuario Package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/Usuario.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
       </li>
@@ -112,7 +123,7 @@
            <div itemprop="articleBody">
              
   <section id="usuario-package">
-<h1>Usuario package<a class="headerlink" href="#usuario-package" title="Link to this heading"></a></h1>
+<h1>Usuario Package<a class="headerlink" href="#usuario-package" title="Link to this heading"></a></h1>
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
@@ -126,9 +137,6 @@
 </section>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
-</section>
-<section id="module-Usuario.admin">
-<span id="usuario-admin-module"></span><h2>Usuario.admin module<a class="headerlink" href="#module-Usuario.admin" title="Link to this heading"></a></h2>
 </section>
 <section id="module-Usuario.apps">
 <span id="usuario-apps-module"></span><h2>Usuario.apps module<a class="headerlink" href="#module-Usuario.apps" title="Link to this heading"></a></h2>
@@ -151,6 +159,50 @@
 </section>
 <section id="module-Usuario.forms">
 <span id="usuario-forms-module"></span><h2>Usuario.forms module<a class="headerlink" href="#module-Usuario.forms" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Usuario.forms.CustomAdminUserChangeForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Usuario.forms.</span></span><span class="sig-name descname"><span class="pre">CustomAdminUserChangeForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/forms.html#CustomAdminUserChangeForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.forms.CustomAdminUserChangeForm" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">UserChangeForm</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="Usuario.forms.CustomAdminUserChangeForm.Meta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/Usuario/forms.html#CustomAdminUserChangeForm.Meta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.forms.CustomAdminUserChangeForm.Meta" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Usuario.forms.CustomAdminUserChangeForm.Meta.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['username',</span> <span class="pre">'first_name',</span> <span class="pre">'last_name',</span> <span class="pre">'email',</span> <span class="pre">'groups']</span></em><a class="headerlink" href="#Usuario.forms.CustomAdminUserChangeForm.Meta.fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Usuario.forms.CustomAdminUserChangeForm.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#Usuario.forms.CustomAdminUserChangeForm.Meta.model" title="Link to this definition"></a></dt>
+<dd><p>alias de <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Usuario.forms.CustomAdminUserChangeForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'email':</span> <span class="pre">&lt;django.forms.fields.EmailField</span> <span class="pre">object&gt;,</span> <span class="pre">'first_name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'groups':</span> <span class="pre">&lt;django.forms.models.ModelMultipleChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'last_name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'username':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Usuario.forms.CustomAdminUserChangeForm.base_fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Usuario.forms.CustomAdminUserChangeForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'groups':</span> <span class="pre">&lt;django.forms.models.ModelMultipleChoiceField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Usuario.forms.CustomAdminUserChangeForm.declared_fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Usuario.forms.CustomAdminUserChangeForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#Usuario.forms.CustomAdminUserChangeForm.media" title="Link to this definition"></a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Usuario.forms.CustomAdminUserChangeForm.password">
+<span class="sig-name descname"><span class="pre">password</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#Usuario.forms.CustomAdminUserChangeForm.password" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="Usuario.forms.CustomUserCreationForm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Usuario.forms.</span></span><span class="sig-name descname"><span class="pre">CustomUserCreationForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/forms.html#CustomUserCreationForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.forms.CustomUserCreationForm" title="Link to this definition"></a></dt>
@@ -179,7 +231,7 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Usuario.forms.CustomUserCreationForm.declared_fields">
-<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'password1':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'password2':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Usuario.forms.CustomUserCreationForm.declared_fields" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'email':</span> <span class="pre">&lt;django.forms.fields.EmailField</span> <span class="pre">object&gt;,</span> <span class="pre">'password1':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'password2':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Usuario.forms.CustomUserCreationForm.declared_fields" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
@@ -195,12 +247,109 @@
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="Usuario.forms.GroupEditForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Usuario.forms.</span></span><span class="sig-name descname"><span class="pre">GroupEditForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/forms.html#GroupEditForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.forms.GroupEditForm" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="Usuario.forms.GroupEditForm.Meta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/Usuario/forms.html#GroupEditForm.Meta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.forms.GroupEditForm.Meta" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Usuario.forms.GroupEditForm.Meta.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['name',</span> <span class="pre">'permissions']</span></em><a class="headerlink" href="#Usuario.forms.GroupEditForm.Meta.fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Usuario.forms.GroupEditForm.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#Usuario.forms.GroupEditForm.Meta.model" title="Link to this definition"></a></dt>
+<dd><p>alias de <code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Usuario.forms.GroupEditForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'permissions':</span> <span class="pre">&lt;django.forms.models.ModelMultipleChoiceField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Usuario.forms.GroupEditForm.base_fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Usuario.forms.GroupEditForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'permissions':</span> <span class="pre">&lt;django.forms.models.ModelMultipleChoiceField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Usuario.forms.GroupEditForm.declared_fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Usuario.forms.GroupEditForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#Usuario.forms.GroupEditForm.media" title="Link to this definition"></a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Usuario.forms.GroupForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Usuario.forms.</span></span><span class="sig-name descname"><span class="pre">GroupForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/forms.html#GroupForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.forms.GroupForm" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="Usuario.forms.GroupForm.Meta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/Usuario/forms.html#GroupForm.Meta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.forms.GroupForm.Meta" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Usuario.forms.GroupForm.Meta.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['name',</span> <span class="pre">'permissions']</span></em><a class="headerlink" href="#Usuario.forms.GroupForm.Meta.fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Usuario.forms.GroupForm.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#Usuario.forms.GroupForm.Meta.model" title="Link to this definition"></a></dt>
+<dd><p>alias de <code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Usuario.forms.GroupForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'permissions':</span> <span class="pre">&lt;django.forms.models.ModelMultipleChoiceField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Usuario.forms.GroupForm.base_fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Usuario.forms.GroupForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'permissions':</span> <span class="pre">&lt;django.forms.models.ModelMultipleChoiceField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Usuario.forms.GroupForm.declared_fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Usuario.forms.GroupForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#Usuario.forms.GroupForm.media" title="Link to this definition"></a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Usuario.forms.RoleForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Usuario.forms.</span></span><span class="sig-name descname"><span class="pre">RoleForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_order=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/forms.html#RoleForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.forms.RoleForm" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Usuario.forms.RoleForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'role_name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Usuario.forms.RoleForm.base_fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Usuario.forms.RoleForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'role_name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Usuario.forms.RoleForm.declared_fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Usuario.forms.RoleForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#Usuario.forms.RoleForm.media" title="Link to this definition"></a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-Usuario.models">
 <span id="usuario-models-module"></span><h2>Usuario.models module<a class="headerlink" href="#module-Usuario.models" title="Link to this heading"></a></h2>
-</section>
-<section id="module-Usuario.tests">
-<span id="usuario-tests-module"></span><h2>Usuario.tests module<a class="headerlink" href="#module-Usuario.tests" title="Link to this heading"></a></h2>
 </section>
 <section id="module-Usuario.views">
 <span id="usuario-views-module"></span><h2>Usuario.views module<a class="headerlink" href="#module-Usuario.views" title="Link to this heading"></a></h2>
@@ -210,8 +359,33 @@
 <dd></dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="Usuario.views.cambiar_rol_usuario">
+<span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">cambiar_rol_usuario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#cambiar_rol_usuario"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.cambiar_rol_usuario" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="Usuario.views.cerrar_sesion">
 <span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">cerrar_sesion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#cerrar_sesion"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.cerrar_sesion" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Usuario.views.crear_rol">
+<span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">crear_rol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#crear_rol"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.crear_rol" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Usuario.views.editar_rol">
+<span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">editar_rol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#editar_rol"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.editar_rol" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Usuario.views.eliminar_rol">
+<span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">eliminar_rol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#eliminar_rol"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.eliminar_rol" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Usuario.views.eliminar_usuario">
+<span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">eliminar_usuario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#eliminar_usuario"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.eliminar_usuario" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -225,8 +399,28 @@
 <dd></dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="Usuario.views.lista_usuarios">
+<span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">lista_usuarios</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#lista_usuarios"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.lista_usuarios" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="Usuario.views.registrar">
 <span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">registrar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#registrar"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.registrar" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Usuario.views.roles_listar">
+<span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">roles_listar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#roles_listar"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.roles_listar" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Usuario.views.ver_roles">
+<span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">ver_roles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#ver_roles"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.ver_roles" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Usuario.views.ver_usuarios">
+<span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">ver_usuarios</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#ver_usuarios"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.ver_usuarios" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>
@@ -238,7 +432,10 @@
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="TableroKanban.html" class="btn btn-neutral float-left" title="TableroKanban Package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="Usuario.migrations.html" class="btn btn-neutral float-right" title="Usuario.migrations package" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

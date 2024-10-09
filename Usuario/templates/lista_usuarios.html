@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header bg-primary text-white text-center">
+                <div class="card-header custom-bg text-white text-center">
                     <h4 class="mb-0">Lista de Usuarios Registrados</h4>
                 </div>
                 <div class="card-body">
@@ -16,6 +16,7 @@
                                 <th>Username</th>
                                 <th>Email</th>
                                 <th>Fecha de Registro</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -24,10 +25,20 @@
                                 <td>{{ usuario.username }}</td>
                                 <td>{{ usuario.email }}</td>
                                 <td>{{ usuario.date_joined }}</td>
+                                <td>
+                                    
+                                    <a href="{% url 'cambiar_rol_usuario' usuario.id %}" class="btn btn-sm btn-warning">Editar</a>
+                                    <form action="{% url 'eliminar_usuario' usuario.id %}" method="POST" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar este usuario?');">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                             {% empty %}
                             <tr>
-                                <td colspan="3" class="text-center">No hay usuarios registrados.</td>
+                                <td colspan="4" class="text-center">No hay usuarios registrados.</td>
                             </tr>
                             {% endfor %}
                         </tbody>

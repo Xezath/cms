@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header bg-primary text-white text-center">
+                <div class="card-header custom-bg text-white text-center">
                     <h4 class="mb-0">Iniciar Sesión</h4>
                 </div>
                 <div class="card-body">
@@ -25,9 +25,13 @@
                             </button>
                         </div>
                     </form>
-
-<a href="http://localhost:8080/auth/realms/sso-login/protocol/openid-connect/auth?client_id=sso-login-django&redirect_uri=http://localhost:8000/callback&response_type=code&scope=openid" class="btn btn-primary">Entrar con cuenta de GitHub</a>
                 </div>
+            </div>
+            <div class="card-header bg-light text-white text-center">
+                <h4 style="color: black;">o Iniciar Sesión</h4>
+                
+<a href="{% provider_login_url 'google' %}" class="btn btn-secondary">con Google</a>
+<a href="{% provider_login_url 'github' %}" class="btn btn-secondary">con GitHub</a>
             </div>
         </div>
     </div>

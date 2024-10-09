@@ -1,10 +1,12 @@
 
 from django.shortcuts import render, redirect,  get_object_or_404
 from django.contrib.auth import login,logout, authenticate
-from .forms import CustomUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User,Group
-from .forms import GroupForm, GroupEditForm
+from .forms import CustomUserCreationForm, CustomAdminUserChangeForm, GroupForm, GroupEditForm
+from django.urls import reverse_lazy
+from django.contrib import messages
+from django.contrib.auth.decorators import permission_required
 
 # Create your views here.
 def home(request):
@@ -12,7 +14,7 @@ def home(request):
     # La función 'render' toma el objeto 'request' y la plantilla 'home.html' para generar la respuesta HTTP.
     return render(request, 'home.html')
 
-    
+
 def exito(request):
     # Renderiza la página de éxito, que podría mostrar un mensaje de éxito
     # después de que el usuario complete una acción como el registro o el inicio de sesión.
@@ -67,12 +69,23 @@ def registrar(request):
         form = CustomUserCreationForm(request.POST) 
         if form.is_valid():
             # Si el formulario es válido, guarda el nuevo usuario en la base de datos.
-            print("Datos recibidos (POST):", request.POST)  # Muestra los datos del formulario recibidos en la solicitud POST.
-            form.save()
+            #print("Datos recibidos (POST):", request.POST)  # Muestra los datos del formulario recibidos en la solicitud POST.
+            user=form.save()
+
+            # Comprobar si este es el primer usuario registrado
+            if User.objects.count() == 1:
+                # Asignar el grupo "Administrador" si es el primer usuario
+                admin_group, created = Group.objects.get_or_create(name='Administrador')
+                user.groups.add(admin_group)
+            else:
+                # Asignar el grupo "Suscriptor" a los demás usuarios
+                suscriptor_group, created = Group.objects.get_or_create(name='Suscriptor')
+                user.groups.add(suscriptor_group)
+                
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
             email = form.cleaned_data.get('email')
-            print("Datos validados y limpios:", form.cleaned_data)  # Muestra los datos validados y limpios del formulario.
+            #print("Datos validados y limpios:", form.cleaned_data)  # Muestra los datos validados y limpios del formulario.
             user = authenticate(username=username, password=password, email=email) # Autentica al usuario
             login(request, user)    # Inicia sesión automáticamente al usuario recién registrado.
 
@@ -85,13 +98,12 @@ def registrar(request):
     else:
         # Si la solicitud es GET, se renderiza un formulario vacío para el registro.
         form = CustomUserCreationForm()
-        print("Datos recibidos (GET):", request.GET) # Muestra los datos recibidos en la solicitud GET, aunque no deberían haber datos en GET para el registro.
+        #print("Datos recibidos (GET):", request.GET) # Muestra los datos recibidos en la solicitud GET, aunque no deberían haber datos en GET para el registro.
     
     # Renderiza la plantilla del formulario de registro con el formulario en el contexto.
     return render(request, 'registrar.html', {'form': form})
 
-
-# usuarios/views.py
+@permission_required('auth.add_group',raise_exception=True)
 def crear_rol(request):
     if request.method == 'POST':
         form = GroupForm(request.POST)
@@ -102,6 +114,7 @@ def crear_rol(request):
         form = GroupForm()
     return render(request, 'crear_rol.html', {'form': form})
 
+@permission_required('auth.change_group',raise_exception=True)
 def editar_rol(request, pk):
     group = get_object_or_404(Group, pk=pk)
     if request.method == 'POST':
@@ -113,6 +126,7 @@ def editar_rol(request, pk):
         form = GroupEditForm(instance=group)
     return render(request, 'editar_rol.html', {'form': form})
 
+@permission_required('auth.delete_group',raise_exception=True)
 def eliminar_rol(request, pk):
     group = get_object_or_404(Group, pk=pk)
     if request.method == 'POST':
@@ -120,22 +134,46 @@ def eliminar_rol(request, pk):
         return redirect('roles_listar')
     return render(request, 'eliminar_rol.html', {'group': group})
 
+@permission_required('auth.view_group',raise_exception=True)
 def roles_listar(request):
     roles = Group.objects.all()
     return render(request, 'roles_listar.html', {'roles': roles})
 
+@permission_required('auth.view_user',raise_exception=True)
 def ver_usuarios(request):
     usuarios = User.objects.all()
     return render(request, 'ver_usuarios.html', {'usuarios': usuarios})
 
+@permission_required('auth.view_group',raise_exception=True)
 def ver_roles(request):
     roles = Group.objects.all()
     return render(request, 'ver_roles.html', {'roles': roles})
 
-
+@permission_required('auth.view_user',raise_exception=True)
 def lista_usuarios(request):
     # Obtener todos los usuarios registrados
     usuarios = User.objects.all()
     return render(request, 'lista_usuarios.html', {'usuarios': usuarios})
 
+# Nueva vista para editar los roles de un usuario
+@permission_required('auth.change_user',raise_exception=True)
+def cambiar_rol_usuario(request, pk):
+    usuario = get_object_or_404(User, pk=pk)
+    if request.method == 'POST':
+        form = CustomAdminUserChangeForm(request.POST, instance=usuario)
+        if form.is_valid():
+            form.save()  # Guardar los cambios del rol
+            return redirect('lista_usuarios')  # Redirigir de nuevo a la lista de usuarios
+    else:
+        form = CustomAdminUserChangeForm(instance=usuario)
+    return render(request, 'cambiar_rol_usuario.html', {'form': form, 'usuario': usuario})
+
+# Nueva vista para eliminar un usuario
+@permission_required('auth.delete_user',raise_exception=True)
+def eliminar_usuario(request, pk):
+    usuario = get_object_or_404(User, pk=pk)
+    if request.method == 'POST':
+        usuario.delete()  # Eliminar el usuario
+        return redirect('lista_usuarios')  # Redirigir a la lista de usuarios
+    return render(request, 'eliminar_usuario.html', {'usuario': usuario})
 

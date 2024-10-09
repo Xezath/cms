@@ -1,17 +1,47 @@
 {% extends "base.html" %}
+{% block titulo %} Lista de Roles {% endblock %}
 
-{% block titulo %} Listar Roles {% endblock %}
 {% block contenido %}
-<h1>Roles</h1>
-<a href="{% url 'crear_rol' %}">Crear Rol</a>
-<ul>
-    {% for role in roles %}
-        <li>
-            {{ role.name }}
-            <a href="{% url 'editar_rol' role.id %}">Editar</a>
-            <a href="{% url 'eliminar_rol' role.id %}">Eliminar</a>
-        </li>
-    {% endfor %}
-</ul>
-
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header custom-bg text-white text-center">
+                    <h4 class="mb-0">Lista de Roles</h4>
+                </div>
+                <div class="card-body">
+                    <a href="{% url 'crear_rol' %}" class="btn btn-success mb-3">Crear Rol</a>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Nombre del Rol</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for role in roles %}
+                            <tr>
+                                <td>{{ role.name }}</td>
+                                <td>
+                                    <a href="{% url 'editar_rol' role.id %}" class="btn btn-sm btn-info">Editar</a>
+                                    <form action="{% url 'eliminar_rol' role.id %}" method="POST" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar este rol?');">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="2" class="text-center">No hay roles disponibles.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

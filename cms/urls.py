@@ -41,6 +41,9 @@ urlpatterns = [
     path('eliminar_rol/<int:pk>/', views.eliminar_rol, name='eliminar_rol'),
     path('ver_usuarios/', views.ver_usuarios, name='ver_usuarios'),
     path('ver_roles/', views.ver_roles, name='ver_roles'),
-    path('lista_usuarios/', views.lista_usuarios, name='lista_usuarios')  # Añade esta línea
+    path('lista_usuarios/', views.lista_usuarios, name='lista_usuarios'),  # Añade esta línea
+    path('eliminar_usuario/<int:pk>/', views.eliminar_usuario, name='eliminar_usuario'),
+    path('cambiar_rol_usuario/<int:pk>/', views.cambiar_rol_usuario, name='cambiar_rol_usuario'),
+    path('tablero_kanban/', include('TableroKanban.urls')),
 
 ]
