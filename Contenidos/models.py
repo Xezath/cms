@@ -48,7 +48,7 @@ class Contenidos(models.Model):
     plantilla = models.ForeignKey(Plantilla, on_delete=models.SET_NULL, null=True, blank=True)  # Plantilla utilizada
     autor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)  # Autor del contenido
     estado = models.ForeignKey(Estado, on_delete=models.CASCADE)  # Estado del contenido
-
+    
     def __str__(self):
         """
         Devuelve el título del contenido.

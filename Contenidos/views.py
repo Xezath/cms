@@ -5,8 +5,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required, login_required
 from django.http import HttpResponseForbidden, JsonResponse
-from django.contrib.auth.models import User  
+from django.contrib.auth.models import User, Permission
 from TableroKanban.models import Tablero, Tarjeta
+from django.db.models import Q
 
 
 @permission_required('Contenidos.view_contenidos', raise_exception=True)
@@ -35,7 +36,12 @@ def contenidos(request):
     # Obtener listas para los filtros
     categorias = Categoria.objects.all()
     subcategorias = Subcategoria.objects.all()
-    autores = User.objects.all() 
+
+    permiso_crear_contenido = Permission.objects.get(codename='add_contenidos')
+    autores = User.objects.filter(
+        Q(user_permissions=permiso_crear_contenido) | 
+        Q(groups__permissions=permiso_crear_contenido)
+    ).distinct()
 
     return render(request, 'contenidos/contenidos.html', {
         'contenidos': contenidos,
