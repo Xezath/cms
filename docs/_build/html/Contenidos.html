@@ -64,7 +64,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#Contenidos.forms.ContenidosForm"><code class="docutils literal notranslate"><span class="pre">ContenidosForm</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Contenidos.forms.EditarContenidosForm"><code class="docutils literal notranslate"><span class="pre">EditarContenidosForm</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Contenidos.forms.VisualizarContenidoForm"><code class="docutils literal notranslate"><span class="pre">VisualizarContenidoForm</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#Contenidos.forms.clean_contenido"><code class="docutils literal notranslate"><span class="pre">clean_contenido()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-Contenidos.models">Contenidos.models module</a><ul>
@@ -136,6 +135,11 @@
 <dt class="sig sig-object py" id="Contenidos.apps.ContenidosConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Contenidos.apps.</span></span><span class="sig-name descname"><span class="pre">ContenidosConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/apps.html#ContenidosConfig"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.apps.ContenidosConfig" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AppConfig</span></code></p>
+<p>Configuración de la aplicación Contenidos.</p>
+<p>Esta clase se encarga de definir las configuraciones específicas de la 
+aplicación “Contenidos” dentro del proyecto CMS. Se establece el 
+tipo de campo automático para claves primarias y se importan las señales 
+necesarias para la lógica del negocio.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.apps.ContenidosConfig.default_auto_field">
 <span class="sig-name descname"><span class="pre">default_auto_field</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'django.db.models.BigAutoField'</span></em><a class="headerlink" href="#Contenidos.apps.ContenidosConfig.default_auto_field" title="Link to this definition"></a></dt>
@@ -149,7 +153,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="Contenidos.apps.ContenidosConfig.ready">
 <span class="sig-name descname"><span class="pre">ready</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/apps.html#ContenidosConfig.ready"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.apps.ContenidosConfig.ready" title="Link to this definition"></a></dt>
-<dd><p>Override this method in subclasses to run code when Django starts.</p>
+<dd><p>Método que se llama cuando la aplicación está lista.</p>
+<p>Aquí se importan las señales definidas en la aplicación, 
+lo que permite ejecutar lógica específica en respuesta a 
+eventos de la base de datos (como crear, actualizar o eliminar objetos).</p>
 </dd></dl>
 
 </dd></dl>
@@ -161,10 +168,13 @@
 <dt class="sig sig-object py" id="Contenidos.forms.ComentarioForm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Contenidos.forms.</span></span><span class="sig-name descname"><span class="pre">ComentarioForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/forms.html#ComentarioForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.forms.ComentarioForm" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+<p>Formulario para la creación de comentarios. Solo incluye el campo “comentario”.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="Contenidos.forms.ComentarioForm.Meta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/Contenidos/forms.html#ComentarioForm.Meta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.forms.ComentarioForm.Meta" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Meta configuración del formulario. Especifica el modelo Comentario y
+que solo el campo “comentario” estará presente en el formulario.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.forms.ComentarioForm.Meta.fields">
 <span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['comentario']</span></em><a class="headerlink" href="#Contenidos.forms.ComentarioForm.Meta.fields" title="Link to this definition"></a></dt>
@@ -210,6 +220,9 @@
 <dt class="sig sig-object py" id="Contenidos.forms.ContenidosForm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Contenidos.forms.</span></span><span class="sig-name descname"><span class="pre">ContenidosForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/forms.html#ContenidosForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.forms.ContenidosForm" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+<p>Formulario para la creación de contenidos. Incluye los campos de
+categoría, subcategoría y plantilla, con opciones dinámicas para 
+subcategorías basadas en la categoría seleccionada.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="Contenidos.forms.ContenidosForm.Meta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/Contenidos/forms.html#ContenidosForm.Meta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.forms.ContenidosForm.Meta" title="Link to this definition"></a></dt>
@@ -232,6 +245,13 @@
 <span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'autor':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'categoria':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'contenido':</span> <span class="pre">&lt;ckeditor.fields.RichTextFormField</span> <span class="pre">object&gt;,</span> <span class="pre">'estado':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'plantilla':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'subcategoria':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'titulo':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Contenidos.forms.ContenidosForm.base_fields" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="Contenidos.forms.ContenidosForm.clean_contenido">
+<span class="sig-name descname"><span class="pre">clean_contenido</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/forms.html#ContenidosForm.clean_contenido"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.forms.ContenidosForm.clean_contenido" title="Link to this definition"></a></dt>
+<dd><p>Valida el campo de contenido para asegurarse de que no esté vacío.
+Si está vacío, se lanza una ValidationError.</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.forms.ContenidosForm.declared_fields">
 <span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'categoria':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'plantilla':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'subcategoria':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Contenidos.forms.ContenidosForm.declared_fields" title="Link to this definition"></a></dt>
@@ -247,12 +267,17 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="Contenidos.forms.EditarContenidosForm">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Contenidos.forms.</span></span><span class="sig-name descname"><span class="pre">EditarContenidosForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/forms.html#EditarContenidosForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.forms.EditarContenidosForm" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Contenidos.forms.</span></span><span class="sig-name descname"><span class="pre">EditarContenidosForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/forms.html#EditarContenidosForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.forms.EditarContenidosForm" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+<p>Formulario para la edición de contenidos. Incluye los campos de
+categoría, subcategoría y plantilla, con opciones dinámicas para
+subcategorías basadas en la categoría seleccionada.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="Contenidos.forms.EditarContenidosForm.Meta">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/forms.html#EditarContenidosForm.Meta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.forms.EditarContenidosForm.Meta" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/Contenidos/forms.html#EditarContenidosForm.Meta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.forms.EditarContenidosForm.Meta" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Meta configuración del formulario. Especifica el modelo Contenidos y
+los campos que estarán presentes en el formulario.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.forms.EditarContenidosForm.Meta.fields">
 <span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['titulo',</span> <span class="pre">'contenido',</span> <span class="pre">'categoria',</span> <span class="pre">'subcategoria',</span> <span class="pre">'estado',</span> <span class="pre">'plantilla']</span></em><a class="headerlink" href="#Contenidos.forms.EditarContenidosForm.Meta.fields" title="Link to this definition"></a></dt>
@@ -288,6 +313,8 @@
 <dt class="sig sig-object py" id="Contenidos.forms.VisualizarContenidoForm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Contenidos.forms.</span></span><span class="sig-name descname"><span class="pre">VisualizarContenidoForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/forms.html#VisualizarContenidoForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.forms.VisualizarContenidoForm" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+<p>Formulario para la visualización de contenidos. Se utiliza para mostrar
+los datos sin opción de modificación.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="Contenidos.forms.VisualizarContenidoForm.Meta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/Contenidos/forms.html#VisualizarContenidoForm.Meta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.forms.VisualizarContenidoForm.Meta" title="Link to this definition"></a></dt>
@@ -323,11 +350,6 @@
 
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="Contenidos.forms.clean_contenido">
-<span class="sig-prename descclassname"><span class="pre">Contenidos.forms.</span></span><span class="sig-name descname"><span class="pre">clean_contenido</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/forms.html#clean_contenido"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.forms.clean_contenido" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
 </section>
 <section id="module-Contenidos.models">
 <span id="contenidos-models-module"></span><h2>Contenidos.models module<a class="headerlink" href="#module-Contenidos.models" title="Link to this heading"></a></h2>
@@ -336,13 +358,6 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Contenidos.models.</span></span><span class="sig-name descname"><span class="pre">Comentario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/models.html#Comentario"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.models.Comentario" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
 <p>Modelo que representa un comentario sobre un contenido.</p>
-<dl class="simple">
-<dt>Atributos:</dt><dd><p>comentario (str): Texto del comentario.
-usuario (ForeignKey): El usuario que realizó el comentario.
-fecha_creacion (DateTimeField): Fecha de creación del comentario.
-contenido (ForeignKey): Contenido relacionado con el comentario.</p>
-</dd>
-</dl>
 <dl class="py exception">
 <dt class="sig sig-object py" id="Contenidos.models.Comentario.DoesNotExist">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#Contenidos.models.Comentario.DoesNotExist" title="Link to this definition"></a></dt>
@@ -358,21 +373,13 @@ contenido (ForeignKey): Contenido relacionado con el comentario.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Comentario.comentario">
 <span class="sig-name descname"><span class="pre">comentario</span></span><a class="headerlink" href="#Contenidos.models.Comentario.comentario" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>(str): Texto del comentario.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Comentario.contenido">
 <span class="sig-name descname"><span class="pre">contenido</span></span><a class="headerlink" href="#Contenidos.models.Comentario.contenido" title="Link to this definition"></a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+<dd><p>(ForeignKey): Contenido relacionado con el comentario.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -383,8 +390,7 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Comentario.fecha_creacion">
 <span class="sig-name descname"><span class="pre">fecha_creacion</span></span><a class="headerlink" href="#Contenidos.models.Comentario.fecha_creacion" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>(DateTimeField): Fecha de creación del comentario.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -412,14 +418,7 @@ object the first time, the query is executed.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Comentario.usuario">
 <span class="sig-name descname"><span class="pre">usuario</span></span><a class="headerlink" href="#Contenidos.models.Comentario.usuario" title="Link to this definition"></a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+<dd><p>(ForeignKey): El usuario que realizó el comentario.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -434,17 +433,6 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Contenidos.models.</span></span><span class="sig-name descname"><span class="pre">Contenidos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/models.html#Contenidos"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.models.Contenidos" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
 <p>Modelo que representa un contenido en el sistema.</p>
-<dl class="simple">
-<dt>Atributos:</dt><dd><p>titulo (str): El título del contenido.
-contenido (RichTextField): El contenido en formato enriquecido.
-fecha_creacion (DateTimeField): La fecha de creación del contenido.
-categoria (ForeignKey): La categoría asociada al contenido.
-subcategoria (ForeignKey): La subcategoría asociada al contenido.
-plantilla (ForeignKey): La plantilla utilizada para el contenido.
-autor (ForeignKey): El usuario que creó el contenido.
-estado (ForeignKey): El estado del contenido.</p>
-</dd>
-</dl>
 <dl class="py exception">
 <dt class="sig sig-object py" id="Contenidos.models.Contenidos.DoesNotExist">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#Contenidos.models.Contenidos.DoesNotExist" title="Link to this definition"></a></dt>
@@ -460,14 +448,7 @@ estado (ForeignKey): El estado del contenido.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Contenidos.autor">
 <span class="sig-name descname"><span class="pre">autor</span></span><a class="headerlink" href="#Contenidos.models.Contenidos.autor" title="Link to this definition"></a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+<dd><p>(ForeignKey): El usuario que creó el contenido.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -478,14 +459,7 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Contenidos.categoria">
 <span class="sig-name descname"><span class="pre">categoria</span></span><a class="headerlink" href="#Contenidos.models.Contenidos.categoria" title="Link to this definition"></a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+<dd><p>(ForeignKey): La categoría asociada al contenido.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -511,21 +485,13 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Contenidos.contenido">
 <span class="sig-name descname"><span class="pre">contenido</span></span><a class="headerlink" href="#Contenidos.models.Contenidos.contenido" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>(RichTextField): El contenido en formato enriquecido.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Contenidos.estado">
 <span class="sig-name descname"><span class="pre">estado</span></span><a class="headerlink" href="#Contenidos.models.Contenidos.estado" title="Link to this definition"></a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+<dd><p>(ForeignKey): El estado del contenido.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -536,8 +502,7 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Contenidos.fecha_creacion">
 <span class="sig-name descname"><span class="pre">fecha_creacion</span></span><a class="headerlink" href="#Contenidos.models.Contenidos.fecha_creacion" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>(DateTimeField): La fecha de creación del contenido.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -565,14 +530,7 @@ object the first time, the query is executed.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Contenidos.plantilla">
 <span class="sig-name descname"><span class="pre">plantilla</span></span><a class="headerlink" href="#Contenidos.models.Contenidos.plantilla" title="Link to this definition"></a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+<dd><p>(ForeignKey): La plantilla utilizada para el contenido.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -583,14 +541,7 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Contenidos.subcategoria">
 <span class="sig-name descname"><span class="pre">subcategoria</span></span><a class="headerlink" href="#Contenidos.models.Contenidos.subcategoria" title="Link to this definition"></a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+<dd><p>(ForeignKey): La subcategoría asociada al contenido.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -616,8 +567,7 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Contenidos.titulo">
 <span class="sig-name descname"><span class="pre">titulo</span></span><a class="headerlink" href="#Contenidos.models.Contenidos.titulo" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>(str): El título del contenido.</p>
 </dd></dl>
 
 </dd></dl>
@@ -627,11 +577,6 @@ object the first time, the query is executed.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Contenidos.models.</span></span><span class="sig-name descname"><span class="pre">Estado</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/models.html#Estado"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.models.Estado" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
 <p>Modelo que representa un estado de un contenido.</p>
-<dl class="simple">
-<dt>Atributos:</dt><dd><p>id (int): Identificador único del estado.
-descripcion (str): Descripción del estado.</p>
-</dd>
-</dl>
 <dl class="py exception">
 <dt class="sig sig-object py" id="Contenidos.models.Estado.DoesNotExist">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#Contenidos.models.Estado.DoesNotExist" title="Link to this definition"></a></dt>
@@ -677,15 +622,13 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Estado.descripcion">
 <span class="sig-name descname"><span class="pre">descripcion</span></span><a class="headerlink" href="#Contenidos.models.Estado.descripcion" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>Descripción del estado.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Estado.id">
 <span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#Contenidos.models.Estado.id" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>Identificador unico del estado.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -719,39 +662,82 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <dl class="py function">
 <dt class="sig sig-object py" id="Contenidos.views.cargar_subcategorias">
 <span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">cargar_subcategorias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#cargar_subcategorias"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.cargar_subcategorias" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Carga las subcategorías correspondientes a una categoría específica. 
+Se utiliza en la vista de creación y edición de contenidos.</p>
+<p>Parámetros:
+- request: HttpRequest object con la información de la solicitud.</p>
+<p>Retorna:
+- JsonResponse con las subcategorías asociadas a la categoría seleccionada.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Contenidos.views.contenidos">
 <span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">contenidos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#contenidos"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.contenidos" title="Link to this definition"></a></dt>
-<dd><p>Vista que muestra una lista de todos los contenidos disponibles
-y permite filtrarlos por categoría, subcategoría o autor.</p>
+<dd><p>Muestra una lista de todos los contenidos disponibles, permitiendo filtrarlos por categoría, 
+subcategoría o autor. También carga las listas necesarias para realizar los filtros.
+Parámetros:
+- request: HttpRequest object con la información de la solicitud.
+Retorna:
+- HttpResponse con la página “contenidos/contenidos.html”, que incluye la lista de contenidos y los filtros.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Contenidos.views.crear_contenido">
 <span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">crear_contenido</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#crear_contenido"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.crear_contenido" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Vista para crear un nuevo contenido. Una vez creado, se asocia una tarjeta en el tablero Kanban 
+al contenido creado.</p>
+<p>Parámetros:
+- request: HttpRequest object con la información de la solicitud.</p>
+<p>Retorna:
+- HttpResponse que redirige a la lista de contenidos si se crea con éxito o muestra la página “contenidos/crear.html” con el formulario si no es válido.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Contenidos.views.editar_contenido">
 <span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">editar_contenido</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#editar_contenido"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.editar_contenido" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Vista para editar un contenido existente. También actualiza la tarjeta asociada en el tablero 
+Kanban si el estado del contenido cambia.</p>
+<p>Parámetros:
+- request: HttpRequest object con la información de la solicitud.
+- id: ID del contenido a editar.</p>
+<p>Retorna:
+- HttpResponse que redirige a la lista de contenidos si la edición se completa con éxito, o muestra la página “contenidos/editar.html” con el formulario si no es válido.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Contenidos.views.eliminar_comentario">
 <span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">eliminar_comentario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comentario_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#eliminar_comentario"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.eliminar_comentario" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Vista para eliminar un comentario. Solo el propietario del comentario o un usuario con permisos 
+adecuados puede eliminarlo. Solicita confirmación antes de proceder con la eliminación.</p>
+<p>Parámetros:
+- request: HttpRequest object con la información de la solicitud.
+- comentario_id: ID del comentario a eliminar.</p>
+<p>Retorna:
+- HttpResponse que redirige a la página anterior o muestra la página de confirmación de eliminación.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Contenidos.views.eliminar_contenido">
 <span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">eliminar_contenido</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#eliminar_contenido"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.eliminar_contenido" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Vista para eliminar un contenido. Solicita confirmación antes de proceder con la eliminación.</p>
+<p>Parámetros:
+- request: HttpRequest object con la información de la solicitud.
+- pk: ID del contenido a eliminar.</p>
+<p>Retorna:
+- HttpResponse que redirige a la lista de contenidos después de la eliminación, o muestra la página “contenidos/confirmar_eliminacion.html” para confirmar la acción.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Contenidos.views.visualizar_contenido">
 <span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">visualizar_contenido</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#visualizar_contenido"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.visualizar_contenido" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Vista para visualizar un contenido. También permite añadir nuevos comentarios relacionados 
+con el contenido.</p>
+<p>Parámetros:
+- request: HttpRequest object con la información de la solicitud.
+- id: ID del contenido a visualizar.</p>
+<p>Retorna:
+- HttpResponse con la página “contenidos/visualizar.html” que muestra el contenido y los comentarios asociados.</p>
+</dd></dl>
 
 </section>
 <section id="module-Contenidos">

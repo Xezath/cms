@@ -4,6 +4,15 @@ from .models import Margenes, Color, Plantilla
 
 @receiver(post_migrate)
 def create_initial_data(sender, **kwargs):
+    """
+    Crea datos iniciales después de la migración.
+
+    Este receptor crea instancias de Margenes, Color y Plantilla si no existen.
+    
+    Args:
+        sender (Model): El modelo que ha sido migrado.
+        **kwargs: Argumentos adicionales proporcionados por la señal.
+    """
     if sender.name == 'Plantilla':
         # Crear objetos Margenes si no existen
         if not Margenes.objects.exists():

@@ -80,9 +80,21 @@
 <div class="viewcode-block" id="Tablero">
 <a class="viewcode-back" href="../../TableroKanban.html#TableroKanban.models.Tablero">[documentos]</a>
 <span class="k">class</span> <span class="nc">Tablero</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Modelo que representa un tablero Kanban.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Identificador único del tablero.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">nombre</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Nombre del tablero.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">descripcion</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Descripción opcional del tablero.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nombre</span></div>
@@ -92,12 +104,29 @@
 <div class="viewcode-block" id="Columna">
 <a class="viewcode-back" href="../../TableroKanban.html#TableroKanban.models.Columna">[documentos]</a>
 <span class="k">class</span> <span class="nc">Columna</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Modelo que representa una columna dentro de un tablero Kanban</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Identificador único de la columna.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">nombre</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Nombre de la columna</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tablero</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Tablero</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;columnas&#39;</span><span class="p">)</span>  <span class="c1"># Relación uno a muchos</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Relación con el tablero al que pertenece.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">estado</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Estado</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>  <span class="c1"># Relaciona columna con el estado del contenido</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Relación con el estado del contenido.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">orden</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">()</span>  <span class="c1"># Orden de la columna en el tablero</span>
-
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Orden de la columna en el tablero.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">tablero</span><span class="o">.</span><span class="n">nombre</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
@@ -106,19 +135,54 @@
 <div class="viewcode-block" id="Tarjeta">
 <a class="viewcode-back" href="../../TableroKanban.html#TableroKanban.models.Tarjeta">[documentos]</a>
 <span class="k">class</span> <span class="nc">Tarjeta</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Modelo que representa una tarjeta en una columna del tablero Kanban.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Identificador único de la tarjeta.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">contenido</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Contenidos</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>  <span class="c1"># Relacionado con el contenido del CMS</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Relacionado con el contenido del CMS.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">autor</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>  <span class="c1"># Relacionado con el autor del contenido</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Relacionado con el autor del contenido.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">columna</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Columna</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;tarjetas&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Relacionado con la columna en la que se encuentra la tarjeta.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">titulo</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Titulo de la tarjeta</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">estado</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Estado</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>  <span class="c1"># Nuevo campo de estado</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Relacionado con el estado de la tarjeta.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">descripcion</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Descripción opcional de la tarjeta.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">orden</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">()</span>  <span class="c1"># Para controlar el orden de las tarjetas dentro de la columna</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Orden de la tarjeta en la columna.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Tarjeta.save">
 <a class="viewcode-back" href="../../TableroKanban.html#TableroKanban.models.Tarjeta.save">[documentos]</a>
     <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="c1"># Al guardar, movemos la tarjeta a la columna correcta según el estado</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Método que se llama al guardar la tarjeta.</span>
+
+<span class="sd">        Mueve la tarjeta a la columna correcta según el estado asociado.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: Si no se encuentra una columna para el estado especificado.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">estado</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="c1"># Busca la columna correspondiente al estado</span>
@@ -135,6 +199,7 @@
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">permissions</span> <span class="o">=</span> <span class="p">[</span>
             <span class="p">(</span><span class="s2">&quot;ver_propio_tablero&quot;</span><span class="p">,</span> <span class="s2">&quot;Puede ver solo su propio contenido&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;cambiar_estado_tarjeta&quot;</span><span class="p">,</span> <span class="s2">&quot;Puede cambiar el estado de una tarjeta&quot;</span><span class="p">),</span>
         <span class="p">]</span>    </div>
 
 </pre></div>

@@ -24,6 +24,7 @@
         </div>
         <!-- Sección de comentarios -->
         <div class="comentarios mt-5">
+            
             <h4>Comentarios ({{ comentarios.count }})</h4>
             {% for comentario in comentarios %}
                 <div class="card mb-3">
@@ -47,11 +48,13 @@
 
         <!-- Formulario para agregar un comentario -->
         <div class="mt-4">
-            <h5>Agregar un comentario</h5>
-            <form method="post">
-                {% csrf_token %}
-                {{ comentario_form.as_p }}
-                <button type="submit" class="btn btn-primary">Comentar</button>
+            {% if perms.add_comentario%}
+                <h5>Agregar un comentario</h5>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ comentario_form.as_p }}
+                    <button type="submit" class="btn btn-primary">Comentar</button>
+            {% endif %}
             </form>
         </div>
 

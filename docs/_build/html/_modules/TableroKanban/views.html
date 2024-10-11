@@ -80,28 +80,35 @@
 <span class="kn">from</span> <span class="nn">django.views.decorators.csrf</span> <span class="kn">import</span> <span class="n">csrf_exempt</span>
 <span class="kn">from</span> <span class="nn">django.views.decorators.http</span> <span class="kn">import</span> <span class="n">require_POST</span>
 
+
 <div class="viewcode-block" id="tablero_kanban">
 <a class="viewcode-back" href="../../TableroKanban.html#TableroKanban.views.tablero_kanban">[documentos]</a>
 <span class="nd">@login_required</span>
 <span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;TableroKanban.ver_propio_tablero&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">tablero_kanban</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">tablero_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista que muestra el tablero Kanban y sus tarjetas.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        request: El objeto de la solicitud HTTP.</span>
+<span class="sd">        tablero_id (int): El ID del tablero a mostrar.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        HttpResponse: Renderiza la plantilla del tablero con las tarjetas organizadas por estado.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tablero</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Tablero</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">tablero_id</span><span class="p">)</span>
     <span class="n">columnas</span> <span class="o">=</span> <span class="n">tablero</span><span class="o">.</span><span class="n">columnas</span><span class="o">.</span><span class="n">prefetch_related</span><span class="p">(</span><span class="s1">&#39;tarjetas&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 
-    <span class="c1"># Crear un diccionario para almacenar tarjetas por estado</span>
     <span class="n">tarjetas_por_estado</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;Activas&#39;</span><span class="p">:</span> <span class="p">[],</span>
         <span class="s1">&#39;Inactivas&#39;</span><span class="p">:</span> <span class="p">[],</span>
         <span class="s1">&#39;Borrador&#39;</span><span class="p">:</span> <span class="p">[]</span>
     <span class="p">}</span>
 
-    <span class="c1"># Llenar el diccionario con tarjetas de cada columna</span>
     <span class="k">for</span> <span class="n">columna</span> <span class="ow">in</span> <span class="n">columnas</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Administrador&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-            <span class="c1"># Si el usuario es administrador, muestra todas las tarjetas</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__in</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Administrador&#39;</span><span class="p">,</span> <span class="s1">&#39;Publicador&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
             <span class="n">tarjetas</span> <span class="o">=</span> <span class="n">columna</span><span class="o">.</span><span class="n">tarjetas</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># Si el usuario no es administrador, solo muestra sus tarjetas</span>
             <span class="n">tarjetas</span> <span class="o">=</span> <span class="n">columna</span><span class="o">.</span><span class="n">tarjetas</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">autor</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">tarjeta</span> <span class="ow">in</span> <span class="n">tarjetas</span><span class="p">:</span>
@@ -112,9 +119,13 @@
             <span class="k">elif</span> <span class="n">tarjeta</span><span class="o">.</span><span class="n">columna</span><span class="o">.</span><span class="n">estado</span><span class="o">.</span><span class="n">descripcion</span> <span class="o">==</span> <span class="s1">&#39;Borrador&#39;</span><span class="p">:</span>
                 <span class="n">tarjetas_por_estado</span><span class="p">[</span><span class="s1">&#39;Borrador&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tarjeta</span><span class="p">)</span>
 
+    <span class="c1"># Verificar si el usuario tiene el permiso de cambiar estado de las tarjetas</span>
+    <span class="n">puede_cambiar_estado</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">has_perm</span><span class="p">(</span><span class="s1">&#39;TableroKanban.cambiar_estado_tarjeta&#39;</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;TableroKanban/tablero.html&#39;</span><span class="p">,</span> <span class="p">{</span>
         <span class="s1">&#39;tablero&#39;</span><span class="p">:</span> <span class="n">tablero</span><span class="p">,</span>
-        <span class="s1">&#39;tarjetas_por_estado&#39;</span><span class="p">:</span> <span class="n">tarjetas_por_estado</span>
+        <span class="s1">&#39;tarjetas_por_estado&#39;</span><span class="p">:</span> <span class="n">tarjetas_por_estado</span><span class="p">,</span>
+        <span class="s1">&#39;puede_cambiar_estado&#39;</span><span class="p">:</span> <span class="n">puede_cambiar_estado</span>
     <span class="p">})</span></div>
 
 
@@ -122,7 +133,19 @@
 <div class="viewcode-block" id="actualizar_estado">
 <a class="viewcode-back" href="../../TableroKanban.html#TableroKanban.views.actualizar_estado">[documentos]</a>
 <span class="nd">@csrf_exempt</span>
+<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;TableroKanban.cambiar_estado_tarjeta&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">actualizar_estado</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">tarjeta_id</span><span class="p">,</span> <span class="n">nuevo_estado</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista que actualiza el estado de una tarjeta.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        request: El objeto de la solicitud HTTP.</span>
+<span class="sd">        tarjeta_id (int): El ID de la tarjeta a actualizar.</span>
+<span class="sd">        nuevo_estado (str): El nuevo estado que se le quiere asignar a la tarjeta.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        JsonResponse: Respuesta en formato JSON indicando el resultado de la operación.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># Buscar la tarjeta por su ID</span>
@@ -156,6 +179,7 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)},</span> <span class="n">status</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>  <span class="c1"># Manejo de errores genéricos</span>
     <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;Método no permitido&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">405</span><span class="p">)</span></div>
+
 
 </pre></div>
 

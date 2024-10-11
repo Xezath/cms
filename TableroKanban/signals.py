@@ -4,6 +4,12 @@ from .models import Tablero, Columna, Estado
 
 @receiver(post_migrate)
 def create_board_columns(sender, **kwargs):
+    """
+    Crea un tablero y columnas predeterminadas después de migraciones.
+
+    Args:
+        sender: La aplicación que envió la señal.
+    """
     if sender.name == 'TableroKanban':
         # Crear un tablero predeterminado si no existe
         if not Tablero.objects.exists():

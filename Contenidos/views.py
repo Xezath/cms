@@ -5,21 +5,24 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required, login_required
 from django.http import HttpResponseForbidden, JsonResponse
-from django.contrib.auth.models import User  
+from django.contrib.auth.models import User, Permission
 from TableroKanban.models import Tablero, Tarjeta
-
+from django.db.models import Q
 
 @permission_required('Contenidos.view_contenidos', raise_exception=True)
 def contenidos(request):
     """
-    Vista que muestra una lista de todos los contenidos disponibles
-    y permite filtrarlos por categoría, subcategoría o autor.
+    Muestra una lista de todos los contenidos disponibles, permitiendo filtrarlos por categoría, 
+    subcategoría o autor. También carga las listas necesarias para realizar los filtros.
+    Parámetros:
+    - request: HttpRequest object con la información de la solicitud.
+    Retorna:
+    - HttpResponse con la página 'contenidos/contenidos.html', que incluye la lista de contenidos y los filtros.
     """
     # Obtener los parámetros de filtrado de la solicitud
     categoria_id = request.GET.get('categoria')
     subcategoria_id = request.GET.get('subcategoria')
     autor_id = request.GET.get('autor')
-
     # Filtrar contenidos basado en los parámetros
     contenidos = Contenidos.objects.all()
 
@@ -31,11 +34,14 @@ def contenidos(request):
     
     if autor_id:
         contenidos = contenidos.filter(autor_id=autor_id)
-
     # Obtener listas para los filtros
     categorias = Categoria.objects.all()
     subcategorias = Subcategoria.objects.all()
-    autores = User.objects.all() 
+    permiso_crear_contenido = Permission.objects.get(codename='add_contenidos')
+    autores = User.objects.filter(
+        Q(user_permissions=permiso_crear_contenido) | 
+        Q(groups__permissions=permiso_crear_contenido)
+    ).distinct()
 
     return render(request, 'contenidos/contenidos.html', {
         'contenidos': contenidos,
@@ -46,6 +52,16 @@ def contenidos(request):
 
 @permission_required('Contenidos.add_contenidos', raise_exception=True)
 def crear_contenido(request):
+    """
+    Vista para crear un nuevo contenido. Una vez creado, se asocia una tarjeta en el tablero Kanban 
+    al contenido creado.
+
+    Parámetros:
+    - request: HttpRequest object con la información de la solicitud.
+
+    Retorna:
+    - HttpResponse que redirige a la lista de contenidos si se crea con éxito o muestra la página 'contenidos/crear.html' con el formulario si no es válido.
+    """
     formulario = ContenidosForm(request.POST or None)
     
     if formulario.is_valid():
@@ -80,6 +96,17 @@ def crear_contenido(request):
 
 @permission_required('Contenidos.change_contenidos', raise_exception=True)
 def editar_contenido(request, id):
+    """
+    Vista para editar un contenido existente. También actualiza la tarjeta asociada en el tablero 
+    Kanban si el estado del contenido cambia.
+
+    Parámetros:
+    - request: HttpRequest object con la información de la solicitud.
+    - id: ID del contenido a editar.
+
+    Retorna:
+    - HttpResponse que redirige a la lista de contenidos si la edición se completa con éxito, o muestra la página 'contenidos/editar.html' con el formulario si no es válido.
+    """
     contenido = get_object_or_404(Contenidos, id=id)
     tarjeta = Tarjeta.objects.filter(contenido=contenido).first()  # Buscar la tarjeta relacionada con el contenido
 
@@ -94,10 +121,8 @@ def editar_contenido(request, id):
         if formulario.is_valid():
             nuevo_estado = formulario.cleaned_data['estado']  # Obtener el nuevo estado del contenido
 
-        
             contenido.save()  # Guarda el contenido modificado
             
-
             # Actualizar el estado y la columna de la tarjeta
             if tarjeta:
                 tarjeta.estado = nuevo_estado  # Actualiza el estado de la tarjeta
@@ -112,9 +137,18 @@ def editar_contenido(request, id):
     return render(request, 'contenidos/editar.html', {'formulario': formulario})
 
 
-
 @permission_required('Contenidos.delete_contenidos', raise_exception=True)
 def eliminar_contenido(request, pk):
+    """
+    Vista para eliminar un contenido. Solicita confirmación antes de proceder con la eliminación.
+
+    Parámetros:
+    - request: HttpRequest object con la información de la solicitud.
+    - pk: ID del contenido a eliminar.
+
+    Retorna:
+    - HttpResponse que redirige a la lista de contenidos después de la eliminación, o muestra la página 'contenidos/confirmar_eliminacion.html' para confirmar la acción.
+    """
     contenido = get_object_or_404(Contenidos, pk=pk)
     if request.method == 'POST':
         contenido.delete()
@@ -122,8 +156,20 @@ def eliminar_contenido(request, pk):
         return redirect('contenidos')
     return render(request, 'contenidos/confirmar_eliminacion.html', {'contenido': contenido})
 
+
 @permission_required('Contenidos.view_contenidos', raise_exception=True)
 def visualizar_contenido(request, id):
+    """
+    Vista para visualizar un contenido. También permite añadir nuevos comentarios relacionados 
+    con el contenido.
+
+    Parámetros:
+    - request: HttpRequest object con la información de la solicitud.
+    - id: ID del contenido a visualizar.
+
+    Retorna:
+    - HttpResponse con la página 'contenidos/visualizar.html' que muestra el contenido y los comentarios asociados.
+    """
     contenido = get_object_or_404(Contenidos, id=id)
     comentarios = contenido.comentarios.all()  # Recuperar los comentarios relacionados con el contenido
 
@@ -144,7 +190,18 @@ def visualizar_contenido(request, id):
         'comentario_form': comentario_form
     })
 
+
 def cargar_subcategorias(request):
+    """
+    Carga las subcategorías correspondientes a una categoría específica. 
+    Se utiliza en la vista de creación y edición de contenidos.
+
+    Parámetros:
+    - request: HttpRequest object con la información de la solicitud.
+
+    Retorna:
+    - JsonResponse con las subcategorías asociadas a la categoría seleccionada.
+    """
     categoria_id = request.GET.get('categoria_id')
 
     # Verificar si categoria_id es válido
@@ -155,17 +212,25 @@ def cargar_subcategorias(request):
 
     return JsonResponse(list(subcategorias.values('id', 'nombre')), safe=False)
 
+
 def eliminar_comentario(request, comentario_id):
+    """
+    Vista para eliminar un comentario. Solo el propietario del comentario o un usuario con permisos 
+    adecuados puede eliminarlo. Solicita confirmación antes de proceder con la eliminación.
+
+    Parámetros:
+    - request: HttpRequest object con la información de la solicitud.
+    - comentario_id: ID del comentario a eliminar.
+
+    Retorna:
+    - HttpResponse que redirige a la página anterior o muestra la página de confirmación de eliminación.
+    """
     comentario = get_object_or_404(Comentario, id=comentario_id)
 
-    # Verificar si el usuario es el propietario del comentario o tiene permiso para eliminarlo
-    if comentario.usuario != request.user and not request.user.has_perm('Contenidos.delete_comentario'):
-        return HttpResponseForbidden("No tienes permiso para eliminar este comentario.")
-
     if request.method == 'POST':
-        comentario.delete()
-        messages.success(request, 'Comentario eliminado exitosamente.')
-        return redirect('visualizar_contenido', id=comentario.contenido.id)
+        if request.user == comentario.usuario or request.user.has_perm('Contenidos.delete_comentario'):
+            comentario.delete()
+            messages.success(request, 'Comentario eliminado con éxito.')
+            return redirect(request.META.get('HTTP_REFERER', 'contenidos'))
 
     return render(request, 'contenidos/confirmar_eliminacion_comentario.html', {'comentario': comentario})
-

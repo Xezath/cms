@@ -79,23 +79,26 @@
 <span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">messages</span>
 <span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span> <span class="kn">import</span> <span class="n">permission_required</span><span class="p">,</span> <span class="n">login_required</span>
 <span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponseForbidden</span><span class="p">,</span> <span class="n">JsonResponse</span>
-<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>  
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span><span class="p">,</span> <span class="n">Permission</span>
 <span class="kn">from</span> <span class="nn">TableroKanban.models</span> <span class="kn">import</span> <span class="n">Tablero</span><span class="p">,</span> <span class="n">Tarjeta</span>
-
+<span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">Q</span>
 
 <div class="viewcode-block" id="contenidos">
 <a class="viewcode-back" href="../../Contenidos.html#Contenidos.views.contenidos">[documentos]</a>
 <span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Contenidos.view_contenidos&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">contenidos</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Vista que muestra una lista de todos los contenidos disponibles</span>
-<span class="sd">    y permite filtrarlos por categoría, subcategoría o autor.</span>
+<span class="sd">    Muestra una lista de todos los contenidos disponibles, permitiendo filtrarlos por categoría, </span>
+<span class="sd">    subcategoría o autor. También carga las listas necesarias para realizar los filtros.</span>
+<span class="sd">    Parámetros:</span>
+<span class="sd">    - request: HttpRequest object con la información de la solicitud.</span>
+<span class="sd">    Retorna:</span>
+<span class="sd">    - HttpResponse con la página &#39;contenidos/contenidos.html&#39;, que incluye la lista de contenidos y los filtros.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Obtener los parámetros de filtrado de la solicitud</span>
     <span class="n">categoria_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;categoria&#39;</span><span class="p">)</span>
     <span class="n">subcategoria_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;subcategoria&#39;</span><span class="p">)</span>
     <span class="n">autor_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;autor&#39;</span><span class="p">)</span>
-
     <span class="c1"># Filtrar contenidos basado en los parámetros</span>
     <span class="n">contenidos</span> <span class="o">=</span> <span class="n">Contenidos</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 
@@ -107,11 +110,14 @@
     
     <span class="k">if</span> <span class="n">autor_id</span><span class="p">:</span>
         <span class="n">contenidos</span> <span class="o">=</span> <span class="n">contenidos</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">autor_id</span><span class="o">=</span><span class="n">autor_id</span><span class="p">)</span>
-
     <span class="c1"># Obtener listas para los filtros</span>
     <span class="n">categorias</span> <span class="o">=</span> <span class="n">Categoria</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
     <span class="n">subcategorias</span> <span class="o">=</span> <span class="n">Subcategoria</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-    <span class="n">autores</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> 
+    <span class="n">permiso_crear_contenido</span> <span class="o">=</span> <span class="n">Permission</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">codename</span><span class="o">=</span><span class="s1">&#39;add_contenidos&#39;</span><span class="p">)</span>
+    <span class="n">autores</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">Q</span><span class="p">(</span><span class="n">user_permissions</span><span class="o">=</span><span class="n">permiso_crear_contenido</span><span class="p">)</span> <span class="o">|</span> 
+        <span class="n">Q</span><span class="p">(</span><span class="n">groups__permissions</span><span class="o">=</span><span class="n">permiso_crear_contenido</span><span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
 
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;contenidos/contenidos.html&#39;</span><span class="p">,</span> <span class="p">{</span>
         <span class="s1">&#39;contenidos&#39;</span><span class="p">:</span> <span class="n">contenidos</span><span class="p">,</span>
@@ -125,6 +131,16 @@
 <a class="viewcode-back" href="../../Contenidos.html#Contenidos.views.crear_contenido">[documentos]</a>
 <span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Contenidos.add_contenidos&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">crear_contenido</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista para crear un nuevo contenido. Una vez creado, se asocia una tarjeta en el tablero Kanban </span>
+<span class="sd">    al contenido creado.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    - request: HttpRequest object con la información de la solicitud.</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    - HttpResponse que redirige a la lista de contenidos si se crea con éxito o muestra la página &#39;contenidos/crear.html&#39; con el formulario si no es válido.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">formulario</span> <span class="o">=</span> <span class="n">ContenidosForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">)</span>
     
     <span class="k">if</span> <span class="n">formulario</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
@@ -162,6 +178,17 @@
 <a class="viewcode-back" href="../../Contenidos.html#Contenidos.views.editar_contenido">[documentos]</a>
 <span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Contenidos.change_contenidos&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">editar_contenido</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista para editar un contenido existente. También actualiza la tarjeta asociada en el tablero </span>
+<span class="sd">    Kanban si el estado del contenido cambia.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    - request: HttpRequest object con la información de la solicitud.</span>
+<span class="sd">    - id: ID del contenido a editar.</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    - HttpResponse que redirige a la lista de contenidos si la edición se completa con éxito, o muestra la página &#39;contenidos/editar.html&#39; con el formulario si no es válido.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">contenido</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Contenidos</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
     <span class="n">tarjeta</span> <span class="o">=</span> <span class="n">Tarjeta</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">contenido</span><span class="o">=</span><span class="n">contenido</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>  <span class="c1"># Buscar la tarjeta relacionada con el contenido</span>
 
@@ -176,10 +203,8 @@
         <span class="k">if</span> <span class="n">formulario</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
             <span class="n">nuevo_estado</span> <span class="o">=</span> <span class="n">formulario</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;estado&#39;</span><span class="p">]</span>  <span class="c1"># Obtener el nuevo estado del contenido</span>
 
-        
             <span class="n">contenido</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>  <span class="c1"># Guarda el contenido modificado</span>
             
-
             <span class="c1"># Actualizar el estado y la columna de la tarjeta</span>
             <span class="k">if</span> <span class="n">tarjeta</span><span class="p">:</span>
                 <span class="n">tarjeta</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="n">nuevo_estado</span>  <span class="c1"># Actualiza el estado de la tarjeta</span>
@@ -195,11 +220,20 @@
 
 
 
-
 <div class="viewcode-block" id="eliminar_contenido">
 <a class="viewcode-back" href="../../Contenidos.html#Contenidos.views.eliminar_contenido">[documentos]</a>
 <span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Contenidos.delete_contenidos&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">eliminar_contenido</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">pk</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista para eliminar un contenido. Solicita confirmación antes de proceder con la eliminación.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    - request: HttpRequest object con la información de la solicitud.</span>
+<span class="sd">    - pk: ID del contenido a eliminar.</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    - HttpResponse que redirige a la lista de contenidos después de la eliminación, o muestra la página &#39;contenidos/confirmar_eliminacion.html&#39; para confirmar la acción.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">contenido</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Contenidos</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
         <span class="n">contenido</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
@@ -208,10 +242,22 @@
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;contenidos/confirmar_eliminacion.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;contenido&#39;</span><span class="p">:</span> <span class="n">contenido</span><span class="p">})</span></div>
 
 
+
 <div class="viewcode-block" id="visualizar_contenido">
 <a class="viewcode-back" href="../../Contenidos.html#Contenidos.views.visualizar_contenido">[documentos]</a>
 <span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Contenidos.view_contenidos&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">visualizar_contenido</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista para visualizar un contenido. También permite añadir nuevos comentarios relacionados </span>
+<span class="sd">    con el contenido.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    - request: HttpRequest object con la información de la solicitud.</span>
+<span class="sd">    - id: ID del contenido a visualizar.</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    - HttpResponse con la página &#39;contenidos/visualizar.html&#39; que muestra el contenido y los comentarios asociados.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">contenido</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Contenidos</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
     <span class="n">comentarios</span> <span class="o">=</span> <span class="n">contenido</span><span class="o">.</span><span class="n">comentarios</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>  <span class="c1"># Recuperar los comentarios relacionados con el contenido</span>
 
@@ -233,9 +279,20 @@
     <span class="p">})</span></div>
 
 
+
 <div class="viewcode-block" id="cargar_subcategorias">
 <a class="viewcode-back" href="../../Contenidos.html#Contenidos.views.cargar_subcategorias">[documentos]</a>
 <span class="k">def</span> <span class="nf">cargar_subcategorias</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Carga las subcategorías correspondientes a una categoría específica. </span>
+<span class="sd">    Se utiliza en la vista de creación y edición de contenidos.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    - request: HttpRequest object con la información de la solicitud.</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    - JsonResponse con las subcategorías asociadas a la categoría seleccionada.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">categoria_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;categoria_id&#39;</span><span class="p">)</span>
 
     <span class="c1"># Verificar si categoria_id es válido</span>
@@ -247,22 +304,30 @@
     <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">subcategorias</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;nombre&#39;</span><span class="p">)),</span> <span class="n">safe</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
 
+
 <div class="viewcode-block" id="eliminar_comentario">
 <a class="viewcode-back" href="../../Contenidos.html#Contenidos.views.eliminar_comentario">[documentos]</a>
 <span class="k">def</span> <span class="nf">eliminar_comentario</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">comentario_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista para eliminar un comentario. Solo el propietario del comentario o un usuario con permisos </span>
+<span class="sd">    adecuados puede eliminarlo. Solicita confirmación antes de proceder con la eliminación.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    - request: HttpRequest object con la información de la solicitud.</span>
+<span class="sd">    - comentario_id: ID del comentario a eliminar.</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    - HttpResponse que redirige a la página anterior o muestra la página de confirmación de eliminación.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">comentario</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Comentario</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">comentario_id</span><span class="p">)</span>
 
-    <span class="c1"># Verificar si el usuario es el propietario del comentario o tiene permiso para eliminarlo</span>
-    <span class="k">if</span> <span class="n">comentario</span><span class="o">.</span><span class="n">usuario</span> <span class="o">!=</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">has_perm</span><span class="p">(</span><span class="s1">&#39;Contenidos.delete_comentario&#39;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">HttpResponseForbidden</span><span class="p">(</span><span class="s2">&quot;No tienes permiso para eliminar este comentario.&quot;</span><span class="p">)</span>
-
     <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-        <span class="n">comentario</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
-        <span class="n">messages</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Comentario eliminado exitosamente.&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;visualizar_contenido&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">comentario</span><span class="o">.</span><span class="n">contenido</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span> <span class="o">==</span> <span class="n">comentario</span><span class="o">.</span><span class="n">usuario</span> <span class="ow">or</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">has_perm</span><span class="p">(</span><span class="s1">&#39;Contenidos.delete_comentario&#39;</span><span class="p">):</span>
+            <span class="n">comentario</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+            <span class="n">messages</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Comentario eliminado con éxito.&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;HTTP_REFERER&#39;</span><span class="p">,</span> <span class="s1">&#39;contenidos&#39;</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;contenidos/confirmar_eliminacion_comentario.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;comentario&#39;</span><span class="p">:</span> <span class="n">comentario</span><span class="p">})</span></div>
-
 
 </pre></div>
 
