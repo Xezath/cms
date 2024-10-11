@@ -4,6 +4,15 @@ from .models import Categoria, Subcategoria
 
 @receiver(post_migrate)
 def create_initial_data(sender, **kwargs):
+    """
+    Crea datos iniciales de categorías y subcategorías tras la migración de la base de datos.
+    
+    Se ejecuta después de la migración de la aplicación e inserta datos en las tablas
+    de categorías y subcategorías si estas no tienen datos.
+    
+    Argumentos:
+    - sender: La aplicación que ha sido migrada.
+    """
     # Verificar si el modelo que se está migrando es el correcto
     if sender.name == 'Categoria':  # Reemplaza 'your_app_name' con el nombre de tu aplicación
         # Crear objetos Categorias si no existen

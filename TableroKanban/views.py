@@ -10,6 +10,16 @@ from django.views.decorators.http import require_POST
 @login_required
 @permission_required('TableroKanban.ver_propio_tablero', raise_exception=True)
 def tablero_kanban(request, tablero_id):
+    """
+    Vista que muestra el tablero Kanban y sus tarjetas.
+
+    Args:
+        request: El objeto de la solicitud HTTP.
+        tablero_id (int): El ID del tablero a mostrar.
+
+    Returns:
+        HttpResponse: Renderiza la plantilla del tablero con las tarjetas organizadas por estado.
+    """
     tablero = get_object_or_404(Tablero, id=tablero_id)
     columnas = tablero.columnas.prefetch_related('tarjetas').all()
 
@@ -46,6 +56,17 @@ def tablero_kanban(request, tablero_id):
 @csrf_exempt
 @permission_required('TableroKanban.cambiar_estado_tarjeta', raise_exception=True)
 def actualizar_estado(request, tarjeta_id, nuevo_estado):
+    """
+    Vista que actualiza el estado de una tarjeta.
+
+    Args:
+        request: El objeto de la solicitud HTTP.
+        tarjeta_id (int): El ID de la tarjeta a actualizar.
+        nuevo_estado (str): El nuevo estado que se le quiere asignar a la tarjeta.
+
+    Returns:
+        JsonResponse: Respuesta en formato JSON indicando el resultado de la operación.
+    """
     if request.method == 'POST':
         try:
             # Buscar la tarjeta por su ID

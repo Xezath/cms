@@ -10,18 +10,28 @@ from django.contrib.auth.decorators import permission_required
 
 # Create your views here.
 def home(request):
+    """
+    Renderiza la página de inicio.
+    """
     # Renderiza la página de inicio
     # La función 'render' toma el objeto 'request' y la plantilla 'home.html' para generar la respuesta HTTP.
     return render(request, 'home.html')
 
 
 def exito(request):
+    """
+    Renderiza la página de éxito, que podría mostrar un mensaje 
+    después de que el usuario complete una acción como el registro o el inicio de sesión.
+    """
     # Renderiza la página de éxito, que podría mostrar un mensaje de éxito
     # después de que el usuario complete una acción como el registro o el inicio de sesión.
     return render(request, 'exito.html')
 
 
 def cerrar_sesion(request):
+    """
+    Cierra la sesión del usuario actual y redirige a la página de inicio.
+    """
     # Cierra la sesión del usuario actual utilizando la función 'logout'.
     # Luego redirige a la página de inicio.
     logout(request)
@@ -29,6 +39,11 @@ def cerrar_sesion(request):
 
 
 def Iniciar_Sesion(request):
+    """
+    Maneja el proceso de inicio de sesión. 
+    Si la solicitud es GET, se muestra el formulario de inicio de sesión; 
+    si es POST, se intenta autenticar al usuario.
+    """
     # Maneja el proceso de inicio de sesión.
     # Si la solicitud es GET, se muestra el formulario de inicio de sesión.
     # Si la solicitud es POST, se intenta autenticar al usuario con las credenciales proporcionadas.
@@ -63,6 +78,10 @@ def Iniciar_Sesion(request):
             return redirect ('home')
 
 def registrar(request):
+    """
+    Maneja el registro de nuevos usuarios. 
+    Si la solicitud es POST, procesa el formulario de registro.
+    """
     # Maneja el registro de nuevos usuarios
     # Si la solicitud es POST, procesa el formulario de registro con los datos proporcionados.
     if request.method == "POST":
@@ -105,6 +124,10 @@ def registrar(request):
 
 @permission_required('auth.add_group',raise_exception=True)
 def crear_rol(request):
+    """
+    Crea un nuevo rol (grupo) si la solicitud es POST.
+    Renderiza el formulario para crear un rol si la solicitud es GET.
+    """
     if request.method == 'POST':
         form = GroupForm(request.POST)
         if form.is_valid():
@@ -116,6 +139,10 @@ def crear_rol(request):
 
 @permission_required('auth.change_group',raise_exception=True)
 def editar_rol(request, pk):
+    """
+    Edita un rol (grupo) existente. 
+    Si la solicitud es POST, actualiza el grupo con los datos del formulario.
+    """
     group = get_object_or_404(Group, pk=pk)
     if request.method == 'POST':
         form = GroupEditForm(request.POST, instance=group)
@@ -128,6 +155,10 @@ def editar_rol(request, pk):
 
 @permission_required('auth.delete_group',raise_exception=True)
 def eliminar_rol(request, pk):
+    """
+    Elimina un rol (grupo) existente. 
+    Si la solicitud es POST, elimina el grupo.
+    """
     group = get_object_or_404(Group, pk=pk)
     if request.method == 'POST':
         group.delete()
@@ -136,21 +167,33 @@ def eliminar_rol(request, pk):
 
 @permission_required('auth.view_group',raise_exception=True)
 def roles_listar(request):
+    """
+    Lista todos los roles (grupos) existentes.
+    """
     roles = Group.objects.all()
     return render(request, 'roles_listar.html', {'roles': roles})
 
 @permission_required('auth.view_user',raise_exception=True)
 def ver_usuarios(request):
+    """
+    Muestra una lista de todos los usuarios registrados.
+    """
     usuarios = User.objects.all()
     return render(request, 'ver_usuarios.html', {'usuarios': usuarios})
 
 @permission_required('auth.view_group',raise_exception=True)
 def ver_roles(request):
+    """
+    Muestra una lista de todos los roles (grupos) existentes.
+    """
     roles = Group.objects.all()
     return render(request, 'ver_roles.html', {'roles': roles})
 
 @permission_required('auth.view_user',raise_exception=True)
 def lista_usuarios(request):
+    """
+    Obtiene todos los usuarios registrados y los muestra en una lista.
+    """
     # Obtener todos los usuarios registrados
     usuarios = User.objects.all()
     return render(request, 'lista_usuarios.html', {'usuarios': usuarios})
@@ -158,6 +201,10 @@ def lista_usuarios(request):
 # Nueva vista para editar los roles de un usuario
 @permission_required('auth.change_user',raise_exception=True)
 def cambiar_rol_usuario(request, pk):
+    """
+    Cambia el rol (grupo) de un usuario existente. 
+    Si la solicitud es POST, actualiza los grupos del usuario.
+    """
     usuario = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
         form = CustomAdminUserChangeForm(request.POST, instance=usuario)
@@ -171,6 +218,10 @@ def cambiar_rol_usuario(request, pk):
 # Nueva vista para eliminar un usuario
 @permission_required('auth.delete_user',raise_exception=True)
 def eliminar_usuario(request, pk):
+    """
+    Elimina un usuario existente. 
+    Si la solicitud es POST, se elimina el usuario.
+    """
     usuario = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
         usuario.delete()  # Eliminar el usuario

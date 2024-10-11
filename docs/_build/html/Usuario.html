@@ -70,7 +70,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#Usuario.forms.RoleForm"><code class="docutils literal notranslate"><span class="pre">RoleForm</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#module-Usuario.models">Usuario.models module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-Usuario.views">Usuario.views module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#Usuario.views.Iniciar_Sesion"><code class="docutils literal notranslate"><span class="pre">Iniciar_Sesion()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Usuario.views.cambiar_rol_usuario"><code class="docutils literal notranslate"><span class="pre">cambiar_rol_usuario()</span></code></a></li>
@@ -163,6 +162,8 @@
 <dt class="sig sig-object py" id="Usuario.forms.CustomAdminUserChangeForm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Usuario.forms.</span></span><span class="sig-name descname"><span class="pre">CustomAdminUserChangeForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/forms.html#CustomAdminUserChangeForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.forms.CustomAdminUserChangeForm" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">UserChangeForm</span></code></p>
+<p>Formulario para editar un usuario existente.
+Permite seleccionar múltiples grupos para el usuario.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="Usuario.forms.CustomAdminUserChangeForm.Meta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/Usuario/forms.html#CustomAdminUserChangeForm.Meta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.forms.CustomAdminUserChangeForm.Meta" title="Link to this definition"></a></dt>
@@ -207,6 +208,8 @@
 <dt class="sig sig-object py" id="Usuario.forms.CustomUserCreationForm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Usuario.forms.</span></span><span class="sig-name descname"><span class="pre">CustomUserCreationForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/forms.html#CustomUserCreationForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.forms.CustomUserCreationForm" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">UserCreationForm</span></code></p>
+<p>Formulario para la creación de un nuevo usuario.
+Incluye campos personalizados por cada usuario</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="Usuario.forms.CustomUserCreationForm.Meta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/Usuario/forms.html#CustomUserCreationForm.Meta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.forms.CustomUserCreationForm.Meta" title="Link to this definition"></a></dt>
@@ -251,6 +254,8 @@
 <dt class="sig sig-object py" id="Usuario.forms.GroupEditForm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Usuario.forms.</span></span><span class="sig-name descname"><span class="pre">GroupEditForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/forms.html#GroupEditForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.forms.GroupEditForm" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+<p>Formulario para editar un grupo existente.
+Permite seleccionar múltiples permisos para el grupo.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="Usuario.forms.GroupEditForm.Meta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/Usuario/forms.html#GroupEditForm.Meta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.forms.GroupEditForm.Meta" title="Link to this definition"></a></dt>
@@ -290,6 +295,8 @@
 <dt class="sig sig-object py" id="Usuario.forms.GroupForm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Usuario.forms.</span></span><span class="sig-name descname"><span class="pre">GroupForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/forms.html#GroupForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.forms.GroupForm" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+<p>Formulario para crear un nuevo grupo.
+Permite seleccionar múltiples permisos para el grupo.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="Usuario.forms.GroupForm.Meta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/Usuario/forms.html#GroupForm.Meta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.forms.GroupForm.Meta" title="Link to this definition"></a></dt>
@@ -329,6 +336,8 @@
 <dt class="sig sig-object py" id="Usuario.forms.RoleForm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Usuario.forms.</span></span><span class="sig-name descname"><span class="pre">RoleForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_order=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/forms.html#RoleForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.forms.RoleForm" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></p>
+<p>Formulario para definir un nuevo rol.
+Contiene un campo para el nombre del rol.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Usuario.forms.RoleForm.base_fields">
 <span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'role_name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Usuario.forms.RoleForm.base_fields" title="Link to this definition"></a></dt>
@@ -348,80 +357,100 @@
 </dd></dl>
 
 </section>
-<section id="module-Usuario.models">
-<span id="usuario-models-module"></span><h2>Usuario.models module<a class="headerlink" href="#module-Usuario.models" title="Link to this heading"></a></h2>
-</section>
 <section id="module-Usuario.views">
 <span id="usuario-views-module"></span><h2>Usuario.views module<a class="headerlink" href="#module-Usuario.views" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="Usuario.views.Iniciar_Sesion">
 <span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">Iniciar_Sesion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#Iniciar_Sesion"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.Iniciar_Sesion" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Maneja el proceso de inicio de sesión. 
+Si la solicitud es GET, se muestra el formulario de inicio de sesión; 
+si es POST, se intenta autenticar al usuario.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Usuario.views.cambiar_rol_usuario">
 <span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">cambiar_rol_usuario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#cambiar_rol_usuario"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.cambiar_rol_usuario" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Cambia el rol (grupo) de un usuario existente. 
+Si la solicitud es POST, actualiza los grupos del usuario.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Usuario.views.cerrar_sesion">
 <span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">cerrar_sesion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#cerrar_sesion"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.cerrar_sesion" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Cierra la sesión del usuario actual y redirige a la página de inicio.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Usuario.views.crear_rol">
 <span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">crear_rol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#crear_rol"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.crear_rol" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Crea un nuevo rol (grupo) si la solicitud es POST.
+Renderiza el formulario para crear un rol si la solicitud es GET.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Usuario.views.editar_rol">
 <span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">editar_rol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#editar_rol"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.editar_rol" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Edita un rol (grupo) existente. 
+Si la solicitud es POST, actualiza el grupo con los datos del formulario.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Usuario.views.eliminar_rol">
 <span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">eliminar_rol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#eliminar_rol"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.eliminar_rol" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Elimina un rol (grupo) existente. 
+Si la solicitud es POST, elimina el grupo.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Usuario.views.eliminar_usuario">
 <span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">eliminar_usuario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#eliminar_usuario"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.eliminar_usuario" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Elimina un usuario existente. 
+Si la solicitud es POST, se elimina el usuario.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Usuario.views.exito">
 <span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">exito</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#exito"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.exito" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Renderiza la página de éxito, que podría mostrar un mensaje 
+después de que el usuario complete una acción como el registro o el inicio de sesión.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Usuario.views.home">
 <span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#home"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.home" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Renderiza la página de inicio.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Usuario.views.lista_usuarios">
 <span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">lista_usuarios</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#lista_usuarios"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.lista_usuarios" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Obtiene todos los usuarios registrados y los muestra en una lista.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Usuario.views.registrar">
 <span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">registrar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#registrar"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.registrar" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Maneja el registro de nuevos usuarios. 
+Si la solicitud es POST, procesa el formulario de registro.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Usuario.views.roles_listar">
 <span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">roles_listar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#roles_listar"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.roles_listar" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Lista todos los roles (grupos) existentes.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Usuario.views.ver_roles">
 <span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">ver_roles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#ver_roles"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.ver_roles" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Muestra una lista de todos los roles (grupos) existentes.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Usuario.views.ver_usuarios">
 <span class="sig-prename descclassname"><span class="pre">Usuario.views.</span></span><span class="sig-name descname"><span class="pre">ver_usuarios</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Usuario/views.html#ver_usuarios"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Usuario.views.ver_usuarios" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Muestra una lista de todos los usuarios registrados.</p>
+</dd></dl>
 
 </section>
 <section id="module-Usuario">

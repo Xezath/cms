@@ -28,14 +28,6 @@ Usuario.forms module
    :undoc-members:
    :show-inheritance:
 
-Usuario.models module
-------------------------
-
-.. automodule:: Usuario.models
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Usuario.views module
 -----------------------
 

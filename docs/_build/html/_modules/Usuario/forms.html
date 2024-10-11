@@ -82,6 +82,10 @@
 <div class="viewcode-block" id="CustomUserCreationForm">
 <a class="viewcode-back" href="../../Usuario.html#Usuario.forms.CustomUserCreationForm">[documentos]</a>
 <span class="k">class</span> <span class="nc">CustomUserCreationForm</span><span class="p">(</span><span class="n">UserCreationForm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formulario para la creación de un nuevo usuario.</span>
+<span class="sd">    Incluye campos personalizados por cada usuario</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">usable_password</span><span class="o">=</span><span class="kc">None</span>
     <span class="n">email</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Correo Electrónico&quot;</span><span class="p">)</span>
 <div class="viewcode-block" id="CustomUserCreationForm.Meta">
@@ -97,6 +101,10 @@
 <div class="viewcode-block" id="GroupForm">
 <a class="viewcode-back" href="../../Usuario.html#Usuario.forms.GroupForm">[documentos]</a>
 <span class="k">class</span> <span class="nc">GroupForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formulario para crear un nuevo grupo.</span>
+<span class="sd">    Permite seleccionar múltiples permisos para el grupo.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">permissions</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ModelMultipleChoiceField</span><span class="p">(</span>
         <span class="n">queryset</span><span class="o">=</span><span class="n">Permission</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span>
         <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">CheckboxSelectMultiple</span><span class="p">,</span>
@@ -114,6 +122,10 @@
 <div class="viewcode-block" id="RoleForm">
 <a class="viewcode-back" href="../../Usuario.html#Usuario.forms.RoleForm">[documentos]</a>
 <span class="k">class</span> <span class="nc">RoleForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formulario para definir un nuevo rol.</span>
+<span class="sd">    Contiene un campo para el nombre del rol.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">role_name</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span></div>
 
 
@@ -121,6 +133,10 @@
 <div class="viewcode-block" id="GroupEditForm">
 <a class="viewcode-back" href="../../Usuario.html#Usuario.forms.GroupEditForm">[documentos]</a>
 <span class="k">class</span> <span class="nc">GroupEditForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formulario para editar un grupo existente.</span>
+<span class="sd">    Permite seleccionar múltiples permisos para el grupo.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">permissions</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ModelMultipleChoiceField</span><span class="p">(</span>
         <span class="n">queryset</span><span class="o">=</span><span class="n">Permission</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span>
         <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">CheckboxSelectMultiple</span><span class="p">,</span>
@@ -139,6 +155,10 @@
 <div class="viewcode-block" id="CustomAdminUserChangeForm">
 <a class="viewcode-back" href="../../Usuario.html#Usuario.forms.CustomAdminUserChangeForm">[documentos]</a>
 <span class="k">class</span> <span class="nc">CustomAdminUserChangeForm</span><span class="p">(</span><span class="n">UserChangeForm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formulario para editar un usuario existente.</span>
+<span class="sd">    Permite seleccionar múltiples grupos para el usuario.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">password</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">groups</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ModelMultipleChoiceField</span><span class="p">(</span>
         <span class="n">queryset</span><span class="o">=</span><span class="n">Group</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span>

@@ -85,6 +85,9 @@
 <a class="viewcode-back" href="../../Categoria.html#Categoria.views.inicio">[documentos]</a>
 <span class="nd">@login_required</span>
 <span class="k">def</span> <span class="nf">inicio</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Renderiza la página de inicio del sistema.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;paginas/inicio.html&#39;</span><span class="p">)</span></div>
 
 
@@ -92,6 +95,13 @@
 <a class="viewcode-back" href="../../Categoria.html#Categoria.views.categorias">[documentos]</a>
 <span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Categoria.view_categoria&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">categorias</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Muestra la lista de categorías disponibles en el sistema.</span>
+<span class="sd">    Requiere el permiso &#39;view_categoria&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">    Argumentos:</span>
+<span class="sd">    - request: Solicitud HTTP.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">categorias</span> <span class="o">=</span> <span class="n">Categoria</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
     <span class="c1">#print(categorias)</span>
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;categorias/index.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;categorias&#39;</span><span class="p">:</span> <span class="n">categorias</span><span class="p">})</span></div>
@@ -101,6 +111,13 @@
 <a class="viewcode-back" href="../../Categoria.html#Categoria.views.crear_cat">[documentos]</a>
 <span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Categoria.add_categoria&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">crear_cat</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista para crear una nueva categoría.</span>
+<span class="sd">    Requiere el permiso &#39;add_categoria&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">    Argumentos:</span>
+<span class="sd">    - request: Solicitud HTTP.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">formulario</span> <span class="o">=</span> <span class="n">CategoriaForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">formulario</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
         <span class="n">formulario</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
@@ -112,6 +129,14 @@
 <a class="viewcode-back" href="../../Categoria.html#Categoria.views.editar_cat">[documentos]</a>
 <span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Categoria.change_categoria&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">editar_cat</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista para editar una categoría existente.</span>
+<span class="sd">    Requiere el permiso &#39;change_categoria&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">    Argumentos:</span>
+<span class="sd">    - request: Solicitud HTTP.</span>
+<span class="sd">    - id: Identificador de la categoría a editar.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">categoria</span> <span class="o">=</span> <span class="n">Categoria</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
     <span class="n">formulario</span> <span class="o">=</span> <span class="n">EditarCategoriaForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">,</span> <span class="n">instance</span><span class="o">=</span><span class="n">categoria</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">formulario</span><span class="o">.</span><span class="n">is_valid</span> <span class="ow">and</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">:</span>
@@ -124,6 +149,14 @@
 <a class="viewcode-back" href="../../Categoria.html#Categoria.views.borrar_cat">[documentos]</a>
 <span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Categoria.delete_categoria&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">borrar_cat</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista para eliminar una categoría.</span>
+<span class="sd">    Requiere el permiso &#39;delete_categoria&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">    Argumentos:</span>
+<span class="sd">    - request: Solicitud HTTP.</span>
+<span class="sd">    - id: Identificador de la categoría a eliminar.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">categoria</span> <span class="o">=</span> <span class="n">Categoria</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
     <span class="n">categoria</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/categoria/mensajeExito&#39;</span><span class="p">)</span></div>
@@ -134,6 +167,13 @@
 <a class="viewcode-back" href="../../Categoria.html#Categoria.views.subcategorias">[documentos]</a>
 <span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Categoria.view_subcategoria&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">subcategorias</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Muestra la lista de subcategorías disponibles en el sistema.</span>
+<span class="sd">    Requiere el permiso &#39;view_subcategoria&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">    Argumentos:</span>
+<span class="sd">    - request: Solicitud HTTP.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">subcategorias</span> <span class="o">=</span> <span class="n">Subcategoria</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
     <span class="c1">#print(subcategorias)</span>
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;subcategorias/index.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;subcategorias&#39;</span><span class="p">:</span> <span class="n">subcategorias</span><span class="p">})</span></div>
@@ -143,6 +183,13 @@
 <a class="viewcode-back" href="../../Categoria.html#Categoria.views.crear_sub">[documentos]</a>
 <span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Categoria.add_subcategoria&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">crear_sub</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista para crear una nueva subcategoría.</span>
+<span class="sd">    Requiere el permiso &#39;add_subcategoria&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">    Argumentos:</span>
+<span class="sd">    - request: Solicitud HTTP.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">formulario</span> <span class="o">=</span> <span class="n">SubcategoriaForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">formulario</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
         <span class="n">formulario</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
@@ -154,6 +201,14 @@
 <a class="viewcode-back" href="../../Categoria.html#Categoria.views.editar_sub">[documentos]</a>
 <span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Categoria.change_subcategoria&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">editar_sub</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista para editar una subcategoría existente.</span>
+<span class="sd">    Requiere el permiso &#39;change_subcategoria&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">    Argumentos:</span>
+<span class="sd">    - request: Solicitud HTTP.</span>
+<span class="sd">    - id: Identificador de la subcategoría a editar.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">subcategoria</span> <span class="o">=</span> <span class="n">Subcategoria</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
     <span class="n">formulario</span> <span class="o">=</span> <span class="n">EditarSubcategoriaForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">,</span> <span class="n">instance</span><span class="o">=</span><span class="n">subcategoria</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">formulario</span><span class="o">.</span><span class="n">is_valid</span> <span class="ow">and</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">:</span>
@@ -166,6 +221,14 @@
 <a class="viewcode-back" href="../../Categoria.html#Categoria.views.borrar_sub">[documentos]</a>
 <span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Categoria.delete_subcategoria&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">borrar_sub</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista para eliminar una subcategoría.</span>
+<span class="sd">    Requiere el permiso &#39;delete_subcategoria&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">    Argumentos:</span>
+<span class="sd">    - request: Solicitud HTTP.</span>
+<span class="sd">    - id: Identificador de la subcategoría a eliminar.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">subcategoria</span> <span class="o">=</span> <span class="n">Subcategoria</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
     <span class="n">subcategoria</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/categoria/mensajeExito_sub&#39;</span><span class="p">)</span></div>
@@ -175,12 +238,24 @@
 <div class="viewcode-block" id="mensajeExito">
 <a class="viewcode-back" href="../../Categoria.html#Categoria.views.mensajeExito">[documentos]</a>
 <span class="k">def</span> <span class="nf">mensajeExito</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Muestra un mensaje de éxito después de completar una operación sobre categorías.</span>
+<span class="sd">    </span>
+<span class="sd">    Argumentos:</span>
+<span class="sd">    - request: Solicitud HTTP.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;categorias/mensajeExito.html&#39;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="mensajeExito_sub">
 <a class="viewcode-back" href="../../Categoria.html#Categoria.views.mensajeExito_sub">[documentos]</a>
 <span class="k">def</span> <span class="nf">mensajeExito_sub</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Muestra un mensaje de éxito después de completar una operación sobre subcategorías.</span>
+<span class="sd">    </span>
+<span class="sd">    Argumentos:</span>
+<span class="sd">    - request: Solicitud HTTP.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;subcategorias/mensajeExito.html&#39;</span><span class="p">)</span></div>
 
 </pre></div>
