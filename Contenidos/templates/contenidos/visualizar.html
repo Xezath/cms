@@ -48,7 +48,7 @@
 
         <!-- Formulario para agregar un comentario -->
         <div class="mt-4">
-            {% if perms.add_comentario%}
+            {% if perms.Contenidos.add_comentario%}
                 <h5>Agregar un comentario</h5>
                 <form method="post">
                     {% csrf_token %}
