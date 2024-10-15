@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
-from .views import contenidos, crear_contenido, editar_contenido, eliminar_contenido, visualizar_contenido, cargar_subcategorias, eliminar_comentario, visualizar_contenido_borrador
+from .views import contenidos, crear_contenido, editar_contenido, eliminar_contenido, visualizar_contenido, cargar_subcategorias, eliminar_comentario, visualizar_contenido_borrador, visualizar_contenido_revision
 
 urlpatterns = [
     path('contenidos/', contenidos, name='contenidos'),
@@ -12,4 +12,5 @@ urlpatterns = [
     path('ajax/load-subcategorias/', cargar_subcategorias, name='ajax_load_subcategorias'),
     path('comentarios/eliminar/<int:comentario_id>/', eliminar_comentario, name='eliminar_comentario'),
     path('contenidos/borrador/<int:id>/',visualizar_contenido_borrador, name='visualizar_contenido_borrador'),
+    path('contenidos/revision/<int:id>/',visualizar_contenido_revision, name='visualizar_contenido_revision'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -75,8 +75,8 @@
                                 <h5 class="card-title" style="color: brown;">{{ contenido.titulo }} (borrador)</h5>
                                 <a href="{% url 'visualizar_contenido_borrador' contenido.id %}" class="btn btn-primary">Leer más</a>
                             {% elif contenido.estado.id == 4 %}
-                                <h5 class="card-title" style="color: brown;">{{ contenido.titulo }} (revisión)</h5>
-                                <a href="{% url 'visualizar_contenido_borrador' contenido.id %}" class="btn btn-primary">Leer más</a>
+                                <h5 class="card-title" style="color:cadetblue;">{{ contenido.titulo }} (revisión)</h5>
+                                <a href="{% url 'visualizar_contenido_revision' contenido.id %}" class="btn btn-primary">Leer más</a>
                             {% else %}
                                 <h5 class="card-title">{{ contenido.titulo }}</h5>
                                 <a href="{% url 'visualizar_contenido' contenido.id %}" class="btn btn-primary">Leer más</a>

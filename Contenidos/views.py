@@ -250,3 +250,20 @@ def visualizar_contenido_borrador(request, id):
     return render(request, 'contenidos/borrador.html', {
         'contenido': contenido,
     })
+
+def visualizar_contenido_revision(request, id):
+    """
+    Vista para visualizar un contenido en revisión.
+
+    Parámetros:
+    - request: HttpRequest object con la información de la solicitud.
+    - id: ID del contenido a visualizar.
+
+    Retorna:
+    - HttpResponse con la página 'contenidos/visualizar.html' que muestra el contenido y los comentarios asociados.
+    """
+    contenido = get_object_or_404(Contenidos, id=id)
+
+    return render(request, 'contenidos/revision.html', {
+        'contenido': contenido,
+    })
