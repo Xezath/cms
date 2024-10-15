@@ -111,7 +111,7 @@ class EditarContenidosForm(forms.ModelForm):
             except (ValueError, TypeError):
                 pass
         elif self.instance.pk and self.instance.categoria:
-            self.fields['subcategoria'].queryset = Subcategoria.objects.filter(categoria=self.instance.categoria).order_by('nombre')
+            self.fields['subcategoria'].queryset = Subcategoria.objects.filter(categoriaPadre=self.instance.categoria).order_by('nombre')
 
 
 class VisualizarContenidoForm(forms.ModelForm):

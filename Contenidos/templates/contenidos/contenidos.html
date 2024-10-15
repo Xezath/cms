@@ -70,12 +70,17 @@
                             <!-- Título del contenido -->
                             {% if contenido.estado.id == 2 %}
                                 <h5 class="card-title" style="color: red;">{{ contenido.titulo }} (inactivo)</h5>
+                                <a href="{% url 'visualizar_contenido' contenido.id %}" class="btn btn-primary">Leer más</a>
                             {% elif contenido.estado.id == 3 %}
                                 <h5 class="card-title" style="color: brown;">{{ contenido.titulo }} (borrador)</h5>
+                                <a href="{% url 'visualizar_contenido_borrador' contenido.id %}" class="btn btn-primary">Leer más</a>
+                            {% elif contenido.estado.id == 4 %}
+                                <h5 class="card-title" style="color: brown;">{{ contenido.titulo }} (revisión)</h5>
+                                <a href="{% url 'visualizar_contenido_borrador' contenido.id %}" class="btn btn-primary">Leer más</a>
                             {% else %}
                                 <h5 class="card-title">{{ contenido.titulo }}</h5>
+                                <a href="{% url 'visualizar_contenido' contenido.id %}" class="btn btn-primary">Leer más</a>
                             {% endif %}
-                            <a href="{% url 'visualizar_contenido' contenido.id %}" class="btn btn-primary">Leer más</a>
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">Creado por {{ contenido.autor }} el {{ contenido.fecha_creacion }}</small>

@@ -87,8 +87,7 @@ def crear_contenido(request):
             descripcion=contenido.autor,  
             orden=0,  # Establecer un orden inicial
         )
-
-        return redirect('contenidos')  # Redirige a la lista de contenidos después de guardar
+        return redirect('visualizar_contenido_borrador', contenido.id)
     
     # Si el formulario no es válido, se vuelve a mostrar con los errores
     return render(request, 'contenidos/crear.html', {'formulario': formulario})
@@ -234,3 +233,20 @@ def eliminar_comentario(request, comentario_id):
             return redirect(request.META.get('HTTP_REFERER', 'contenidos'))
 
     return render(request, 'contenidos/confirmar_eliminacion_comentario.html', {'comentario': comentario})
+
+def visualizar_contenido_borrador(request, id):
+    """
+    Vista para visualizar un contenido en borrador.
+
+    Parámetros:
+    - request: HttpRequest object con la información de la solicitud.
+    - id: ID del contenido a visualizar.
+
+    Retorna:
+    - HttpResponse con la página 'contenidos/visualizar.html' que muestra el contenido y los comentarios asociados.
+    """
+    contenido = get_object_or_404(Contenidos, id=id)
+
+    return render(request, 'contenidos/borrador.html', {
+        'contenido': contenido,
+    })

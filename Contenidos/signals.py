@@ -18,4 +18,5 @@ def create_initial_data(sender, **kwargs):
             Estado.objects.create(id=1, descripcion='Activo')
             Estado.objects.create(id=2, descripcion='Inactivo')
             Estado.objects.create(id=3, descripcion='Borrador')
+            Estado.objects.create(id=4, descripcion='Revision')
         
