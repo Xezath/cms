@@ -20,16 +20,17 @@ def tablero_kanban(request, tablero_id):
     Returns:
         HttpResponse: Renderiza la plantilla del tablero con las tarjetas organizadas por estado.
     """
-    tablero = get_object_or_404(Tablero, id=tablero_id)
-    columnas = tablero.columnas.prefetch_related('tarjetas').all()
+    tablero = get_object_or_404(Tablero, id=tablero_id) # Obtener el tablero por su ID
+    columnas = tablero.columnas.prefetch_related('tarjetas').all() # Obtener todas las columnas del tablero con sus tarjetas
 
     tarjetas_por_estado = {
         'Activas': [],
         'Inactivas': [],
-        'Borrador': []
+        'Borrador': [],
+        'Revision': []
     }
 
-    for columna in columnas:
+    for columna in columnas: # Iterar sobre las columnas
         if request.user.groups.filter(name__in=['Administrador', 'Publicador']).exists():
             tarjetas = columna.tarjetas.all()
         else:
@@ -42,6 +43,8 @@ def tablero_kanban(request, tablero_id):
                 tarjetas_por_estado['Inactivas'].append(tarjeta)
             elif tarjeta.columna.estado.descripcion == 'Borrador':
                 tarjetas_por_estado['Borrador'].append(tarjeta)
+            elif tarjeta.columna.estado.descripcion == 'Revision':
+                tarjetas_por_estado['Revision'].append(tarjeta)
 
     # Verificar si el usuario tiene el permiso de cambiar estado de las tarjetas
     puede_cambiar_estado = request.user.has_perm('TableroKanban.cambiar_estado_tarjeta')
