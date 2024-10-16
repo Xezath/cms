@@ -225,12 +225,14 @@ def eliminar_comentario(request, comentario_id):
     - HttpResponse que redirige a la página anterior o muestra la página de confirmación de eliminación.
     """
     comentario = get_object_or_404(Comentario, id=comentario_id)
+    contenido = comentario.contenido
+    print(f"Comentario encontrado: {comentario}")  # Para asegurarse de que el comentario está siendo encontrado correctamente
 
     if request.method == 'POST':
         if request.user == comentario.usuario or request.user.has_perm('Contenidos.delete_comentario'):
             comentario.delete()
             messages.success(request, 'Comentario eliminado con éxito.')
-            return redirect(request.META.get('HTTP_REFERER', 'contenidos'))
+            return redirect('visualizar_contenido', id=contenido.id)
 
     return render(request, 'contenidos/confirmar_eliminacion_comentario.html', {'comentario': comentario})
 
