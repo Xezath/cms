@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+    <div class="container">
+        <p class="text-uppercase text-muted" style="font-size: 0.8rem;">
+            {{ contenido.categoria.nombre }}
+        </p>
+
+        <h2>{{ contenido.titulo }}</h2>
+        <div class="card" style="
+            margin: {{ contenido.plantilla.margenes.izq }}px {{ contenido.plantilla.margenes.der }}px {{ contenido.plantilla.margenes.aba }}px {{ contenido.plantilla.margenes.arr }}px;
+            background-color: {{ contenido.plantilla.colorFondo.codigo }};
+        ">
+            <div class="card-body">
+                <div class="contenido">
+                    {{ contenido.contenido|safe }}
+                </div>
+            </div>
+        </div>
+        <br>
+        <div>
+            <!-- Botones de acción -->
+            <button type="submit" class="btn btn-primary" onclick="updateEstado()">Enviar a revisión</button>
+            <a class="btn btn-secondary" href="{% url 'contenidos' %}" role="button">Salir</a>
+        </div>
+        <br>
+
+        <script>
+            function updateEstado(){
+                contenido.estado = 4;
+            }
+        </script>
+{% endblock %}

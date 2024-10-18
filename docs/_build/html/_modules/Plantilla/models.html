@@ -42,8 +42,11 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">cms</a></li>
+</ul>
+
         </div>
       </div>
     </nav>
@@ -73,46 +76,100 @@
 
 <span class="c1"># Create your models here.</span>
 <span class="c1">#Plantilla</span>
-<div class="viewcode-block" id="Tipografia">
-<a class="viewcode-back" href="../../Plantilla.html#Plantilla.models.Tipografia">[documentos]</a>
-<span class="k">class</span> <span class="nc">Tipografia</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">estilo</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span></div>
-
-
 <div class="viewcode-block" id="Margenes">
-<a class="viewcode-back" href="../../Plantilla.html#Plantilla.models.Margenes">[documentos]</a>
+<a class="viewcode-back" href="../../Plantilla.html#Plantilla.forms.Margenes">[documentos]</a>
 <span class="k">class</span> <span class="nc">Margenes</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>   <span class="c1">#Márgenes predefinidos</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Modelo para representar márgenes predefinidos.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    (AutoField): Identificador único para cada margen</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">der</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DecimalField</span><span class="p">(</span><span class="n">decimal_places</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_digits</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    (DecimalField): Margen derecho</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">izq</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DecimalField</span><span class="p">(</span><span class="n">decimal_places</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_digits</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    (DecimalField): Margen izquierdo</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">arr</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DecimalField</span><span class="p">(</span><span class="n">decimal_places</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_digits</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
-    <span class="n">aba</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DecimalField</span><span class="p">(</span><span class="n">decimal_places</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_digits</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    (DecimalField): Margen superior</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">aba</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DecimalField</span><span class="p">(</span><span class="n">decimal_places</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_digits</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    (DecimalField): Margen inferior</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Devuelve una representación en cadena del margen izquierdo.&quot;&quot;&quot;</span>
+        <span class="n">fila</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">izq</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">fila</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Modulos">
-<a class="viewcode-back" href="../../Plantilla.html#Plantilla.models.Modulos">[documentos]</a>
-<span class="k">class</span> <span class="nc">Modulos</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>    <span class="c1">#Módulos multimedia</span>
+    
+<div class="viewcode-block" id="Color">
+<a class="viewcode-back" href="../../Plantilla.html#Plantilla.forms.Color">[documentos]</a>
+<span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>  <span class="c1">#Colores</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Modelo para representar colores.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">tipoMultimedia</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    (AutoField): Identificador único para cada color.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nombre</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    (CharField): Nombre del color.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">codigo</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    (CharField): Código hexadecimal del color.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Devuelve una representación en cadena del nombre del color.&quot;&quot;&quot;</span>
+        <span class="n">fila</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nombre</span>
+        <span class="k">return</span> <span class="n">fila</span></div>
 
 
 <div class="viewcode-block" id="Plantilla">
-<a class="viewcode-back" href="../../Plantilla.html#Plantilla.models.Plantilla">[documentos]</a>
+<a class="viewcode-back" href="../../Plantilla.html#Plantilla.forms.Plantilla">[documentos]</a>
 <span class="k">class</span> <span class="nc">Plantilla</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Modelo para representar una plantilla.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    (AutoField): Identificador único para cada plantilla.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">nombre</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    (CharField): Nombre de la plantilla.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">descripcion</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">verbose_name</span><span class="o">=</span><span class="s2">&quot;Descripcion&quot;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">colorFondo</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">()</span>
-    <span class="n">tipografia</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Tipografia</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    (TextField): Descripción de la plantilla.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">colorFondo</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Color</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    (ForeignKey): Color de fondo asociado a la plantilla.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">margenes</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Margenes</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
-    <span class="n">disposicion</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">()</span> <span class="c1">#Horizonal o Vertical</span>
-    <span class="n">modulos</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Modulos</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    (ForeignKey): Márgenes asociados a la plantilla.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">disposicionHorizontal</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">()</span> <span class="c1">#Horizonal o Vertical</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    (BooleanField): Indica si la disposición es horizontal o vertical.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">fila</span> <span class="o">=</span> <span class="s2">&quot;Nombre: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nombre</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Devuelve una representación en cadena del nombre de la plantilla.&quot;&quot;&quot;</span>
+        <span class="n">fila</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nombre</span>
         <span class="k">return</span> <span class="n">fila</span></div>
 
+    
 </pre></div>
 
            </div>

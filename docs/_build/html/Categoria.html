@@ -88,9 +88,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#module-Categoria">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="Plantilla.html">Plantilla Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Plantilla.html">Plantilla Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Contenidos.html">Contenidos Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Usuario.html">Usuario Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TableroKanban.html">TableroKanban Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Usuario.html">Usuario Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cms.html">cms package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
 </ul>
@@ -169,6 +170,7 @@
 <dt class="sig sig-object py" id="Categoria.forms.CategoriaForm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Categoria.forms.</span></span><span class="sig-name descname"><span class="pre">CategoriaForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/forms.html#CategoriaForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.forms.CategoriaForm" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+<p>Formulario para la creación de categorías.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="Categoria.forms.CategoriaForm.Meta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/Categoria/forms.html#CategoriaForm.Meta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.forms.CategoriaForm.Meta" title="Link to this definition"></a></dt>
@@ -208,6 +210,7 @@
 <dt class="sig sig-object py" id="Categoria.forms.EditarCategoriaForm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Categoria.forms.</span></span><span class="sig-name descname"><span class="pre">EditarCategoriaForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/forms.html#EditarCategoriaForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.forms.EditarCategoriaForm" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+<p>Formulario para la edición de una categoría existente.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="Categoria.forms.EditarCategoriaForm.Meta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/Categoria/forms.html#EditarCategoriaForm.Meta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.forms.EditarCategoriaForm.Meta" title="Link to this definition"></a></dt>
@@ -247,6 +250,8 @@
 <dt class="sig sig-object py" id="Categoria.forms.EditarSubcategoriaForm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Categoria.forms.</span></span><span class="sig-name descname"><span class="pre">EditarSubcategoriaForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/forms.html#EditarSubcategoriaForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.forms.EditarSubcategoriaForm" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+<p>Formulario para la edición de una subcategoría existente.
+Incluye un campo para seleccionar la categoría padre.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="Categoria.forms.EditarSubcategoriaForm.Meta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/Categoria/forms.html#EditarSubcategoriaForm.Meta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.forms.EditarSubcategoriaForm.Meta" title="Link to this definition"></a></dt>
@@ -286,6 +291,8 @@
 <dt class="sig sig-object py" id="Categoria.forms.SubcategoriaForm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Categoria.forms.</span></span><span class="sig-name descname"><span class="pre">SubcategoriaForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/forms.html#SubcategoriaForm"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.forms.SubcategoriaForm" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+<p>Formulario para la creación de subcategorías.
+Incluye un campo para seleccionar la categoría padre.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="Categoria.forms.SubcategoriaForm.Meta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/Categoria/forms.html#SubcategoriaForm.Meta"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.forms.SubcategoriaForm.Meta" title="Link to this definition"></a></dt>
@@ -326,8 +333,9 @@
 <span id="categoria-models-module"></span><h2>Categoria.models module<a class="headerlink" href="#module-Categoria.models" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="Categoria.models.Categoria">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Categoria.models.</span></span><span class="sig-name descname"><span class="pre">Categoria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descripcion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/models.html#Categoria"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.models.Categoria" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Categoria.models.</span></span><span class="sig-name descname"><span class="pre">Categoria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/models.html#Categoria"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.models.Categoria" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Modelo que representa una categoría de contenido.</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="Categoria.models.Categoria.DoesNotExist">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#Categoria.models.Categoria.DoesNotExist" title="Link to this definition"></a></dt>
@@ -358,22 +366,19 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Categoria.models.Categoria.descripcion">
 <span class="sig-name descname"><span class="pre">descripcion</span></span><a class="headerlink" href="#Categoria.models.Categoria.descripcion" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>Descripción detallada de la categoría.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Categoria.models.Categoria.id">
 <span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#Categoria.models.Categoria.id" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>Identificador único de la categoría.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Categoria.models.Categoria.nombre">
 <span class="sig-name descname"><span class="pre">nombre</span></span><a class="headerlink" href="#Categoria.models.Categoria.nombre" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>Nombre de la categoría.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -400,8 +405,9 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 
 <dl class="py class">
 <dt class="sig sig-object py" id="Categoria.models.Subcategoria">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Categoria.models.</span></span><span class="sig-name descname"><span class="pre">Subcategoria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descripcion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categoriaPadre</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/models.html#Subcategoria"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.models.Subcategoria" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Categoria.models.</span></span><span class="sig-name descname"><span class="pre">Subcategoria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/models.html#Subcategoria"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.models.Subcategoria" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Modelo que representa una subcategoría de una categoría principal.</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="Categoria.models.Subcategoria.DoesNotExist">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#Categoria.models.Subcategoria.DoesNotExist" title="Link to this definition"></a></dt>
@@ -417,14 +423,7 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Categoria.models.Subcategoria.categoriaPadre">
 <span class="sig-name descname"><span class="pre">categoriaPadre</span></span><a class="headerlink" href="#Categoria.models.Subcategoria.categoriaPadre" title="Link to this definition"></a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+<dd><p>Relacion con la categoria principal a la que pertenece</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -450,22 +449,19 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Categoria.models.Subcategoria.descripcion">
 <span class="sig-name descname"><span class="pre">descripcion</span></span><a class="headerlink" href="#Categoria.models.Subcategoria.descripcion" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>Descripcion detallada de la subcategoria</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Categoria.models.Subcategoria.id">
 <span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#Categoria.models.Subcategoria.id" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>Identificador unico de la subcategoria</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Categoria.models.Subcategoria.nombre">
 <span class="sig-name descname"><span class="pre">nombre</span></span><a class="headerlink" href="#Categoria.models.Subcategoria.nombre" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>Nombre de la subcategoria</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -484,57 +480,100 @@ object the first time, the query is executed.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="Categoria.views.borrar_cat">
 <span class="sig-prename descclassname"><span class="pre">Categoria.views.</span></span><span class="sig-name descname"><span class="pre">borrar_cat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/views.html#borrar_cat"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.views.borrar_cat" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Vista para eliminar una categoría.
+Requiere el permiso “delete_categoria”.</p>
+<p>Argumentos:
+- request: Solicitud HTTP.
+- id: Identificador de la categoría a eliminar.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Categoria.views.borrar_sub">
 <span class="sig-prename descclassname"><span class="pre">Categoria.views.</span></span><span class="sig-name descname"><span class="pre">borrar_sub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/views.html#borrar_sub"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.views.borrar_sub" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Vista para eliminar una subcategoría.
+Requiere el permiso “delete_subcategoria”.</p>
+<p>Argumentos:
+- request: Solicitud HTTP.
+- id: Identificador de la subcategoría a eliminar.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Categoria.views.categorias">
 <span class="sig-prename descclassname"><span class="pre">Categoria.views.</span></span><span class="sig-name descname"><span class="pre">categorias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/views.html#categorias"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.views.categorias" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Muestra la lista de categorías disponibles en el sistema.
+Requiere el permiso “view_categoria”.</p>
+<p>Argumentos:
+- request: Solicitud HTTP.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Categoria.views.crear_cat">
 <span class="sig-prename descclassname"><span class="pre">Categoria.views.</span></span><span class="sig-name descname"><span class="pre">crear_cat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/views.html#crear_cat"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.views.crear_cat" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Vista para crear una nueva categoría.
+Requiere el permiso “add_categoria”.</p>
+<p>Argumentos:
+- request: Solicitud HTTP.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Categoria.views.crear_sub">
 <span class="sig-prename descclassname"><span class="pre">Categoria.views.</span></span><span class="sig-name descname"><span class="pre">crear_sub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/views.html#crear_sub"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.views.crear_sub" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Vista para crear una nueva subcategoría.
+Requiere el permiso “add_subcategoria”.</p>
+<p>Argumentos:
+- request: Solicitud HTTP.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Categoria.views.editar_cat">
 <span class="sig-prename descclassname"><span class="pre">Categoria.views.</span></span><span class="sig-name descname"><span class="pre">editar_cat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/views.html#editar_cat"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.views.editar_cat" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Vista para editar una categoría existente.
+Requiere el permiso “change_categoria”.</p>
+<p>Argumentos:
+- request: Solicitud HTTP.
+- id: Identificador de la categoría a editar.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Categoria.views.editar_sub">
 <span class="sig-prename descclassname"><span class="pre">Categoria.views.</span></span><span class="sig-name descname"><span class="pre">editar_sub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/views.html#editar_sub"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.views.editar_sub" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Vista para editar una subcategoría existente.
+Requiere el permiso “change_subcategoria”.</p>
+<p>Argumentos:
+- request: Solicitud HTTP.
+- id: Identificador de la subcategoría a editar.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Categoria.views.inicio">
 <span class="sig-prename descclassname"><span class="pre">Categoria.views.</span></span><span class="sig-name descname"><span class="pre">inicio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/views.html#inicio"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.views.inicio" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Renderiza la página de inicio del sistema.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Categoria.views.mensajeExito">
 <span class="sig-prename descclassname"><span class="pre">Categoria.views.</span></span><span class="sig-name descname"><span class="pre">mensajeExito</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/views.html#mensajeExito"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.views.mensajeExito" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Muestra un mensaje de éxito después de completar una operación sobre categorías.</p>
+<p>Argumentos:
+- request: Solicitud HTTP.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Categoria.views.mensajeExito_sub">
 <span class="sig-prename descclassname"><span class="pre">Categoria.views.</span></span><span class="sig-name descname"><span class="pre">mensajeExito_sub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/views.html#mensajeExito_sub"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.views.mensajeExito_sub" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Muestra un mensaje de éxito después de completar una operación sobre subcategorías.</p>
+<p>Argumentos:
+- request: Solicitud HTTP.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Categoria.views.subcategorias">
 <span class="sig-prename descclassname"><span class="pre">Categoria.views.</span></span><span class="sig-name descname"><span class="pre">subcategorias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Categoria/views.html#subcategorias"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Categoria.views.subcategorias" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Muestra la lista de subcategorías disponibles en el sistema.
+Requiere el permiso “view_subcategoria”.</p>
+<p>Argumentos:
+- request: Solicitud HTTP.</p>
+</dd></dl>
 
 </section>
 <section id="module-Categoria">

@@ -24,6 +24,7 @@
         </div>
         <!-- Sección de comentarios -->
         <div class="comentarios mt-5">
+            
             <h4>Comentarios ({{ comentarios.count }})</h4>
             {% for comentario in comentarios %}
                 <div class="card mb-3">
@@ -32,9 +33,7 @@
                         <p>{{ comentario.comentario }}</p>
                         <p class="text-muted">{{ comentario.fecha_creacion }}</p>
                         <div class="d-flex justify-content-end">
-                            {% if perms.Contenidos.delete_comentario %}
-                                <a href="{% url 'eliminar_comentario' comentario.id %}" class="btn btn-danger btn-sm">Eliminar</a>
-                            {%elif comentario.usuario == request.user %}
+                            {% if comentario.usuario == request.user or perms.Contenidos.delete_comentario %}
                                 <a href="{% url 'eliminar_comentario' comentario.id %}" class="btn btn-danger btn-sm">Eliminar</a>
                             {% endif %}
                         </div>
@@ -47,11 +46,13 @@
 
         <!-- Formulario para agregar un comentario -->
         <div class="mt-4">
-            <h5>Agregar un comentario</h5>
-            <form method="post">
-                {% csrf_token %}
-                {{ comentario_form.as_p }}
-                <button type="submit" class="btn btn-primary">Comentar</button>
+            {% if perms.Contenidos.add_comentario%}
+                <h5>Agregar un comentario</h5>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ comentario_form.as_p }}
+                    <button type="submit" class="btn btn-primary">Comentar</button>
+            {% endif %}
             </form>
         </div>
 

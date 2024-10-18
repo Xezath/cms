@@ -79,6 +79,9 @@
 <div class="viewcode-block" id="CategoriaForm">
 <a class="viewcode-back" href="../../Categoria.html#Categoria.forms.CategoriaForm">[documentos]</a>
 <span class="k">class</span> <span class="nc">CategoriaForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formulario para la creación de categorías.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="CategoriaForm.Meta">
 <a class="viewcode-back" href="../../Categoria.html#Categoria.forms.CategoriaForm.Meta">[documentos]</a>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
@@ -90,6 +93,10 @@
 <div class="viewcode-block" id="SubcategoriaForm">
 <a class="viewcode-back" href="../../Categoria.html#Categoria.forms.SubcategoriaForm">[documentos]</a>
 <span class="k">class</span> <span class="nc">SubcategoriaForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formulario para la creación de subcategorías.</span>
+<span class="sd">    Incluye un campo para seleccionar la categoría padre.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">categoriaPadre</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ModelChoiceField</span><span class="p">(</span>
         <span class="n">queryset</span><span class="o">=</span><span class="n">Categoria</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span>  <span class="c1"># Aquí defines el queryset con las opciones</span>
         <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Select</span><span class="p">,</span>               <span class="c1"># Esto asegura que se renderice como un &lt;select&gt;</span>
@@ -108,6 +115,9 @@
 <div class="viewcode-block" id="EditarCategoriaForm">
 <a class="viewcode-back" href="../../Categoria.html#Categoria.forms.EditarCategoriaForm">[documentos]</a>
 <span class="k">class</span> <span class="nc">EditarCategoriaForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formulario para la edición de una categoría existente.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="EditarCategoriaForm.Meta">
 <a class="viewcode-back" href="../../Categoria.html#Categoria.forms.EditarCategoriaForm.Meta">[documentos]</a>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
@@ -119,6 +129,10 @@
 <div class="viewcode-block" id="EditarSubcategoriaForm">
 <a class="viewcode-back" href="../../Categoria.html#Categoria.forms.EditarSubcategoriaForm">[documentos]</a>
 <span class="k">class</span> <span class="nc">EditarSubcategoriaForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formulario para la edición de una subcategoría existente.</span>
+<span class="sd">    Incluye un campo para seleccionar la categoría padre.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">categoriaPadre</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ModelChoiceField</span><span class="p">(</span>
         <span class="n">queryset</span><span class="o">=</span><span class="n">Categoria</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span>  <span class="c1"># Aquí defines el queryset con las opciones</span>
         <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Select</span><span class="p">,</span>               <span class="c1"># Esto asegura que se renderice como un &lt;select&gt;</span>

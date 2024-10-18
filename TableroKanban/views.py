@@ -10,16 +10,27 @@ from django.views.decorators.http import require_POST
 @login_required
 @permission_required('TableroKanban.ver_propio_tablero', raise_exception=True)
 def tablero_kanban(request, tablero_id):
-    tablero = get_object_or_404(Tablero, id=tablero_id)
-    columnas = tablero.columnas.prefetch_related('tarjetas').all()
+    """
+    Vista que muestra el tablero Kanban y sus tarjetas.
+
+    Args:
+        request: El objeto de la solicitud HTTP.
+        tablero_id (int): El ID del tablero a mostrar.
+
+    Returns:
+        HttpResponse: Renderiza la plantilla del tablero con las tarjetas organizadas por estado.
+    """
+    tablero = get_object_or_404(Tablero, id=tablero_id) # Obtener el tablero por su ID
+    columnas = tablero.columnas.prefetch_related('tarjetas').all() # Obtener todas las columnas del tablero con sus tarjetas
 
     tarjetas_por_estado = {
         'Activas': [],
         'Inactivas': [],
-        'Borrador': []
+        'Borrador': [],
+        'Revision': []
     }
 
-    for columna in columnas:
+    for columna in columnas: # Iterar sobre las columnas
         if request.user.groups.filter(name__in=['Administrador', 'Publicador']).exists():
             tarjetas = columna.tarjetas.all()
         else:
@@ -32,6 +43,8 @@ def tablero_kanban(request, tablero_id):
                 tarjetas_por_estado['Inactivas'].append(tarjeta)
             elif tarjeta.columna.estado.descripcion == 'Borrador':
                 tarjetas_por_estado['Borrador'].append(tarjeta)
+            elif tarjeta.columna.estado.descripcion == 'Revision':
+                tarjetas_por_estado['Revision'].append(tarjeta)
 
     # Verificar si el usuario tiene el permiso de cambiar estado de las tarjetas
     puede_cambiar_estado = request.user.has_perm('TableroKanban.cambiar_estado_tarjeta')
@@ -46,6 +59,17 @@ def tablero_kanban(request, tablero_id):
 @csrf_exempt
 @permission_required('TableroKanban.cambiar_estado_tarjeta', raise_exception=True)
 def actualizar_estado(request, tarjeta_id, nuevo_estado):
+    """
+    Vista que actualiza el estado de una tarjeta.
+
+    Args:
+        request: El objeto de la solicitud HTTP.
+        tarjeta_id (int): El ID de la tarjeta a actualizar.
+        nuevo_estado (str): El nuevo estado que se le quiere asignar a la tarjeta.
+
+    Returns:
+        JsonResponse: Respuesta en formato JSON indicando el resultado de la operación.
+    """
     if request.method == 'POST':
         try:
             # Buscar la tarjeta por su ID
