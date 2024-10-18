@@ -276,17 +276,23 @@ def enviar_a_revision(request, id):
 
     Parámetros:
     - request: HttpRequest object con la información de la solicitud.
-    - id: ID del contenido a formatear.
+    - id: ID del contenido a enviar a revisión.
 
     Retorna:
     - HttpResponse que redirige a la página anterior o muestra la página de contenidos.
     """
     # Obtener el contenido con el ID proporcionado
     contenido = get_object_or_404(Contenidos, id=id)
+    tarjeta = Tarjeta.objects.filter(contenido=contenido).first()
     
-    # Cambiar el estado del contenido de 3 a 4
-    contenido.estado = get_object_or_404(Estado, id=4)
+    # Cambiar el estado del contenido a "revisión"
+    contenido.estado = get_object_or_404(Estado, id=4)  # Asumiendo que el ID 4 corresponde al estado "revisión"
     contenido.save()  # Guardar los cambios en la base de datos
+    
+    # Actualizar el estado de la tarjeta si existe
+    if tarjeta:
+        tarjeta.estado = contenido.estado  # Actualiza el estado de la tarjeta al nuevo estado del contenido
+        tarjeta.save()  # Guarda los cambios en la tarjeta
 
     # Redirigir o devolver una respuesta
     return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir
