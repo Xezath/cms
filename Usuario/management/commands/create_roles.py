@@ -16,7 +16,7 @@ class Command(BaseCommand):
             administracion.permissions.add(permiso)
 
         roles = {
-            'Suscriptor': ['view_contenidos'],
+            'Suscriptor': ['view_contenidos','add_comentario'],
             'Autor': ['add_contenidos', 'view_tablero', 'ver_propio_tablero', 'view_columna','change_contenidos', 'delete_contenidos'],  
             'Editor': ['change_contenidos', 'change_categoria'],
             'Publicador': ['view_tarjeta','can_viewInactive','delete_contenidos', 'change_subcategoria','cambiar_estado_tarjeta','can_viewBorrador','can_change_estado'],
