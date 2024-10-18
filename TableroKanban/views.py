@@ -27,7 +27,8 @@ def tablero_kanban(request, tablero_id):
         'Activas': [],
         'Inactivas': [],
         'Borrador': [],
-        'Revision': []
+        'Revision': [],
+        'Rechazadas': []
     }
 
     for columna in columnas: # Iterar sobre las columnas
@@ -45,6 +46,8 @@ def tablero_kanban(request, tablero_id):
                 tarjetas_por_estado['Borrador'].append(tarjeta)
             elif tarjeta.columna.estado.descripcion == 'Revision':
                 tarjetas_por_estado['Revision'].append(tarjeta)
+            elif tarjeta.columna.estado.descripcion == 'Rechazado':
+                tarjetas_por_estado['Rechazadas'].append(tarjeta)
 
     # Verificar si el usuario tiene el permiso de cambiar estado de las tarjetas
     puede_cambiar_estado = request.user.has_perm('TableroKanban.cambiar_estado_tarjeta')
