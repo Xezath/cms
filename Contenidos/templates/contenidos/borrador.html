@@ -6,7 +6,7 @@
             {{ contenido.categoria.nombre }}
         </p>
 
-        <h2>{{ contenido.titulo }}</h2>
+        <h2>{{ contenido.titulo }} (Borrador)</h2>
         <div class="card" style="
             margin: {{ contenido.plantilla.margenes.izq }}px {{ contenido.plantilla.margenes.der }}px {{ contenido.plantilla.margenes.aba }}px {{ contenido.plantilla.margenes.arr }}px;
             background-color: {{ contenido.plantilla.colorFondo.codigo }};
@@ -20,14 +20,11 @@
         <br>
         <div>
             <!-- Botones de acción -->
-            <button type="submit" class="btn btn-primary" onclick="updateEstado()">Enviar a revisión</button>
-            <a class="btn btn-secondary" href="{% url 'contenidos' %}" role="button">Salir</a>
+            <form action="{% url 'enviar_a_revision' contenido.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Enviar a Revisión</button>
+                <a class="btn btn-secondary" href="{% url 'contenidos' %}" role="button">Salir</a>
+            </form>
         </div>
         <br>
-
-        <script>
-            function updateEstado(){
-                contenido.estado = 4;
-            }
-        </script>
 {% endblock %}

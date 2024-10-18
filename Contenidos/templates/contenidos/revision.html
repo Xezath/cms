@@ -22,20 +22,15 @@
             <!-- Botones de acción -->
              {% if perms.Contenidos.can_change_estado %}
              <h6 style="color: brown;">Desea confirmar el contenido?</h6>
-             <a class="btn btn-primary" onclick="aceptarContenido()">Aceptar contenido</a>
+             <form action="{% url 'aceptar_contenido' contenido.id %}" method="post">
+                 {% csrf_token %}
+                 <button type="submit" class="btn btn-primary">Aceptar Contenido</button>
+                 <a class="btn btn-secondary" href="{% url 'contenidos' %}" role="button">Salir</a>
+             </form>
              {% else %}
             <h6 style="color: brown;">Esperando confirmación de un publicador...</h6>
-            {% endif %}
             <a class="btn btn-secondary" href="{% url 'contenidos' %}" role="button">Volver</a>
+            {% endif %}
         </div>
         <br>
-
-        <script>
-            function updateEstado(){
-                contenido.estado = 4;
-            }
-            function aceptarContenido(){
-                contenido.estado.id = 1;
-            }
-        </script>
 {% endblock %}
