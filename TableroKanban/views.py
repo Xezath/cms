@@ -79,7 +79,7 @@ def actualizar_estado(request, tarjeta_id, nuevo_estado):
             tarjeta = Tarjeta.objects.get(id=tarjeta_id)
             
             # Buscar el estado correspondiente al nuevo estado
-            estado = Estado.objects.get(descripcion=nuevo_estado)  # Suponiendo que 'descripcion' es el campo en Estado
+            estado = Estado.objects.get(descripcion=nuevo_estado)  
             
             # Buscar la columna correspondiente a ese estado en el mismo tablero
             columna = Columna.objects.get(estado=estado, tablero=tarjeta.columna.tablero)
@@ -90,9 +90,8 @@ def actualizar_estado(request, tarjeta_id, nuevo_estado):
             tarjeta.save()
 
             # Sincronizar el estado del contenido relacionado
-            # Suponiendo que tienes una relación en Tarjeta a Contenido, por ejemplo: tarjeta.contenido
             if hasattr(tarjeta, 'contenido'):
-                contenido = tarjeta.contenido  # Obtén el contenido relacionado
+                contenido = tarjeta.contenido  # Obtiene el contenido relacionado
                 contenido.estado = estado  # Cambia el estado del contenido
                 contenido.save()  # Guarda los cambios
             

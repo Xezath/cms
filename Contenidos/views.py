@@ -1,4 +1,4 @@
-from .models import Contenidos, Comentario
+from .models import Contenidos, Comentario, Estado
 from Categoria.models import Categoria, Subcategoria
 from .forms import ContenidosForm, EditarContenidosForm, VisualizarContenidoForm, ComentarioForm
 from django.shortcuts import render, redirect, get_object_or_404
@@ -269,3 +269,52 @@ def visualizar_contenido_revision(request, id):
     return render(request, 'contenidos/revision.html', {
         'contenido': contenido,
     })
+
+def enviar_a_revision(request, id):
+    """
+    Vista para enviar un contenido a revisión.
+
+    Parámetros:
+    - request: HttpRequest object con la información de la solicitud.
+    - id: ID del contenido a enviar a revisión.
+
+    Retorna:
+    - HttpResponse que redirige a la página anterior o muestra la página de contenidos.
+    """
+    # Obtener el contenido con el ID proporcionado
+    contenido = get_object_or_404(Contenidos, id=id)
+    tarjeta = Tarjeta.objects.filter(contenido=contenido).first()
+    
+    # Cambiar el estado del contenido a "revisión"
+    contenido.estado = get_object_or_404(Estado, id=4)  # Asumiendo que el ID 4 corresponde al estado "revisión"
+    contenido.save()  # Guardar los cambios en la base de datos
+    
+    # Actualizar el estado de la tarjeta si existe
+    if tarjeta:
+        tarjeta.estado = contenido.estado  # Actualiza el estado de la tarjeta al nuevo estado del contenido
+        tarjeta.save()  # Guarda los cambios en la tarjeta
+
+    # Redirigir o devolver una respuesta
+    return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir
+
+def aceptar_contenido(request, id):
+    """
+    Vista para enviar un contenido a activo.
+
+    Parámetros:
+    - request: HttpRequest object con la información de la solicitud.
+    - id: ID del contenido a formatear.
+
+    Retorna:
+    - HttpResponse que redirige a la página anterior o muestra la página de contenidos.
+    """
+    # Obtener el contenido con el ID proporcionado
+    contenido = get_object_or_404(Contenidos, id=id)
+    
+    # Cambiar el estado del contenido de 3 a 4
+    contenido.estado = get_object_or_404(Estado, id=1)
+    contenido.save()  # Guardar los cambios en la base de datos
+
+    # Redirigir o devolver una respuesta
+    return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir
+

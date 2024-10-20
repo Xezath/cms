@@ -15,7 +15,7 @@
     }
 
     .kanban-tarjeta:hover {
-        background-color: #8ea6c2; /* Color al pasar el mouse (opcional) */
+        background-color: #8ea6c2; /* Color al pasar el mouse */
     }
     .kanban-board {
         display: flex; /* Flexbox para alinear las columnas */
@@ -25,12 +25,12 @@
         padding: 10px; /* Espaciado interno */
     }
     .kanban-column {
-        width: 30%; /* Cada columna ocupará un 20% del ancho del tablero */
-        min-width: 250px; /* Define un ancho mínimo para cada columna */
+        width: 30%; 
+        min-width: 235px; /* Define un ancho mínimo para cada columna */
         background-color: #f4f4f4; /* Color de fondo de las columnas */
-        margin: 5px; /* Espaciado entre columnas */
+        margin: 2px; /* Espaciado entre columnas */
         padding: 20px; /* Espaciado interno */
-        border-radius: 10px; /* Esquinas redondeadas */
+        border-radius: 5px; /* Esquinas redondeadas */
     }
     .kanban-column a {
         text-decoration: none; /* Elimina el subrayado */
@@ -43,19 +43,19 @@
 
 <div class="card">
     <div class="card-header">
-        <h4 class="card-title">Tablero Kanban</h4>
+        <h2 class="card-title">Tablero Kanban</h2>
     </div>
     <div class="card-body">
         <div class="kanban-board">
             <!-- Columna Inactivo -->
             <div class="kanban-column" {% if puede_cambiar_estado %} ondrop="drop(event, 'Inactivo')" ondragover="allowDrop(event)" {% endif %}>
-                <h2>Inactivo</h2>
+                <h3>Inactivo</h3>
                 {% for tarjeta in tarjetas_por_estado.Inactivas %}
                     <div class="kanban-tarjeta card" {% if puede_cambiar_estado %} draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')" {% endif %}>
                         <div class="card-body">
-                            <h5 class="card-title">
+                            <h6 class="card-title">
                                 <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
-                            </h5>
+                            </h6>
                             <p class="card-text">{{ tarjeta.descripcion }}</p>
                         </div>
                     </div>
@@ -65,13 +65,13 @@
             </div>
             <!-- Columna Borrador -->
             <div class="kanban-column" {% if puede_cambiar_estado %} ondrop="drop(event, 'Borrador')" ondragover="allowDrop(event)" {% endif %}>
-                <h2>Borrador</h2>
+                <h3>Borrador</h3>
                 {% for tarjeta in tarjetas_por_estado.Borrador %}
                     <div class="kanban-tarjeta card" {% if puede_cambiar_estado %} draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')" {% endif %}>
                         <div class="card-body">
-                            <h5 class="card-title">
+                            <h6 class="card-title">
                                 <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
-                            </h5>
+                            </h6>
                             <p class="card-text">{{ tarjeta.descripcion }}</p>
                         </div>
                     </div>
@@ -81,13 +81,13 @@
             </div>
             <!-- Columna Revisión -->
             <div class="kanban-column" {% if puede_cambiar_estado %} ondrop="drop(event, 'Revision')" ondragover="allowDrop(event)" {% endif %}>
-                <h2>En Revisión</h2>
+                <h3>En Revisión</h3>
                 {% for tarjeta in tarjetas_por_estado.Revision %}
                     <div class="kanban-tarjeta card" {% if puede_cambiar_estado %} draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')" {% endif %}>
                         <div class="card-body">
-                            <h5 class="card-title">
+                            <h6 class="card-title">
                                 <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
-                            </h5>
+                            </h6>
                             <p class="card-text">{{ tarjeta.descripcion }}</p>
                         </div>
                     </div>
@@ -97,13 +97,13 @@
             </div>
             <!-- Columna Rechazado -->
             <div class="kanban-column" {% if puede_cambiar_estado %} ondrop="drop(event, 'Rechazado')" ondragover="allowDrop(event)" {% endif %}>
-                <h2>Rechazado</h2>
+                <h3>Rechazado</h3>
                 {% for tarjeta in tarjetas_por_estado.Rechazadas %}
                     <div class="kanban-tarjeta card" {% if puede_cambiar_estado %} draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')" {% endif %}>
                         <div class="card-body">
-                            <h5 class="card-title">
+                            <h6 class="card-title">
                                 <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
-                            </h5>
+                            </h6>
                             <p class="card-text">{{ tarjeta.descripcion }}</p>
                         </div>
                     </div>
@@ -113,13 +113,13 @@
             </div>
             <!-- Columna Activo -->
             <div class="kanban-column" {% if puede_cambiar_estado %} ondrop="drop(event, 'Activo')" ondragover="allowDrop(event)" {% endif %}>
-                <h2>Activo</h2>
+                <h3>Activo</h3>
                 {% for tarjeta in tarjetas_por_estado.Activas %}
                     <div class="kanban-tarjeta card" {% if puede_cambiar_estado %} draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')" {% endif %}>
                         <div class="card-body">
-                            <h5 class="card-title">
+                            <h6 class="card-title">
                                 <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
-                            </h5>
+                            </h6>
                             <p class="card-text">{{ tarjeta.descripcion }}</p>
                         </div>
                     </div>
