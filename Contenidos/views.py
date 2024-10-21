@@ -8,6 +8,8 @@ from django.http import HttpResponseForbidden, JsonResponse
 from django.contrib.auth.models import User, Permission
 from TableroKanban.models import Tablero, Tarjeta
 from django.db.models import Q
+from django.core.mail import send_mail
+from django.conf import settings
 
 @permission_required('Contenidos.view_contenidos', raise_exception=True)
 def contenidos(request):
@@ -179,6 +181,7 @@ def visualizar_contenido(request, id):
             comentario.usuario = request.user  # Asignar el usuario autenticado
             comentario.contenido = contenido   # Relacionar el comentario con el contenido actual
             comentario.save()
+
             return redirect('visualizar_contenido', id=contenido.id)
     else:
         comentario_form = ComentarioForm()

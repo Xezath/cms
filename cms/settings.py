@@ -185,6 +185,14 @@ DATABASES = {
     }
 }
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "apikey"  # este valor es siempre 'apikey'
+EMAIL_HOST_PASSWORD = "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"  # aquí pones tu clave de API
+DEFAULT_FROM_EMAIL = "cicloncita89@fpuna.edu.py"
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
