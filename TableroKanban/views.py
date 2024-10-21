@@ -10,18 +10,8 @@ from django.views.decorators.http import require_POST
 @login_required
 @permission_required('TableroKanban.ver_propio_tablero', raise_exception=True)
 def tablero_kanban(request, tablero_id):
-    """
-    Vista que muestra el tablero Kanban y sus tarjetas.
-
-    Args:
-        request: El objeto de la solicitud HTTP.
-        tablero_id (int): El ID del tablero a mostrar.
-
-    Returns:
-        HttpResponse: Renderiza la plantilla del tablero con las tarjetas organizadas por estado.
-    """
-    tablero = get_object_or_404(Tablero, id=tablero_id) # Obtener el tablero por su ID
-    columnas = tablero.columnas.prefetch_related('tarjetas').all() # Obtener todas las columnas del tablero con sus tarjetas
+    tablero = get_object_or_404(Tablero, id=tablero_id)
+    columnas = tablero.columnas.prefetch_related('tarjetas').all()
 
     tarjetas_por_estado = {
         'Activas': [],
@@ -31,8 +21,11 @@ def tablero_kanban(request, tablero_id):
         'Rechazadas': []
     }
 
-    for columna in columnas: # Iterar sobre las columnas
+    for columna in columnas:
+        # Permitir a los roles Administrador, Publicador y Editor ver las tarjetas en revisión de todos
         if request.user.groups.filter(name__in=['Administrador', 'Publicador']).exists():
+            tarjetas = columna.tarjetas.all()
+        elif request.user.groups.filter(name__in=['Editor']).exists() and columna.estado.descripcion == 'Revision':
             tarjetas = columna.tarjetas.all()
         else:
             tarjetas = columna.tarjetas.filter(autor=request.user)
@@ -49,7 +42,6 @@ def tablero_kanban(request, tablero_id):
             elif tarjeta.columna.estado.descripcion == 'Rechazado':
                 tarjetas_por_estado['Rechazadas'].append(tarjeta)
 
-    # Verificar si el usuario tiene el permiso de cambiar estado de las tarjetas
     puede_cambiar_estado = request.user.has_perm('TableroKanban.cambiar_estado_tarjeta')
 
     return render(request, 'TableroKanban/tablero.html', {
