@@ -1,12 +1,14 @@
 from django.test import TestCase
 from django.utils import timezone
-from Contenidos.models import Contenidos
+from Contenidos.models import Contenidos, Estado
 from Categoria.models import Categoria
 from Plantilla.models import Plantilla, Color, Margenes
 
 class ContenidosModelTest(TestCase):
     def setUp(self):
         """Setup initial data for tests."""
+        # Elimina los datos antiguos antes de crear nuevos
+        Estado.objects.all().delete()
         # Create instances of Categoria and Margenes
         self.categoria = Categoria.objects.create(nombre='Categoria Test')
         self.margenes = Margenes.objects.create(
@@ -26,6 +28,8 @@ class ContenidosModelTest(TestCase):
             margenes=self.margenes,
             disposicionHorizontal=True
         )
+
+        self.estado, created = Estado.objects.get_or_create(descripcion='Activo')
         
         # Create a Contenidos instance
         self.contenido = Contenidos.objects.create(
@@ -33,7 +37,8 @@ class ContenidosModelTest(TestCase):
             contenido='Este es un contenido de prueba.',
             fecha_creacion=timezone.now(),
             categoria=self.categoria,
-            plantilla=self.plantilla
+            plantilla=self.plantilla,
+            estado=self.estado
         )
     
     def test_contenidos_creation(self):
@@ -54,7 +59,8 @@ class ContenidosModelTest(TestCase):
             titulo='Otro Contenido Test',
             contenido='Este es otro contenido de prueba.',
             categoria=self.categoria,
-            plantilla=self.plantilla
+            plantilla=self.plantilla,
+            estado=self.estado
         )
         self.assertAlmostEqual(contenido.fecha_creacion, timezone.now(), delta=timezone.timedelta(seconds=1))
     
@@ -63,3 +69,5 @@ class ContenidosModelTest(TestCase):
         self.assertIn(('can_add', 'Puede agregar contenido'), Contenidos._meta.permissions)
         self.assertIn(('can_modify', 'Puede editar contenido'), Contenidos._meta.permissions)
         self.assertIn(('can_delete', 'Puede eliminar contenido'), Contenidos._meta.permissions)
+        self.assertIn(('can_viewInactive', 'Puede ver contenido inactivo'), Contenidos._meta.permissions)
+
