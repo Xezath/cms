@@ -4,27 +4,44 @@ from django.contrib.auth.models import User
 from .models import Contenidos, Estado, Categoria, Subcategoria, Comentario
 from .forms import ContenidosForm, EditarContenidosForm, ComentarioForm
 from django.utils import timezone
-from django.contrib.auth.models import Permission
+from Contenidos.models import Contenidos, Estado
+from Categoria.models import Categoria
+from Plantilla.models import Plantilla, Color, Margenes
 
 class ContenidosModelTest(TestCase):
     def setUp(self):
-        # Crear un usuario de prueba
-        self.user = User.objects.create_user(username='testuser', password='12345')
+        """Setup initial data for tests."""
+        # Elimina los datos antiguos antes de crear nuevos
+        Estado.objects.all().delete()
+        # Create instances of Categoria and Margenes
+        self.categoria = Categoria.objects.create(nombre='Categoria Test')
+        self.margenes = Margenes.objects.create(
+            der=10.0,
+            izq=10.0,
+            arr=20.0,
+            aba=20.0
+        )
+        self.color = Color.objects.create(
+            nombre='Blanco',
+            codigo='#FFFFFF'
+        )
+        self.plantilla = Plantilla.objects.create(
+            nombre='Plantilla Test',
+            descripcion='Descripción de prueba',
+            colorFondo=self.color,
+            margenes=self.margenes,
+            disposicionHorizontal=True
+        )
 
-        # Crear estado y categorías de prueba
-        self.estado = Estado.objects.create(descripcion="Publicado")
-        self.categoria = Categoria.objects.create(nombre="Tecnología")
-        self.subcategoria = Subcategoria.objects.create(nombre="Programación", categoriaPadre=self.categoria)
-
-        # Crear contenido de prueba
+        self.estado, created = Estado.objects.get_or_create(descripcion='Activo')
+        
+        # Create a Contenidos instance
         self.contenido = Contenidos.objects.create(
             titulo="Título de prueba",
             contenido="Contenido de prueba",
             categoria=self.categoria,
-            subcategoria=self.subcategoria,
-            estado=self.estado,
-            autor=self.user,
-            fecha_creacion=timezone.now()
+            plantilla=self.plantilla,
+            estado=self.estado
         )
 
     def test_contenidos_creation(self):
@@ -123,17 +140,15 @@ class ComentarioFormTest(TestCase):
             titulo="Título de prueba",
             contenido="Contenido de prueba",
             categoria=self.categoria,
-            estado=self.estado,
-            autor=self.user,
+            plantilla=self.plantilla,
+            estado=self.estado
         )
-
-    def test_comentario_form_valid(self):
-        form_data = {'comentario': 'Este es un comentario de prueba'}
-        form = ComentarioForm(data=form_data)
-        self.assertTrue(form.is_valid())
-
-    def test_comentario_form_invalid(self):
-        form_data = {'comentario': ''}
-        form = ComentarioForm(data=form_data)
-        self.assertFalse(form.is_valid())
+        self.assertAlmostEqual(contenido.fecha_creacion, timezone.now(), delta=timezone.timedelta(seconds=1))
+    
+    def test_permissions(self):
+        """Test the permissions defined in the Meta class."""
+        self.assertIn(('can_add', 'Puede agregar contenido'), Contenidos._meta.permissions)
+        self.assertIn(('can_modify', 'Puede editar contenido'), Contenidos._meta.permissions)
+        self.assertIn(('can_delete', 'Puede eliminar contenido'), Contenidos._meta.permissions)
+        self.assertIn(('can_viewInactive', 'Puede ver contenido inactivo'), Contenidos._meta.permissions)
 

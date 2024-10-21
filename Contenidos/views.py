@@ -96,6 +96,7 @@ def crear_contenido(request):
 
 
 @permission_required('Contenidos.change_contenidos', raise_exception=True)
+@login_required
 def editar_contenido(request, id):
     """
     Vista para editar un contenido existente. También actualiza la tarjeta asociada en el tablero 
@@ -106,27 +107,29 @@ def editar_contenido(request, id):
     - id: ID del contenido a editar.
 
     Retorna:
-    - HttpResponse que redirige a la lista de contenidos si la edición se completa con éxito, o muestra la página 'contenidos/editar.html' con el formulario si no es válido.
+    - HttpResponse que redirige a la lista de contenidos si la edición se completa con éxito, 
+      o muestra la página 'contenidos/editar.html' con el formulario si no es válido.
     """
     contenido = get_object_or_404(Contenidos, id=id)
     tarjeta = Tarjeta.objects.filter(contenido=contenido).first()  # Buscar la tarjeta relacionada con el contenido
 
     if request.method == 'POST':
         formulario = EditarContenidosForm(request.POST, instance=contenido)
-        
+
         # Actualiza el queryset de subcategorías basadas en la categoría seleccionada
         categoria_id = request.POST.get('categoria')
         if categoria_id:
             formulario.fields['subcategoria'].queryset = Subcategoria.objects.filter(categoriaPadre_id=categoria_id)
 
         if formulario.is_valid():
-            nuevo_estado = formulario.cleaned_data['estado']  # Obtener el nuevo estado del contenido
-
+            # Aquí no es necesario modificar el autor
+            contenido = formulario.save(commit=False)  # No guardar aún
+            contenido.autor = contenido.autor  # Mantener el autor existente
             contenido.save()  # Guarda el contenido modificado
             
             # Actualizar el estado y la columna de la tarjeta
             if tarjeta:
-                tarjeta.estado = nuevo_estado  # Actualiza el estado de la tarjeta
+                tarjeta.estado = formulario.cleaned_data['estado']  # Actualiza el estado de la tarjeta
                 tarjeta.save()  # Mueve la tarjeta a la columna correcta
 
             return redirect('contenidos')
@@ -136,6 +139,7 @@ def editar_contenido(request, id):
         formulario = EditarContenidosForm(instance=contenido)
 
     return render(request, 'contenidos/editar.html', {'formulario': formulario})
+
 
 
 @permission_required('Contenidos.delete_contenidos', raise_exception=True)

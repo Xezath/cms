@@ -5,7 +5,7 @@ from .models import Estado
 @receiver(post_migrate)
 def create_initial_data(sender, **kwargs):
     """
-    Crea los estados iniciales ('Activo', 'Inactivo', 'Borrador') en la tabla Estado
+    Crea los estados iniciales ('Activo', 'Inactivo', 'Borrador', 'Revision', 'Rechazado') en la tabla Estado
     después de la migración de la aplicación 'Contenidos', si estos no existen.
     
     Args:
