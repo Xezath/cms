@@ -16,13 +16,15 @@
                         {{ error }}
                     </div>
                     {% endif %}
-                    <form action="/Iniciar_Sesion/" method="POST">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <div class="d-flex justify-content-center mt-3">
-                            <button type="submit" class="btn btn-primary">
-                                Entrar
-                            </button>
+                    <div class="form-in-out">
+                        <form action="/Iniciar_Sesion/" method="POST">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <div class="d-flex justify-content-center mt-3">
+                                <button type="submit" class="btn btn-primary">
+                                    Entrar
+                                </button>
+                        </div>
                         </div>
                     </form>
                 </div>
