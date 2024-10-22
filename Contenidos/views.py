@@ -301,7 +301,7 @@ def enviar_a_revision(request, id):
     # Redirigir o devolver una respuesta
     return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir
 
-def aceptar_contenido(request, id):
+def aceptar_rechazar_contenido(request, id):
     """
     Vista para enviar un contenido a activo.
 
@@ -314,11 +314,16 @@ def aceptar_contenido(request, id):
     """
     # Obtener el contenido con el ID proporcionado
     contenido = get_object_or_404(Contenidos, id=id)
-    
-    # Cambiar el estado del contenido de 3 a 4
-    contenido.estado = get_object_or_404(Estado, id=1)
-    contenido.save()  # Guardar los cambios en la base de datos
+
+    #Obtener el el accion
+    if request.method == 'POST':
+        accion = request.POST.get('accion')
+        # Cambiar el estado del contenido
+        if(accion == '0'):
+            contenido.estado = get_object_or_404(Estado, id=3)
+        else:
+            contenido.estado = get_object_or_404(Estado, id=5)
+        contenido.save()  # Guardar los cambios en la base de datos
 
     # Redirigir o devolver una respuesta
     return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir
-
