@@ -301,7 +301,7 @@ def enviar_a_revision(request, id):
     # Redirigir o devolver una respuesta
     return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir
 
-def aceptar_contenido(request, id):
+def aceptar_rechazar_contenido(request, id):
     """
     Vista para enviar un contenido a activo.
 
@@ -314,7 +314,6 @@ def aceptar_contenido(request, id):
     """
     # Obtener el contenido con el ID proporcionado
     contenido = get_object_or_404(Contenidos, id=id)
-    tarjeta = Tarjeta.objects.filter(contenido=contenido).first()
     
     # Cambiar el estado del contenido de 3 a 4
     contenido.estado = get_object_or_404(Estado, id=1)
@@ -326,4 +325,3 @@ def aceptar_contenido(request, id):
 
     # Redirigir o devolver una respuesta
     return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir
-

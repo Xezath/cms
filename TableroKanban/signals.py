@@ -24,7 +24,7 @@ def create_board_columns(sender, **kwargs):
                 'Inactivo': Estado.objects.get_or_create(descripcion='Inactivo')[0],
                 'Borrador': Estado.objects.get_or_create(descripcion='Borrador')[0],
                 'Revision': Estado.objects.get_or_create(descripcion='Revision')[0],
-                'Rechazado': Estado.objects.get_or_create(descripcion='Rechazado')[0]
+                'Aceptado': Estado.objects.get_or_create(descripcion='Aceptado')[0]
             }
 
             # Crear columnas predeterminadas si no existen
@@ -33,5 +33,5 @@ def create_board_columns(sender, **kwargs):
                 Columna.objects.create(nombre='Inactivo', tablero=tablero, estado=estados['Inactivo'], orden=1)
                 Columna.objects.create(nombre='Borrador', tablero=tablero, estado=estados['Borrador'], orden=2)
                 Columna.objects.create(nombre='Revision', tablero=tablero, estado=estados['Revision'], orden=3)
-                Columna.objects.create(nombre='Revision', tablero=tablero, estado=estados['Rechazado'], orden=4)
+                Columna.objects.create(nombre='Aceptado', tablero=tablero, estado=estados['Aceptado'], orden=4)
 

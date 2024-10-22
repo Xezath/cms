@@ -1,187 +1,303 @@
-{% extends 'base.html' %}
-
-{% block titulo %}
-    Tablero Kanban
-{% endblock %}
-
+<!-- prettier-ignore -->
+{% extends 'base.html' %} {% block titulo %} Tablero Kanban {% endblock %} 
 {% block contenido %}
 <style>
-    .kanban-tarjeta {
-        background-color: #b8d2dd; /* Color de fondo de las tarjetas */
-        border: 1px solid #d1e0e4; /* Borde de las tarjetas */
-        border-radius: 10px; /* Esquinas redondeadas */
-        margin-bottom: 7px; /* Espaciado entre tarjetas */
-        box-shadow: none; /* Sin sombra para un acabado mate */
-    }
+  .kanban-tarjeta {
+    background-color: #b8d2dd; /* Color de fondo de las tarjetas */
+    border: 1px solid #d1e0e4; /* Borde de las tarjetas */
+    border-radius: 10px; /* Esquinas redondeadas */
+    margin-bottom: 7px; /* Espaciado entre tarjetas */
+    box-shadow: none; /* Sin sombra para un acabado mate */
+  }
 
-    .kanban-tarjeta:hover {
-        background-color: #8ea6c2; /* Color al pasar el mouse */
-    }
-    .kanban-board {
-        display: flex; /* Flexbox para alinear las columnas */
-        justify-content: space-between; /* Distribuye las columnas de manera uniforme */
-        width: 100%; /* Asegura que ocupe todo el ancho disponible */
-        overflow-x: auto; /* Permite desplazamiento horizontal si es necesario */
-        padding: 10px; /* Espaciado interno */
-    }
-    .kanban-column {
-        width: 30%; 
-        min-width: 235px; /* Define un ancho mínimo para cada columna */
-        background-color: #f4f4f4; /* Color de fondo de las columnas */
-        margin: 2px; /* Espaciado entre columnas */
-        padding: 20px; /* Espaciado interno */
-        border-radius: 5px; /* Esquinas redondeadas */
-    }
-    .kanban-column a {
-        text-decoration: none; /* Elimina el subrayado */
-        color: inherit; /* Usa el color de texto por defecto */
-    }
-    .kanban-column a:hover {
-        text-decoration: underline; /* Subrayar solo al pasar el mouse */
-    }
+  .kanban-tarjeta:hover {
+    background-color: #8ea6c2; /* Color al pasar el mouse */
+  }
+  .kanban-board {
+    display: flex; /* Flexbox para alinear las columnas */
+    justify-content: space-between; /* Distribuye las columnas de manera uniforme */
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
+    overflow-x: auto; /* Permite desplazamiento horizontal si es necesario */
+    padding: 10px; /* Espaciado interno */
+  }
+  .kanban-column {
+    width: 30%;
+    min-width: 235px; /* Define un ancho mínimo para cada columna */
+    background-color: #f4f4f4; /* Color de fondo de las columnas */
+    margin: 2px; /* Espaciado entre columnas */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 5px; /* Esquinas redondeadas */
+  }
+  .kanban-column a {
+    text-decoration: none; /* Elimina el subrayado */
+    color: inherit; /* Usa el color de texto por defecto */
+  }
+  .kanban-column a:hover {
+    text-decoration: underline; /* Subrayar solo al pasar el mouse */
+  }
 </style>
 
 <div class="card">
-    <div class="card-header">
-        <h2 class="card-title">Tablero Kanban</h2>
-    </div>
-    <div class="card-body">
-        <div class="kanban-board">
-            <!-- Columna Inactivo -->
-            <div class="kanban-column" {% if puede_cambiar_estado %} ondrop="drop(event, 'Inactivo')" ondragover="allowDrop(event)" {% endif %}>
-                <h3>Inactivo</h3>
-                {% for tarjeta in tarjetas_por_estado.Inactivas %}
-                    <div class="kanban-tarjeta card" {% if puede_cambiar_estado %} draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')" {% endif %}>
-                        <div class="card-body">
-                            <h6 class="card-title">
-                                <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
-                            </h6>
-                            <p class="card-text">{{ tarjeta.descripcion }}</p>
-                        </div>
-                    </div>
-                {% empty %}
-                    <p>No hay tarjetas inactivas.</p>
-                {% endfor %}
-            </div>
-            <!-- Columna Borrador -->
-            <div class="kanban-column" {% if puede_cambiar_estado %} ondrop="drop(event, 'Borrador')" ondragover="allowDrop(event)" {% endif %}>
-                <h3>Borrador</h3>
-                {% for tarjeta in tarjetas_por_estado.Borrador %}
-                    <div class="kanban-tarjeta card" {% if puede_cambiar_estado %} draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')" {% endif %}>
-                        <div class="card-body">
-                            <h6 class="card-title">
-                                <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
-                            </h6>
-                            <p class="card-text">{{ tarjeta.descripcion }}</p>
-                        </div>
-                    </div>
-                {% empty %}
-                    <p>No hay tarjetas en borrador.</p>
-                {% endfor %}
-            </div>
-            <!-- Columna Revisión -->
-            <div class="kanban-column" {% if puede_cambiar_estado %} ondrop="drop(event, 'Revision')" ondragover="allowDrop(event)" {% endif %}>
-                <h3>En Revisión</h3>
-                {% for tarjeta in tarjetas_por_estado.Revision %}
-                    <div class="kanban-tarjeta card" {% if puede_cambiar_estado %} draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')" {% endif %}>
-                        <div class="card-body">
-                            <h6 class="card-title">
-                                <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
-                            </h6>
-                            <p class="card-text">{{ tarjeta.descripcion }}</p>
-                        </div>
-                    </div>
-                {% empty %}
-                    <p>No hay tarjetas en revisión.</p>
-                {% endfor %}
-            </div>
-            <!-- Columna Rechazado -->
-            <div class="kanban-column" {% if puede_cambiar_estado %} ondrop="drop(event, 'Rechazado')" ondragover="allowDrop(event)" {% endif %}>
-                <h3>Rechazado</h3>
-                {% for tarjeta in tarjetas_por_estado.Rechazadas %}
-                    <div class="kanban-tarjeta card" {% if puede_cambiar_estado %} draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')" {% endif %}>
-                        <div class="card-body">
-                            <h6 class="card-title">
-                                <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
-                            </h6>
-                            <p class="card-text">{{ tarjeta.descripcion }}</p>
-                        </div>
-                    </div>
-                {% empty %}
-                    <p>No hay tarjetas rechazadas.</p>
-                {% endfor %}
-            </div>
-            <!-- Columna Activo -->
-            <div class="kanban-column" {% if puede_cambiar_estado %} ondrop="drop(event, 'Activo')" ondragover="allowDrop(event)" {% endif %}>
-                <h3>Activo</h3>
-                {% for tarjeta in tarjetas_por_estado.Activas %}
-                    <div class="kanban-tarjeta card" {% if puede_cambiar_estado %} draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')" {% endif %}>
-                        <div class="card-body">
-                            <h6 class="card-title">
-                                <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
-                            </h6>
-                            <p class="card-text">{{ tarjeta.descripcion }}</p>
-                        </div>
-                    </div>
-                {% empty %}
-                    <p>No hay tarjetas activas.</p>
-                {% endfor %}
-            </div>
+  <div class="card-header">
+    <h2 class="card-title">Tablero Kanban</h2>
+  </div>
+  <div class="card-body">
+    <div class="kanban-board">
+      <!-- Columna Inactivo -->
+      <div
+        class="kanban-column"
+        {%
+        if
+        puede_cambiar_estado
+        %}
+        ondrop="drop(event, 'Inactivo')"
+        ondragover="allowDrop(event)"
+        {%
+        endif
+        %}
+      >
+        <h3>Inactivo</h3>
+        {% for tarjeta in tarjetas_por_estado.Inactivas %}
+        <div
+          class="kanban-tarjeta card"
+          {%
+          if
+          puede_cambiar_estado
+          %}
+          draggable="true"
+          ondragstart="drag(event, '{{ tarjeta.id }}')"
+          {%
+          endif
+          %}
+        >
+          <div class="card-body">
+            <h6 class="card-title">
+              <a href="{% url 'visualizar_contenido' tarjeta.id %}"
+                >{{ tarjeta.titulo }}</a
+              >
+            </h6>
+            <p class="card-text">{{ tarjeta.descripcion }}</p>
+          </div>
         </div>
+        {% empty %}
+        <p>No hay tarjetas inactivas.</p>
+        {% endfor %}
+      </div>
+      <!-- Columna Borrador -->
+      <div
+        class="kanban-column"
+        {%
+        if
+        puede_cambiar_estado
+        %}
+        ondrop="drop(event, 'Borrador')"
+        ondragover="allowDrop(event)"
+        {%
+        endif
+        %}
+      >
+        <h3>Borrador</h3>
+        {% for tarjeta in tarjetas_por_estado.Borrador %}
+        <div
+          class="kanban-tarjeta card"
+          {%
+          if
+          puede_cambiar_estado
+          %}
+          draggable="true"
+          ondragstart="drag(event, '{{ tarjeta.id }}')"
+          {%
+          endif
+          %}
+        >
+          <div class="card-body">
+            <h6 class="card-title">
+              <a href="{% url 'visualizar_contenido' tarjeta.id %}"
+                >{{ tarjeta.titulo }}</a
+              >
+            </h6>
+            <p class="card-text">{{ tarjeta.descripcion }}</p>
+          </div>
+        </div>
+        {% empty %}
+        <p>No hay tarjetas en borrador.</p>
+        {% endfor %}
+      </div>
+      <!-- Columna Revisión -->
+      <div
+        class="kanban-column"
+        {%
+        if
+        puede_cambiar_estado
+        %}
+        ondrop="drop(event, 'Revision')"
+        ondragover="allowDrop(event)"
+        {%
+        endif
+        %}
+      >
+        <h3>En Revisión</h3>
+        {% for tarjeta in tarjetas_por_estado.Revision %}
+        <div
+          class="kanban-tarjeta card"
+          {%
+          if
+          puede_cambiar_estado
+          %}
+          draggable="true"
+          ondragstart="drag(event, '{{ tarjeta.id }}')"
+          {%
+          endif
+          %}
+        >
+          <div class="card-body">
+            <h6 class="card-title">
+              <a href="{% url 'visualizar_contenido' tarjeta.id %}"
+                >{{ tarjeta.titulo }}</a
+              >
+            </h6>
+            <p class="card-text">{{ tarjeta.descripcion }}</p>
+          </div>
+        </div>
+        {% empty %}
+        <p>No hay tarjetas en revisión.</p>
+        {% endfor %}
+      </div>
+      <!-- Columna Aceptado -->
+      <div
+        class="kanban-column"
+        {%
+        if
+        puede_cambiar_estado
+        %}
+        ondrop="drop(event, 'Aceptado')"
+        ondragover="allowDrop(event)"
+        {%
+        endif
+        %}
+      >
+        <h3>Aceptado</h3>
+        {% for tarjeta in tarjetas_por_estado.Aceptadas %}
+        <div
+          class="kanban-tarjeta card"
+          {%
+          if
+          puede_cambiar_estado
+          %}
+          draggable="true"
+          ondragstart="drag(event, '{{ tarjeta.id }}')"
+          {%
+          endif
+          %}
+        >
+          <div class="card-body">
+            <h6 class="card-title">
+              <a href="{% url 'visualizar_contenido' tarjeta.id %}"
+                >{{ tarjeta.titulo }}</a
+              >
+            </h6>
+            <p class="card-text">{{ tarjeta.descripcion }}</p>
+          </div>
+        </div>
+        {% empty %}
+        <p>No hay tarjetas Aceptadas.</p>
+        {% endfor %}
+      </div>
+      <!-- Columna Activo -->
+      <div
+        class="kanban-column"
+        {%
+        if
+        puede_cambiar_estado
+        %}
+        ondrop="drop(event, 'Activo')"
+        ondragover="allowDrop(event)"
+        {%
+        endif
+        %}
+      >
+        <h3>Activo</h3>
+        {% for tarjeta in tarjetas_por_estado.Activas %}
+        <div
+          class="kanban-tarjeta card"
+          {%
+          if
+          puede_cambiar_estado
+          %}
+          draggable="true"
+          ondragstart="drag(event, '{{ tarjeta.id }}')"
+          {%
+          endif
+          %}
+        >
+          <div class="card-body">
+            <h6 class="card-title">
+              <a href="{% url 'visualizar_contenido' tarjeta.id %}"
+                >{{ tarjeta.titulo }}</a
+              >
+            </h6>
+            <p class="card-text">{{ tarjeta.descripcion }}</p>
+          </div>
+        </div>
+        {% empty %}
+        <p>No hay tarjetas activas.</p>
+        {% endfor %}
+      </div>
     </div>
+  </div>
 </div>
 
 <script>
-    function allowDrop(event) {
-        event.preventDefault();
-    }
+  function allowDrop(event) {
+    event.preventDefault();
+  }
 
-    function drag(event, tarjetaId) {
-        event.dataTransfer.setData("text", tarjetaId);
-    }
+  function drag(event, tarjetaId) {
+    event.dataTransfer.setData("text", tarjetaId);
+  }
 
-    function drop(event, nuevoEstado) {
-        event.preventDefault();
-        const tarjetaId = event.dataTransfer.getData("text");
+  function drop(event, nuevoEstado) {
+    event.preventDefault();
+    const tarjetaId = event.dataTransfer.getData("text");
 
-        // Construir la URL manualmente
-        const url = `/tablero_kanban/actualizar_estado/${tarjetaId}/${nuevoEstado}/`;
+    // Construir la URL manualmente
+    const url = `/tablero_kanban/actualizar_estado/${tarjetaId}/${nuevoEstado}/`;
 
-        // Hacer una solicitud AJAX para actualizar el estado de la tarjeta
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken')  // Asegúrate de que tengas el token CSRF en el encabezado
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                location.reload(); // Recarga la página para reflejar los cambios
-            } else {
-                alert('Error al actualizar el estado de la tarjeta');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-
-    // Función para obtener el token CSRF
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                // Comprueba si este es el cookie que buscamos
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
+    // Hacer una solicitud AJAX para actualizar el estado de la tarjeta
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCookie("csrftoken"), // Asegúrate de que tengas el token CSRF en el encabezado
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          location.reload(); // Recarga la página para reflejar los cambios
+        } else {
+          alert("Error al actualizar el estado de la tarjeta");
         }
-        return cookieValue;
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+
+  // Función para obtener el token CSRF
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Comprueba si este es el cookie que buscamos
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
     }
+    return cookieValue;
+  }
 </script>
 {% endblock %}

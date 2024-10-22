@@ -5,7 +5,7 @@ from .models import Estado
 @receiver(post_migrate)
 def create_initial_data(sender, **kwargs):
     """
-    Crea los estados iniciales ('Activo', 'Inactivo', 'Borrador', 'Revision', 'Rechazado') en la tabla Estado
+    Crea los estados iniciales ('Activo', 'Inactivo', 'Borrador', 'Revision', 'Aceptado') en la tabla Estado
     después de la migración de la aplicación 'Contenidos', si estos no existen.
     
     Args:
@@ -19,5 +19,5 @@ def create_initial_data(sender, **kwargs):
             Estado.objects.create(id=2, descripcion='Inactivo')
             Estado.objects.create(id=3, descripcion='Borrador')
             Estado.objects.create(id=4, descripcion='Revision')
-            Estado.objects.create(id=5, descripcion='Rechazado')
+            Estado.objects.create(id=5, descripcion='Aceptado')
         
