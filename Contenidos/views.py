@@ -314,10 +314,15 @@ def aceptar_contenido(request, id):
     """
     # Obtener el contenido con el ID proporcionado
     contenido = get_object_or_404(Contenidos, id=id)
+    tarjeta = Tarjeta.objects.filter(contenido=contenido).first()
     
     # Cambiar el estado del contenido de 3 a 4
     contenido.estado = get_object_or_404(Estado, id=1)
     contenido.save()  # Guardar los cambios en la base de datos
+
+    if tarjeta:
+        tarjeta.estado = contenido.estado  # Actualiza el estado de la tarjeta al nuevo estado del contenido
+        tarjeta.save()  # Guarda los cambios en la tarjeta
 
     # Redirigir o devolver una respuesta
     return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir

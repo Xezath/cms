@@ -89,6 +89,7 @@ class Contenidos(models.Model):
             ("can_viewInactive", "Puede ver contenido inactivo"),
             ("can_viewBorrador", "Puede ver contenido en borrador"),
             ("can_viewRevision", "Puede ver contenido en revisión"),
+            ("can_viewRechazado", "Puede ver contenido rechazado"),
             ("can_change_estado", "Puede cambiar estado"),
         ]
 
