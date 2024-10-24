@@ -91,6 +91,7 @@ class Contenidos(models.Model):
             ("can_viewRevision", "Puede ver contenido en revisión"),
             ("can_viewAceptado", "Puede ver contenido aceptado"),
             ("can_change_estado", "Puede cambiar estado"),
+            ("can_activateContenido", "Puede activar contenido"),
         ]
 
 class Comentario(models.Model):

@@ -17,9 +17,9 @@ class Command(BaseCommand):
 
         roles = {
             'Suscriptor': ['view_contenidos','add_comentario'],
-            'Autor': ['view_contenidos','add_contenidos', 'view_tablero', 'ver_propio_tablero', 'view_columna','change_contenidos', 'delete_contenidos', 'can_viewBorrador', 'can_viewRevision',],  
-            'Editor': ['view_contenidos', 'view_tablero', 'ver_propio_tablero', 'view_columna','change_contenidos', 'delete_contenidos', 'can_viewBorrador', 'can_viewRevision', 'can_change_estado', 'change_categoria', 'change_subcategoria'],
-            'Publicador': ['view_contenidos', 'view_tablero', 'ver_propio_tablero', 'view_columna', 'delete_contenidos', 'can_viewRevision','view_tarjeta','can_viewInactive','cambiar_estado_tarjeta','can_change_estado','can_viewAceptado'],
+            'Autor': ['view_contenidos','add_contenidos', 'view_tablero', 'ver_propio_tablero', 'view_columna','change_contenidos', 'delete_contenidos', 'can_viewBorrador', 'can_viewRevision','can_viewAceptado'],  
+            'Editor': ['view_contenidos', 'view_tablero', 'ver_propio_tablero', 'view_columna','change_contenidos', 'delete_contenidos', 'can_viewBorrador', 'can_viewRevision', 'can_change_estado', 'change_categoria', 'change_subcategoria','can_viewAceptado'],
+            'Publicador': ['view_contenidos', 'view_tablero', 'ver_propio_tablero', 'view_columna', 'delete_contenidos', 'can_viewRevision','view_tarjeta','can_viewInactive','cambiar_estado_tarjeta','can_change_estado','can_viewAceptado', 'can_activateContenido'],
         }
 
         # Crea o obtiene los grupos y asigna permisos

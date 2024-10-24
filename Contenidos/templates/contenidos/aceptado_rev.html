@@ -19,7 +19,8 @@
   <br />
   <div>
     <!-- Botones de acción -->
-    <h6 style="color: brown">Desea publicar el contenido?</h6>
+    {% if perms.Contenidos.can_activateContenido %}
+      <h6 style="color: brown">Desea publicar el contenido?</h6>
     <!-- prettier-ignore -->
     <form action="{% url 'publicar_contenido' contenido.id %}" method="post">
       {% csrf_token %}
@@ -29,6 +30,12 @@
         >Salir</a
       >
     </form>
+    {% else %}
+      <h6 style="color: brown">Esperando confirmación de un publicador...</h6>
+      <a class="btn btn-secondary" href="{% url 'contenidos' %}" role="button"
+      >Volver</a
+    >
+    {% endif %}
   </div>
   <br />
   {% endblock %}

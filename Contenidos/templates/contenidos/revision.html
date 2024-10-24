@@ -19,20 +19,20 @@
   <br />
   <div>
     <!-- Botones de acción -->
-    {% if perms.Contenidos.can_change_estado %}
-    <h6 style="color: brown">Desea confirmar el contenido?</h6>
-    <!-- prettier-ignore -->
-    <form action="{% url 'aceptar_rechazar_contenido' contenido.id %}" method="post">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-primary" name="accion" value="1">Aceptar Contenido</button>
-      <button type="submit" class="btn btn-primary" name="accion" value="0">Rechazar Contenido</button>
-      <a class="btn btn-secondary" href="{% url 'contenidos' %}" role="button"
-        >Salir</a
-      >
-    </form>
+    {% if perms.Contenidos.can_change_estado and perms.Contenidos.change_contenidos %}
+      <h6 style="color: brown">Desea confirmar el contenido?</h6>
+      <!-- prettier-ignore -->
+      <form action="{% url 'aceptar_rechazar_contenido' contenido.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary" name="accion" value="1">Aceptar Contenido</button>
+        <button type="submit" class="btn btn-primary" name="accion" value="0">Rechazar Contenido</button>
+        <a class="btn btn-secondary" href="{% url 'contenidos' %}" role="button"
+          >Salir</a
+        >
+      </form>
     {% else %}
-    <h6 style="color: brown">Esperando confirmación de un publicador...</h6>
-    <a class="btn btn-secondary" href="{% url 'contenidos' %}" role="button"
+      <h6 style="color: brown">Esperando confirmación de un editor...</h6>
+      <a class="btn btn-secondary" href="{% url 'contenidos' %}" role="button"
       >Volver</a
     >
     {% endif %}

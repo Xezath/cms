@@ -20,11 +20,19 @@
         <br>
         <div>
             <!-- Botones de acción -->
-            <form action="{% url 'enviar_a_revision' contenido.id %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary">Enviar a Revisión</button>
-                <a class="btn btn-secondary" href="{% url 'contenidos' %}" role="button">Salir</a>
+            {% if not perms.Contenidos.can_change_estado %}
+                <form action="{% url 'enviar_a_revision' contenido.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Enviar a Revisión</button>
+                    <a class="btn btn-secondary" href="{% url 'contenidos' %}" role="button">Salir</a>
+                </form>
             </form>
+        {% else %}
+            <h6 style="color: brown">Esperando confirmación del autor...</h6>
+            <a class="btn btn-secondary" href="{% url 'contenidos' %}" role="button"
+              >Volver</a
+            >
+        {% endif %}
         </div>
         <br>
 {% endblock %}
