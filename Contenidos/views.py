@@ -9,6 +9,10 @@ from django.contrib.auth.models import User, Permission
 from TableroKanban.models import Tablero, Tarjeta
 from django.db.models import Q
 from TableroKanban.views import actualizar_estado
+from django.conf import settings
+from django.core.mail import send_mail,EmailMessage
+from django.template.loader import render_to_string
+
 
 @permission_required('Contenidos.view_contenidos', raise_exception=True)
 def contenidos(request):
@@ -183,6 +187,7 @@ def visualizar_contenido(request, id):
             comentario.usuario = request.user  # Asignar el usuario autenticado
             comentario.contenido = contenido   # Relacionar el comentario con el contenido actual
             comentario.save()
+
             return redirect('visualizar_contenido', id=contenido.id)
     else:
         comentario_form = ComentarioForm()
@@ -309,9 +314,22 @@ def enviar_a_revision(request, id):
     contenido.save()  # Guardar los cambios en la base de datos
     nuevo_estado = contenido.estado
     # Actualizar el estado de la tarjeta si existe
-    tarjeta = Tarjeta.objects.filter(contenido=contenido).first()
-    tarjeta.estado = nuevo_estado
-    tarjeta.save()
+    if tarjeta:
+        actualizar_estado(request, tarjeta.id, nuevo_estado.descripcion)
+        tarjeta.estado = contenido.estado  # Actualiza el estado de la tarjeta al nuevo estado del contenido
+        tarjeta.save()  # Guarda los cambios en la tarjeta
+    
+    context = {
+                    'titulo': contenido.titulo,
+                }      
+    html_template = 'contenidos/en_revision.html'
+    html_message = render_to_string(html_template, context)
+    subject = 'Cambio de estado de publicación'
+    message=EmailMessage(subject, html_message, 'cmseq052024@gmail.com', [contenido.autor.email])
+    message.content_subtype = 'html'
+    message.send()
+    
+
     # Redirigir o devolver una respuesta
     return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir
 
@@ -333,10 +351,41 @@ def aceptar_rechazar_contenido(request, id):
     if request.method == 'POST':
         accion = request.POST.get('accion')
         # Cambiar el estado del contenido
-        if(accion == '0'):
+        if(accion == '0'): #accion 0 es rechazado
             contenido.estado = get_object_or_404(Estado, id=3)
-        else:
+            context = {
+                    'titulo': contenido.titulo,
+                }      
+            html_template = 'contenidos/rechazado.html'
+            html_message = render_to_string(html_template, context)
+            subject = 'Cambio de estado de publicación'
+            message=EmailMessage(subject, html_message, 'cmseq052024@gmail.com', [contenido.autor.email])
+            message.content_subtype = 'html'
+            message.send()
+
+            context = {
+                    'titulo': contenido.titulo,
+                }      
+            html_template = 'contenidos/borrador_editor.html'
+            html_message = render_to_string(html_template, context)
+            subject = 'Cambio de estado de publicación'
+            message=EmailMessage(subject, html_message, 'cmseq052024@gmail.com', [contenido.autor.email])
+            message.content_subtype = 'html'
+            message.send()
+
+
+        else: # esto es para aceptado
             contenido.estado = get_object_or_404(Estado, id=5)
+            context = {
+                    'titulo': contenido.titulo,
+                }      
+            html_template = 'contenidos/aceptado.html'
+            html_message = render_to_string(html_template, context)
+            subject = 'Cambio de estado de publicación'
+            message=EmailMessage(subject, html_message, 'cmseq052024@gmail.com', [contenido.autor.email])
+            message.content_subtype = 'html'
+            message.send()
+
         contenido.save()  # Guardar los cambios en la base de datos
         nuevo_estado = contenido.estado
     # Actualizar el estado de la tarjeta si existe
@@ -364,10 +413,20 @@ def publicar_contenido(request, id):
     if request.method == 'POST':
         accion = request.POST.get('accion')
         # Cambiar el estado del contenido
-        if(accion == '0'):
+        if(accion == '0'): #rechazar es decir envia a en revision
             contenido.estado = get_object_or_404(Estado, id=4)
-        else:
+        else: #el contenido se publica y se va al estado de activo
             contenido.estado = get_object_or_404(Estado, id=1)
+            context = {
+                    'titulo': contenido.titulo,
+                }      
+            html_template = 'contenidos/publicado.html'
+            html_message = render_to_string(html_template, context)
+            subject = 'Cambio de estado de publicación'
+            message=EmailMessage(subject, html_message, 'cmseq052024@gmail.com', [contenido.autor.email])
+            message.content_subtype = 'html'
+            message.send()
+
         contenido.save()  # Guardar los cambios en la base de datos
         nuevo_estado = contenido.estado
     # Actualizar el estado de la tarjeta si existe
