@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
-from .views import aceptar_contenido, contenidos, crear_contenido, editar_contenido, eliminar_contenido, enviar_a_revision, visualizar_contenido, cargar_subcategorias, eliminar_comentario, visualizar_contenido_borrador, visualizar_contenido_revision
+from .views import aceptar_rechazar_contenido, contenidos, crear_contenido, editar_contenido, eliminar_contenido, enviar_a_revision, visualizar_contenido, cargar_subcategorias, eliminar_comentario, visualizar_contenido_borrador, visualizar_contenido_revision
 
 urlpatterns = [
     path('contenidos/', contenidos, name='contenidos'),
@@ -14,5 +14,5 @@ urlpatterns = [
     path('contenidos/borrador/<int:id>/',visualizar_contenido_borrador, name='visualizar_contenido_borrador'),
     path('contenidos/revision/<int:id>/',visualizar_contenido_revision, name='visualizar_contenido_revision'),
     path('enviar-a-revision/<int:id>/', enviar_a_revision, name='enviar_a_revision'),
-    path('aceptar-contenido/<int:id>/', aceptar_contenido, name='aceptar_contenido'),
+    path('aceptar-rechazar-contenido/<int:id>/', aceptar_rechazar_contenido, name='aceptar_rechazar_contenido'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

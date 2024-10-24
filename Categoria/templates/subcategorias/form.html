@@ -1,6 +1,32 @@
 <form enctype="multipart/form-data" method="post" onsubmit="return confirmarEnvio();">
     {% csrf_token %}
     {% for campo in formulario %}
+    <style>
+        input{
+            width: 100%; /* Ocupa todo el ancho disponible */
+            padding: 10px; /* Espaciado interno */
+            font-size: 16px; /* Tamaño de fuente para el input */
+            border: 1px solid #ccc; /* Borde ligero */
+            border-radius: 5px; /* Bordes redondeados */
+            box-sizing: border-box; /* Asegura que el padding no desborde el input */
+        }
+        select{
+            width: 100%; /* Ocupa todo el ancho disponible */
+            padding: 10px; /* Espaciado interno */
+            font-size: 16px; /* Tamaño de fuente para el input */
+            border: 1px solid #ccc; /* Borde ligero */
+            border-radius: 5px; /* Bordes redondeados */
+            box-sizing: border-box; /* Asegura que el padding no desborde el input */
+        }
+        #acceptButton{
+            width: auto;
+        }
+        #fileInput{
+            padding: 0;
+            margin: 0;
+            width: 50%;
+        }
+    </style>
     <div class="mb-3">
         <label for="" class="form-label">{{ campo.label }}</label>
         {{ campo }}  <!-- Django automáticamente renderiza el campo como un <select> -->
@@ -9,7 +35,7 @@
     {% endfor %}
     <input
         name=""
-        id=""
+        id="acceptButton"
         class="btn btn-success"
         type="submit"
         value="Aceptar"
