@@ -45,6 +45,9 @@ cover/
 # Ignorar el archivo de configuración con claves sensibles
 cms/settings.py
 
+# Ignorar archivos de entorno
+.env
+
 # Environments
 .env
 .venv
