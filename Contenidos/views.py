@@ -274,6 +274,23 @@ def visualizar_contenido_revision(request, id):
         'contenido': contenido,
     })
 
+def visualizar_contenido_aceptado(request, id):
+    """
+    Vista para visualizar un contenido en revisión.
+
+    Parámetros:
+    - request: HttpRequest object con la información de la solicitud.
+    - id: ID del contenido a visualizar.
+
+    Retorna:
+    - HttpResponse con la página 'contenidos/visualizar.html' que muestra el contenido y los comentarios asociados.
+    """
+    contenido = get_object_or_404(Contenidos, id=id)
+
+    return render(request, 'contenidos/aceptado.html', {
+        'contenido': contenido,
+})
+
 def enviar_a_revision(request, id):
     """
     Vista para enviar un contenido a revisión.
@@ -300,7 +317,7 @@ def enviar_a_revision(request, id):
 
 def aceptar_rechazar_contenido(request, id):
     """
-    Vista para enviar un contenido a activo.
+    Vista para enviar un contenido a aceptado.
 
     Parámetros:
     - request: HttpRequest object con la información de la solicitud.
@@ -320,6 +337,36 @@ def aceptar_rechazar_contenido(request, id):
             contenido.estado = get_object_or_404(Estado, id=3)
         else:
             contenido.estado = get_object_or_404(Estado, id=5)
+        contenido.save()  # Guardar los cambios en la base de datos
+        nuevo_estado = contenido.estado
+    # Actualizar el estado de la tarjeta si existe
+    if tarjeta:
+        actualizar_estado(request, tarjeta.id, nuevo_estado.descripcion)
+    # Redirigir o devolver una respuesta
+    return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir
+
+def publicar_contenido(request, id):
+    """
+    Vista para enviar un contenido a activo.
+
+    Parámetros:
+    - request: HttpRequest object con la información de la solicitud.
+    - id: ID del contenido a formatear.
+
+    Retorna:
+    - HttpResponse que redirige a la página anterior o muestra la página de contenidos.
+    """
+    # Obtener el contenido con el ID proporcionado
+    contenido = get_object_or_404(Contenidos, id=id)
+    tarjeta = Tarjeta.objects.filter(contenido=contenido).first() 
+    # Cambiar el estado del contenido de 3 a 4
+    if request.method == 'POST':
+        accion = request.POST.get('accion')
+        # Cambiar el estado del contenido
+        if(accion == '0'):
+            contenido.estado = get_object_or_404(Estado, id=4)
+        else:
+            contenido.estado = get_object_or_404(Estado, id=1)
         contenido.save()  # Guardar los cambios en la base de datos
         nuevo_estado = contenido.estado
     # Actualizar el estado de la tarjeta si existe

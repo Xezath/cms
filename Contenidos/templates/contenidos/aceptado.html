@@ -4,7 +4,7 @@
     {{ contenido.categoria.nombre }}
   </p>
 
-  <h2>{{ contenido.titulo }} (Revisión)</h2>
+  <h2>{{ contenido.titulo }} (Aceptado)</h2>
   <div
     class="card"
     style="
@@ -19,23 +19,16 @@
   <br />
   <div>
     <!-- Botones de acción -->
-    {% if perms.Contenidos.can_change_estado %}
-    <h6 style="color: brown">Desea confirmar el contenido?</h6>
+    <h6 style="color: brown">Desea publicar el contenido?</h6>
     <!-- prettier-ignore -->
-    <form action="{% url 'aceptar_rechazar_contenido' contenido.id %}" method="post">
+    <form action="{% url 'publicar_contenido' contenido.id %}" method="post">
       {% csrf_token %}
-      <button type="submit" class="btn btn-primary" name="accion" value="1">Aceptar Contenido</button>
-      <button type="submit" class="btn btn-primary" name="accion" value="0">Rechazar Contenido</button>
+      <button type="submit" class="btn btn-primary" name="accion" value="1">Publicar Contenido</button>
+      <button type="submit" class="btn btn-primary" name="accion" value="0">Devolver a revisión</button>
       <a class="btn btn-secondary" href="{% url 'contenidos' %}" role="button"
         >Salir</a
       >
     </form>
-    {% else %}
-    <h6 style="color: brown">Esperando confirmación de un publicador...</h6>
-    <a class="btn btn-secondary" href="{% url 'contenidos' %}" role="button"
-      >Volver</a
-    >
-    {% endif %}
   </div>
   <br />
   {% endblock %}
