@@ -79,6 +79,9 @@
                             {% elif contenido.estado.id == 4 %}
                                 <h5 class="card-title" style="color:cadetblue;">{{ contenido.titulo }} (revisión)</h5>
                                 <a href="{% url 'visualizar_contenido_revision' contenido.id %}" class="btn btn-primary">Leer más</a>
+                            {% elif contenido.estado.id == 5 %}
+                                <h5 class="card-title" style="color:rgb(11, 136, 0);">{{ contenido.titulo }} (aceptado)</h5>
+                                <a href="{% url 'visualizar_contenido_aceptado' contenido.id %}" class="btn btn-primary">Leer más</a>
                             {% else %}
                                 <h5 class="card-title">{{ contenido.titulo }}</h5>
                                 <a href="{% url 'visualizar_contenido' contenido.id %}" class="btn btn-primary">Leer más</a>

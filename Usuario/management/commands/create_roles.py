@@ -19,7 +19,7 @@ class Command(BaseCommand):
             'Suscriptor': ['view_contenidos','add_comentario'],
             'Autor': ['add_contenidos', 'view_tablero', 'ver_propio_tablero', 'view_columna','change_contenidos', 'delete_contenidos'],  
             'Editor': ['change_contenidos', 'change_categoria', 'can_viewBorrador', 'can_viewRevision', 'can_change_estado'],
-            'Publicador': ['view_tarjeta','can_viewInactive','delete_contenidos', 'change_subcategoria','cambiar_estado_tarjeta','can_viewBorrador','can_change_estado'],
+            'Publicador': ['view_tarjeta','can_viewInactive','delete_contenidos', 'change_subcategoria','cambiar_estado_tarjeta','can_viewBorrador','can_change_estado','can_viewAceptado'],
         }
 
         # Crea o obtiene los grupos y asigna permisos
