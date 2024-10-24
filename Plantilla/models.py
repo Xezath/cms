@@ -77,7 +77,7 @@ class Plantilla(models.Model):
     """
     (ForeignKey): Márgenes asociados a la plantilla.
     """
-    disposicionHorizontal = models.BooleanField(default=False) #Horizonal o Vertical
+    disposicionHorizontal = models.BooleanField() #Horizonal o Vertical
     """
     (BooleanField): Indica si la disposición es horizontal o vertical.
     """
