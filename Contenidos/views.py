@@ -8,6 +8,7 @@ from django.http import HttpResponseForbidden, JsonResponse
 from django.contrib.auth.models import User, Permission
 from TableroKanban.models import Tablero, Tarjeta
 from django.db.models import Q
+from TableroKanban.views import actualizar_estado
 
 @permission_required('Contenidos.view_contenidos', raise_exception=True)
 def contenidos(request):
@@ -124,11 +125,10 @@ def editar_contenido(request, id):
             contenido = formulario.save(commit=False)  # No guardar aún
             contenido.autor = contenido.autor  # Mantener el autor existente
             contenido.save()  # Guarda el contenido modificado
-            
-            # Actualizar el estado y la columna de la tarjeta
+            nuevo_estado = formulario.cleaned_data['estado']            # Actualizar el estado y la columna de la tarjeta
             if tarjeta:
-                tarjeta.estado = formulario.cleaned_data['estado']  # Actualiza el estado de la tarjeta
-                tarjeta.save()  # Mueve la tarjeta a la columna correcta
+                # Llamada a la función actualizar_estado
+                actualizar_estado(request, tarjeta.id, nuevo_estado.descripcion)
 
             return redirect('contenidos')
         else:
@@ -288,15 +288,12 @@ def enviar_a_revision(request, id):
     # Obtener el contenido con el ID proporcionado
     contenido = get_object_or_404(Contenidos, id=id)
     tarjeta = Tarjeta.objects.filter(contenido=contenido).first()
-    
-    # Cambiar el estado del contenido a "revisión"
     contenido.estado = get_object_or_404(Estado, id=4)  # Asumiendo que el ID 4 corresponde al estado "revisión"
     contenido.save()  # Guardar los cambios en la base de datos
-    
+    nuevo_estado = contenido.estado
     # Actualizar el estado de la tarjeta si existe
     if tarjeta:
-        tarjeta.estado = contenido.estado  # Actualiza el estado de la tarjeta al nuevo estado del contenido
-        tarjeta.save()  # Guarda los cambios en la tarjeta
+        actualizar_estado(request, tarjeta.id, nuevo_estado.descripcion)
 
     # Redirigir o devolver una respuesta
     return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir
@@ -314,14 +311,13 @@ def aceptar_rechazar_contenido(request, id):
     """
     # Obtener el contenido con el ID proporcionado
     contenido = get_object_or_404(Contenidos, id=id)
-    
+    tarjeta = Tarjeta.objects.filter(contenido=contenido).first() 
     # Cambiar el estado del contenido de 3 a 4
     contenido.estado = get_object_or_404(Estado, id=1)
     contenido.save()  # Guardar los cambios en la base de datos
-
+    nuevo_estado = contenido.estado
+    # Actualizar el estado de la tarjeta si existe
     if tarjeta:
-        tarjeta.estado = contenido.estado  # Actualiza el estado de la tarjeta al nuevo estado del contenido
-        tarjeta.save()  # Guarda los cambios en la tarjeta
-
+        actualizar_estado(request, tarjeta.id, nuevo_estado.descripcion)
     # Redirigir o devolver una respuesta
     return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir
