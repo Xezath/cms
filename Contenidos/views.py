@@ -323,7 +323,8 @@ def aceptar_rechazar_contenido(request, id):
         contenido.save()  # Guardar los cambios en la base de datos
         nuevo_estado = contenido.estado
     # Actualizar el estado de la tarjeta si existe
-    if tarjeta:
-        actualizar_estado(request, tarjeta.id, nuevo_estado.descripcion)
+    tarjeta = Tarjeta.objects.filter(contenido=contenido).first()
+    tarjeta.estado = nuevo_estado
+    tarjeta.save()
     # Redirigir o devolver una respuesta
     return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir
