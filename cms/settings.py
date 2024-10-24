@@ -191,7 +191,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "apikey"  # este valor es siempre 'apikey'
 EMAIL_HOST_PASSWORD = "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"  # aquí pones tu clave de API
-DEFAULT_FROM_EMAIL = "cicloncita89@fpuna.edu.py"
+DEFAULT_FROM_EMAIL = "cicloncita89@fpuna.edu.py" #este es el correo que esta mandando todos los correos es decir ese correo esta 
+                                                #mandando las notificaciones de esos correos
 
 
 # Password validation

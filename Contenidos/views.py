@@ -11,6 +11,7 @@ from django.db.models import Q
 from django.core.mail import send_mail
 from django.conf import settings
 
+
 @permission_required('Contenidos.view_contenidos', raise_exception=True)
 def contenidos(request):
     """
@@ -300,6 +301,14 @@ def enviar_a_revision(request, id):
     if tarjeta:
         tarjeta.estado = contenido.estado  # Actualiza el estado de la tarjeta al nuevo estado del contenido
         tarjeta.save()  # Guarda los cambios en la tarjeta
+
+    send_mail(
+        'Asunto del correo',
+        'Mensaje del correo',
+        'cicloncita89@fpuna.edu.py',
+        ['cicloncita89@gmail.com'],
+        fail_silently=False,
+    )
 
     # Redirigir o devolver una respuesta
     return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir
