@@ -413,10 +413,20 @@ def publicar_contenido(request, id):
     if request.method == 'POST':
         accion = request.POST.get('accion')
         # Cambiar el estado del contenido
-        if(accion == '0'):
+        if(accion == '0'): #rechazar es decir envia a en revision
             contenido.estado = get_object_or_404(Estado, id=4)
-        else:
+        else: #el contenido se publica y se va al estado de activo
             contenido.estado = get_object_or_404(Estado, id=1)
+            context = {
+                    'titulo': contenido.titulo,
+                }      
+            html_template = 'contenidos/publicado.html'
+            html_message = render_to_string(html_template, context)
+            subject = 'Cambio de estado de publicación'
+            message=EmailMessage(subject, html_message, 'cmseq052024@gmail.com', [contenido.autor.email])
+            message.content_subtype = 'html'
+            message.send()
+
         contenido.save()  # Guardar los cambios en la base de datos
         nuevo_estado = contenido.estado
     # Actualizar el estado de la tarjeta si existe
