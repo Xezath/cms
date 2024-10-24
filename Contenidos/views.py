@@ -8,8 +8,9 @@ from django.http import HttpResponseForbidden, JsonResponse
 from django.contrib.auth.models import User, Permission
 from TableroKanban.models import Tablero, Tarjeta
 from django.db.models import Q
-from django.core.mail import send_mail
 from django.conf import settings
+from django.core.mail import send_mail,EmailMessage
+from django.template.loader import render_to_string
 
 
 @permission_required('Contenidos.view_contenidos', raise_exception=True)
@@ -301,14 +302,17 @@ def enviar_a_revision(request, id):
     if tarjeta:
         tarjeta.estado = contenido.estado  # Actualiza el estado de la tarjeta al nuevo estado del contenido
         tarjeta.save()  # Guarda los cambios en la tarjeta
-
-    send_mail(
-        'Asunto del correo',
-        'Mensaje del correo',
-        'cicloncita89@fpuna.edu.py',
-        ['cicloncita89@gmail.com'],
-        fail_silently=False,
-    )
+    
+    context = {
+                    'titulo': contenido.titulo,
+                }      
+    html_template = 'contenidos/en_revision.html'
+    html_message = render_to_string(html_template, context)
+    subject = 'Cambio de estado de publicación'
+    message=EmailMessage(subject, html_message, 'cmseq052024@gmail.comm', [contenido.autor.email])
+    message.content_subtype = 'html'
+    message.send()
+    
 
     # Redirigir o devolver una respuesta
     return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir
