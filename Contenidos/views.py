@@ -308,7 +308,7 @@ def enviar_a_revision(request, id):
     html_template = 'contenidos/en_revision.html'
     html_message = render_to_string(html_template, context)
     subject = 'Cambio de estado de publicación'
-    message=EmailMessage(subject, html_message, 'cmseq052024@gmail.comm', [contenido.autor.email])
+    message=EmailMessage(subject, html_message, 'cmseq052024@gmail.com', [contenido.autor.email])
     message.content_subtype = 'html'
     message.send()
     
@@ -334,10 +334,41 @@ def aceptar_rechazar_contenido(request, id):
     if request.method == 'POST':
         accion = request.POST.get('accion')
         # Cambiar el estado del contenido
-        if(accion == '0'):
+        if(accion == '0'): #accion 0 es rechazado
             contenido.estado = get_object_or_404(Estado, id=3)
-        else:
+            context = {
+                    'titulo': contenido.titulo,
+                }      
+            html_template = 'contenidos/rechazado.html'
+            html_message = render_to_string(html_template, context)
+            subject = 'Cambio de estado de publicación'
+            message=EmailMessage(subject, html_message, 'cmseq052024@gmail.com', [contenido.autor.email])
+            message.content_subtype = 'html'
+            message.send()
+
+            context = {
+                    'titulo': contenido.titulo,
+                }      
+            html_template = 'contenidos/borrador_editor.html'
+            html_message = render_to_string(html_template, context)
+            subject = 'Cambio de estado de publicación'
+            message=EmailMessage(subject, html_message, 'cmseq052024@gmail.com', [contenido.autor.email])
+            message.content_subtype = 'html'
+            message.send()
+
+
+        else: # esto es para aceptado
             contenido.estado = get_object_or_404(Estado, id=5)
+            context = {
+                    'titulo': contenido.titulo,
+                }      
+            html_template = 'contenidos/aceptado.html'
+            html_message = render_to_string(html_template, context)
+            subject = 'Cambio de estado de publicación'
+            message=EmailMessage(subject, html_message, 'cmseq052024@gmail.com', [contenido.autor.email])
+            message.content_subtype = 'html'
+            message.send()
+
         contenido.save()  # Guardar los cambios en la base de datos
         nuevo_estado = contenido.estado
     # Actualizar el estado de la tarjeta si existe
