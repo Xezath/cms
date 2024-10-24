@@ -287,7 +287,7 @@ def visualizar_contenido_aceptado(request, id):
     """
     contenido = get_object_or_404(Contenidos, id=id)
 
-    return render(request, 'contenidos/aceptado.html', {
+    return render(request, 'contenidos/aceptado_rev.html', {
         'contenido': contenido,
 })
 
