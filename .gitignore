@@ -46,7 +46,6 @@ cover/
 cms/settings.py
 
 # Environments
-.env
 .venv
 env/
 venv/
