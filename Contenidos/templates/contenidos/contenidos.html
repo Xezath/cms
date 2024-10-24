@@ -51,7 +51,7 @@
                 {% if contenido.estado.id != 2 or perms.Contenidos.can_viewInactive %}
                 {% if contenido.estado.id != 3 or contenido.autor.id == user.id or perms.Contenidos.can_viewBorrador %}
                 {% if contenido.estado.id != 4 or contenido.autor.id == user.id or perms.Contenidos.can_viewRevision %}
-                {% if contenido.estado.id != 5 or contenido.autor.id == user.id or perms.Contenidos.can_viewRechazado %}
+                {% if contenido.estado.id != 5 or contenido.autor.id == user.id or perms.Contenidos.can_viewAceptado %}
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
                         {% if contenido.imagen %}
