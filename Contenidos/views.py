@@ -331,9 +331,15 @@ def aceptar_rechazar_contenido(request, id):
     contenido = get_object_or_404(Contenidos, id=id)
     tarjeta = Tarjeta.objects.filter(contenido=contenido).first() 
     # Cambiar el estado del contenido de 3 a 4
-    contenido.estado = get_object_or_404(Estado, id=5)
-    contenido.save()  # Guardar los cambios en la base de datos
-    nuevo_estado = contenido.estado
+    if request.method == 'POST':
+        accion = request.POST.get('accion')
+        # Cambiar el estado del contenido
+        if(accion == '0'):
+            contenido.estado = get_object_or_404(Estado, id=3)
+        else:
+            contenido.estado = get_object_or_404(Estado, id=5)
+        contenido.save()  # Guardar los cambios en la base de datos
+        nuevo_estado = contenido.estado
     # Actualizar el estado de la tarjeta si existe
     if tarjeta:
         actualizar_estado(request, tarjeta.id, nuevo_estado.descripcion)
