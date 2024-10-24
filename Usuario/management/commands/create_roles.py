@@ -17,9 +17,9 @@ class Command(BaseCommand):
 
         roles = {
             'Suscriptor': ['view_contenidos','add_comentario'],
-            'Autor': ['add_contenidos', 'view_tablero', 'ver_propio_tablero', 'view_columna','change_contenidos', 'delete_contenidos'],  
-            'Editor': ['change_contenidos', 'change_categoria', 'can_viewBorrador', 'can_viewRevision', 'can_change_estado'],
-            'Publicador': ['view_tarjeta','can_viewInactive','delete_contenidos', 'change_subcategoria','cambiar_estado_tarjeta','can_viewBorrador','can_change_estado','can_viewAceptado'],
+            'Autor': ['view_contenidos','add_contenidos', 'view_tablero', 'ver_propio_tablero', 'view_columna','change_contenidos', 'delete_contenidos', 'can_viewBorrador', 'can_viewRevision',],  
+            'Editor': ['view_contenidos', 'view_tablero', 'ver_propio_tablero', 'view_columna','change_contenidos', 'delete_contenidos', 'can_viewBorrador', 'can_viewRevision', 'can_change_estado', 'change_categoria', 'change_subcategoria'],
+            'Publicador': ['view_contenidos', 'view_tablero', 'ver_propio_tablero', 'view_columna', 'delete_contenidos', 'can_viewRevision','view_tarjeta','can_viewInactive','cambiar_estado_tarjeta','can_change_estado','can_viewAceptado'],
         }
 
         # Crea o obtiene los grupos y asigna permisos
@@ -34,11 +34,14 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.ERROR(f'Permiso no encontrado: {perm_code}'))
 
         # Herencia de permisos
+        '''
         autor = Group.objects.get(name='Autor')
         suscriptor = Group.objects.get(name='Suscriptor')
         editor = Group.objects.get(name='Editor')
         publicador = Group.objects.get(name='Publicador')
-
+        
+        
+        
         # Asignar permisos del Suscriptor al Autor
         autor.permissions.add(*suscriptor.permissions.all())
         
@@ -47,5 +50,6 @@ class Command(BaseCommand):
         
         # Asignar permisos del Editor al Publicador
         publicador.permissions.add(*editor.permissions.all())
-
+        
+        '''
         self.stdout.write(self.style.SUCCESS('Roles y permisos asignados correctamente.'))
