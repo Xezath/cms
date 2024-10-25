@@ -66,7 +66,8 @@
             <div class="kanban-column" {% if puede_cambiar_estado %} ondrop="drop(event, 'Borrador')" ondragover="allowDrop(event)" {% endif %}>
                 <h3>Borrador</h3>
                 {% for tarjeta in tarjetas_por_estado.Borrador %}
-                    <div class="kanban-tarjeta card" {% if puede_cambiar_estado %} draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')" {% endif %}>
+                    <!-- Las tarjetas en "Borrador" no son arrastrables -->
+                    <div class="kanban-tarjeta card" draggable="false">
                         <div class="card-body">
                             <h6 class="card-title">
                                 <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
@@ -78,11 +79,13 @@
                     <p>No hay tarjetas en borrador.</p>
                 {% endfor %}
             </div>
+
             <!-- Columna Revisión -->
             <div class="kanban-column" {% if puede_cambiar_estado %} ondrop="drop(event, 'Revision')" ondragover="allowDrop(event)" {% endif %}>
                 <h3>En Revisión</h3>
                 {% for tarjeta in tarjetas_por_estado.Revision %}
-                    <div class="kanban-tarjeta card" {% if puede_cambiar_estado %} draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')" {% endif %}>
+                    <!-- Las tarjetas en "Revisión" no son arrastrables -->
+                    <div class="kanban-tarjeta card" draggable="false">
                         <div class="card-body">
                             <h6 class="card-title">
                                 <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
