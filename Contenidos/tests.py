@@ -1,12 +1,18 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.urls import reverse
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from .models import Contenidos, Estado, Categoria, Subcategoria, Comentario
 from .forms import ContenidosForm, EditarContenidosForm, ComentarioForm
 from django.utils import timezone
 from Contenidos.models import Contenidos, Estado
 from Categoria.models import Categoria
 from Plantilla.models import Plantilla, Color, Margenes
+from django.core import mail
+from django.core.mail import send_mail
+from django.test import override_settings
+import os
+
+
 
 class ContenidosModelTest(TestCase):
     def setUp(self):
@@ -152,3 +158,18 @@ class ComentarioFormTest(TestCase):
         self.assertIn(('can_delete', 'Puede eliminar contenido'), Contenidos._meta.permissions)
         self.assertIn(('can_viewInactive', 'Puede ver contenido inactivo'), Contenidos._meta.permissions)
 
+
+class EmailTest(TestCase):
+    @override_settings(EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend')
+    def test_send_email(self):
+        subject = 'Test Email'
+        message = 'This is a test email.'
+        from_email = 'from@example.com'
+        recipient_list = ['to@example.com']
+        send_mail(subject, message, from_email, recipient_list)
+        self.assertEqual(len(mail.outbox), 1)
+        sent_email = mail.outbox[0]
+        self.assertEqual(sent_email.subject, subject)
+        self.assertEqual(sent_email.body, message)
+        self.assertEqual(sent_email.from_email, from_email)
+        self.assertEqual(sent_email.to, recipient_list)
