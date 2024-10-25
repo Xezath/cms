@@ -19,7 +19,7 @@
   <br />
   <div>
     <!-- Botones de acción -->
-    {% if perms.Contenidos.can_change_estado and perms.Contenidos.change_contenidos %}
+    {% if perms.Contenidos.change_contenidos %}
       <h6 style="color: brown">Desea confirmar el contenido?</h6>
       <!-- prettier-ignore -->
       <form action="{% url 'aceptar_rechazar_contenido' contenido.id %}" method="post">

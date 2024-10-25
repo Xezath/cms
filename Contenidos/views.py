@@ -98,7 +98,7 @@ def crear_contenido(request):
     return render(request, 'contenidos/crear.html', {'formulario': formulario})
 
 
-@permission_required('Contenidos.change_contenidos', raise_exception=True)
+#@permission_required('Contenidos.change_contenidos', raise_exception=True)
 @login_required
 def editar_contenido(request, id):
     """

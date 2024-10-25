@@ -92,10 +92,10 @@
                             {% if perms.Contenidos.change_contenidos or perms.Contenidos.delete_contenidos %}
                             <div class="mt-2">
                                 {% if perms.Contenidos.change_contenidos or contenido.autor.id == user.id %}
-                                <a class="btn btn-info" href="{% url 'editar_contenido' contenido.id %}" role="button">Editar</a>
+                                    <a class="btn btn-info" href="{% url 'editar_contenido' contenido.id %}" role="button">Editar</a>
                                 {% endif %}
                                 {% if perms.Contenidos.delete_contenidos %}
-                                <a class="btn btn-danger" href="{% url 'eliminar_contenido' contenido.id %}" role="button">Eliminar</a>
+                                    <a class="btn btn-danger" href="{% url 'eliminar_contenido' contenido.id %}" role="button">Eliminar</a>
                                 {% endif %}
                             </div>
                             {% endif %}
