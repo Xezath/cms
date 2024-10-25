@@ -20,7 +20,7 @@
         <br>
         <div>
             <!-- Botones de acción -->
-            {% if not perms.Contenidos.can_change_estado %}
+            {% if not perms.Contenidos.can_change_estado and contenido.autor.id == user.id %}
                 <form action="{% url 'enviar_a_revision' contenido.id %}" method="post">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary">Enviar a Revisión</button>

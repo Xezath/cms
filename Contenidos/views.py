@@ -185,6 +185,17 @@ def visualizar_contenido(request, id):
             comentario.usuario = request.user  # Asignar el usuario autenticado
             comentario.contenido = contenido   # Relacionar el comentario con el contenido actual
             comentario.save()
+            #Si se crea el comentario, se envia una notificación por correo al autor
+            context = {
+                    'titulo': contenido.titulo,
+                }      
+            html_template = 'contenidos/comentado.html'
+            html_message = render_to_string(html_template, context)
+            subject = 'Alguien comentó tu publicación'
+            message=EmailMessage(subject, html_message, 'cmseq052024@gmail.com', [contenido.autor.email])
+            message.content_subtype = 'html'
+            message.send()
+
 
             return redirect('visualizar_contenido', id=contenido.id)
     else:
