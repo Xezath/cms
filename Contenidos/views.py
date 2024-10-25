@@ -102,16 +102,14 @@ def crear_contenido(request):
 @login_required
 def editar_contenido(request, id):
     """
-    Vista para editar un contenido existente. También actualiza la tarjeta asociada en el tablero 
-    Kanban si el estado del contenido cambia.
+    Vista para editar un contenido existente. También actualiza la tarjeta asociada en el tablero Kanban si el estado del contenido cambia.
 
     Parámetros:
     - request: HttpRequest object con la información de la solicitud.
     - id: ID del contenido a editar.
 
     Retorna:
-    - HttpResponse que redirige a la lista de contenidos si la edición se completa con éxito, 
-      o muestra la página 'contenidos/editar.html' con el formulario si no es válido.
+    - HttpResponse que redirige a la lista de contenidos si la edición se completa con éxito, o muestra la página 'contenidos/editar.html' con el formulario si no es válido.
     """
     contenido = get_object_or_404(Contenidos, id=id)
     tarjeta = Tarjeta.objects.filter(contenido=contenido).first()  # Buscar la tarjeta relacionada con el contenido
@@ -314,11 +312,11 @@ def enviar_a_revision(request, id):
     contenido.save()  # Guardar los cambios en la base de datos
     nuevo_estado = contenido.estado
     # Actualizar el estado de la tarjeta si existe
-    if tarjeta:
-        actualizar_estado(request, tarjeta.id, nuevo_estado.descripcion)
-        tarjeta.estado = contenido.estado  # Actualiza el estado de la tarjeta al nuevo estado del contenido
-        tarjeta.save()  # Guarda los cambios en la tarjeta
-    
+
+    tarjeta = Tarjeta.objects.filter(contenido=contenido).first()
+    tarjeta.estado = nuevo_estado
+    tarjeta.save()
+        
     context = {
                     'titulo': contenido.titulo,
                 }      

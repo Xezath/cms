@@ -31,3 +31,5 @@ language = 'es'
 # -- Options for HTML output -------------------------------------------------
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+html_use_index = True
+html_search = True

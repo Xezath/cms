@@ -23,7 +23,7 @@
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Búsqueda" href="search.html" />
     <link rel="next" title="TableroKanban Package" href="TableroKanban.html" />
-    <link rel="prev" title="Plantilla.migrations package" href="Plantilla.migrations.html" /> 
+    <link rel="prev" title="Plantilla Package" href="Plantilla.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,16 +45,12 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contenido:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">cms</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="Categoria.html">Categoria Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Plantilla.html">Plantilla Package</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Contenidos Package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-Contenidos.apps">Contenidos.apps module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#Contenidos.apps.ContenidosConfig"><code class="docutils literal notranslate"><span class="pre">ContenidosConfig</span></code></a></li>
 </ul>
@@ -72,15 +68,20 @@
 <li class="toctree-l4"><a class="reference internal" href="#Contenidos.models.Estado"><code class="docutils literal notranslate"><span class="pre">Estado</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#module-Contenidos.urls">Contenidos.urls module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-Contenidos.views">Contenidos.views module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.aceptar_rechazar_contenido"><code class="docutils literal notranslate"><span class="pre">aceptar_rechazar_contenido()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.cargar_subcategorias"><code class="docutils literal notranslate"><span class="pre">cargar_subcategorias()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.contenidos"><code class="docutils literal notranslate"><span class="pre">contenidos()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.crear_contenido"><code class="docutils literal notranslate"><span class="pre">crear_contenido()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.editar_contenido"><code class="docutils literal notranslate"><span class="pre">editar_contenido()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.eliminar_comentario"><code class="docutils literal notranslate"><span class="pre">eliminar_comentario()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.eliminar_contenido"><code class="docutils literal notranslate"><span class="pre">eliminar_contenido()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.enviar_a_revision"><code class="docutils literal notranslate"><span class="pre">enviar_a_revision()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.publicar_contenido"><code class="docutils literal notranslate"><span class="pre">publicar_contenido()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.visualizar_contenido"><code class="docutils literal notranslate"><span class="pre">visualizar_contenido()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.visualizar_contenido_aceptado"><code class="docutils literal notranslate"><span class="pre">visualizar_contenido_aceptado()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.visualizar_contenido_borrador"><code class="docutils literal notranslate"><span class="pre">visualizar_contenido_borrador()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.visualizar_contenido_revision"><code class="docutils literal notranslate"><span class="pre">visualizar_contenido_revision()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-Contenidos">Module contents</a></li>
@@ -121,14 +122,8 @@
              
   <section id="contenidos-package">
 <h1>Contenidos Package<a class="headerlink" href="#contenidos-package" title="Link to this heading"></a></h1>
-<section id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 </div>
-</section>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
-</section>
 <section id="module-Contenidos.apps">
 <span id="contenidos-apps-module"></span><h2>Contenidos.apps module<a class="headerlink" href="#module-Contenidos.apps" title="Link to this heading"></a></h2>
 <dl class="py class">
@@ -654,11 +649,19 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 </dd></dl>
 
 </section>
-<section id="module-Contenidos.urls">
-<span id="contenidos-urls-module"></span><h2>Contenidos.urls module<a class="headerlink" href="#module-Contenidos.urls" title="Link to this heading"></a></h2>
-</section>
 <section id="module-Contenidos.views">
 <span id="contenidos-views-module"></span><h2>Contenidos.views module<a class="headerlink" href="#module-Contenidos.views" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="Contenidos.views.aceptar_rechazar_contenido">
+<span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">aceptar_rechazar_contenido</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#aceptar_rechazar_contenido"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.aceptar_rechazar_contenido" title="Link to this definition"></a></dt>
+<dd><p>Vista para enviar un contenido a aceptado.</p>
+<p>Parámetros:
+- request: HttpRequest object con la información de la solicitud.
+- id: ID del contenido a formatear.</p>
+<p>Retorna:
+- HttpResponse que redirige a la página anterior o muestra la página de contenidos.</p>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="Contenidos.views.cargar_subcategorias">
 <span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">cargar_subcategorias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#cargar_subcategorias"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.cargar_subcategorias" title="Link to this definition"></a></dt>
@@ -695,8 +698,7 @@ al contenido creado.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="Contenidos.views.editar_contenido">
 <span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">editar_contenido</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#editar_contenido"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.editar_contenido" title="Link to this definition"></a></dt>
-<dd><p>Vista para editar un contenido existente. También actualiza la tarjeta asociada en el tablero 
-Kanban si el estado del contenido cambia.</p>
+<dd><p>Vista para editar un contenido existente. También actualiza la tarjeta asociada en el tablero Kanban si el estado del contenido cambia.</p>
 <p>Parámetros:
 - request: HttpRequest object con la información de la solicitud.
 - id: ID del contenido a editar.</p>
@@ -728,10 +730,65 @@ adecuados puede eliminarlo. Solicita confirmación antes de proceder con la elim
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="Contenidos.views.enviar_a_revision">
+<span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">enviar_a_revision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#enviar_a_revision"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.enviar_a_revision" title="Link to this definition"></a></dt>
+<dd><p>Vista para enviar un contenido a revisión.</p>
+<p>Parámetros:
+- request: HttpRequest object con la información de la solicitud.
+- id: ID del contenido a enviar a revisión.</p>
+<p>Retorna:
+- HttpResponse que redirige a la página anterior o muestra la página de contenidos.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Contenidos.views.publicar_contenido">
+<span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">publicar_contenido</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#publicar_contenido"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.publicar_contenido" title="Link to this definition"></a></dt>
+<dd><p>Vista para enviar un contenido a activo.</p>
+<p>Parámetros:
+- request: HttpRequest object con la información de la solicitud.
+- id: ID del contenido a formatear.</p>
+<p>Retorna:
+- HttpResponse que redirige a la página anterior o muestra la página de contenidos.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="Contenidos.views.visualizar_contenido">
 <span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">visualizar_contenido</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#visualizar_contenido"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.visualizar_contenido" title="Link to this definition"></a></dt>
 <dd><p>Vista para visualizar un contenido. También permite añadir nuevos comentarios relacionados 
 con el contenido.</p>
+<p>Parámetros:
+- request: HttpRequest object con la información de la solicitud.
+- id: ID del contenido a visualizar.</p>
+<p>Retorna:
+- HttpResponse con la página “contenidos/visualizar.html” que muestra el contenido y los comentarios asociados.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Contenidos.views.visualizar_contenido_aceptado">
+<span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">visualizar_contenido_aceptado</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#visualizar_contenido_aceptado"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.visualizar_contenido_aceptado" title="Link to this definition"></a></dt>
+<dd><p>Vista para visualizar un contenido en revisión.</p>
+<p>Parámetros:
+- request: HttpRequest object con la información de la solicitud.
+- id: ID del contenido a visualizar.</p>
+<p>Retorna:
+- HttpResponse con la página “contenidos/visualizar.html” que muestra el contenido y los comentarios asociados.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Contenidos.views.visualizar_contenido_borrador">
+<span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">visualizar_contenido_borrador</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#visualizar_contenido_borrador"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.visualizar_contenido_borrador" title="Link to this definition"></a></dt>
+<dd><p>Vista para visualizar un contenido en borrador.</p>
+<p>Parámetros:
+- request: HttpRequest object con la información de la solicitud.
+- id: ID del contenido a visualizar.</p>
+<p>Retorna:
+- HttpResponse con la página “contenidos/visualizar.html” que muestra el contenido y los comentarios asociados.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Contenidos.views.visualizar_contenido_revision">
+<span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">visualizar_contenido_revision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#visualizar_contenido_revision"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.visualizar_contenido_revision" title="Link to this definition"></a></dt>
+<dd><p>Vista para visualizar un contenido en revisión.</p>
 <p>Parámetros:
 - request: HttpRequest object con la información de la solicitud.
 - id: ID del contenido a visualizar.</p>
@@ -749,7 +806,7 @@ con el contenido.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
-        <a href="Plantilla.migrations.html" class="btn btn-neutral float-left" title="Plantilla.migrations package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="Plantilla.html" class="btn btn-neutral float-left" title="Plantilla Package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
         <a href="TableroKanban.html" class="btn btn-neutral float-right" title="TableroKanban Package" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

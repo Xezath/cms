@@ -9,7 +9,7 @@ Documentacion del CMS
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Contenido:
 
    modules
 

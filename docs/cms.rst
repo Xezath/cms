@@ -1,9 +1,6 @@
 cms package
 ===========
 
-Submodules
-----------
-
 cms.asgi module
 ---------------
 

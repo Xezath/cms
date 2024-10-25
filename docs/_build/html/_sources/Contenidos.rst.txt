@@ -1,15 +1,8 @@
 Contenidos Package
 ==================
 
-Subpackages
------------
-
 .. toctree::
    :maxdepth: 7
-
-
-Submodules
-----------
 
 Contenidos.apps module
 ----------------------
@@ -35,13 +28,6 @@ Contenidos.models module
    :undoc-members:
    :show-inheritance:
 
-Contenidos.urls module
-----------------------
-
-.. automodule:: Contenidos.urls
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 Contenidos.views module
 -----------------------

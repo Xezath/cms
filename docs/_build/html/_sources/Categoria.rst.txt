@@ -1,16 +1,8 @@
 Categoria Package
 ==================
 
-Subpackages
------------
-
 .. toctree::
    :maxdepth: 4
-
-   Categoria.migrations
-
-Submodules
-----------
 
 Categoria.apps module
 ----------------------
@@ -35,15 +27,7 @@ Categoria.models module
    :members:
    :undoc-members:
    :show-inheritance:
-
-Categoria.urls module
-----------------------
-
-.. automodule:: Categoria.urls
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
+   
 Categoria.views module
 -----------------------
 

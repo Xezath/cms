@@ -42,7 +42,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contenido:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">cms</a></li>
 </ul>
@@ -80,7 +80,7 @@
 <span class="kn">from</span> <span class="nn">Plantilla.models</span> <span class="kn">import</span> <span class="n">Plantilla</span>
 
 <div class="viewcode-block" id="Estado">
-<a class="viewcode-back" href="../../Contenidos.html#Contenidos.models.Estado">[documentos]</a>
+<a class="viewcode-back" href="../../Contenidos.html#Contenidos.forms.Estado">[documentos]</a>
 <span class="k">class</span> <span class="nc">Estado</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Modelo que representa un estado de un contenido.</span>
@@ -105,7 +105,7 @@
     
 
 <div class="viewcode-block" id="Contenidos">
-<a class="viewcode-back" href="../../Contenidos.html#Contenidos.models.Contenidos">[documentos]</a>
+<a class="viewcode-back" href="../../Contenidos.html#Contenidos.forms.Contenidos">[documentos]</a>
 <span class="k">class</span> <span class="nc">Contenidos</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Modelo que representa un contenido en el sistema.</span>
@@ -167,12 +167,15 @@
             <span class="p">(</span><span class="s2">&quot;can_delete&quot;</span><span class="p">,</span> <span class="s2">&quot;Puede eliminar contenido&quot;</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;can_viewInactive&quot;</span><span class="p">,</span> <span class="s2">&quot;Puede ver contenido inactivo&quot;</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;can_viewBorrador&quot;</span><span class="p">,</span> <span class="s2">&quot;Puede ver contenido en borrador&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;can_viewRevision&quot;</span><span class="p">,</span> <span class="s2">&quot;Puede ver contenido en revisión&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;can_viewAceptado&quot;</span><span class="p">,</span> <span class="s2">&quot;Puede ver contenido aceptado&quot;</span><span class="p">),</span>
             <span class="p">(</span><span class="s2">&quot;can_change_estado&quot;</span><span class="p">,</span> <span class="s2">&quot;Puede cambiar estado&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;can_activateContenido&quot;</span><span class="p">,</span> <span class="s2">&quot;Puede activar contenido&quot;</span><span class="p">),</span>
         <span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="Comentario">
-<a class="viewcode-back" href="../../Contenidos.html#Contenidos.models.Comentario">[documentos]</a>
+<a class="viewcode-back" href="../../Contenidos.html#Contenidos.forms.Comentario">[documentos]</a>
 <span class="k">class</span> <span class="nc">Comentario</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Modelo que representa un comentario sobre un contenido.</span>

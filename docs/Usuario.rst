@@ -1,16 +1,8 @@
 Usuario Package
 ==================
 
-Subpackages
------------
-
 .. toctree::
    :maxdepth: 4
-
-   Usuario.migrations
-
-Submodules
-----------
 
 Usuario.apps module
 ----------------------
