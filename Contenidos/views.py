@@ -312,11 +312,11 @@ def enviar_a_revision(request, id):
     contenido.save()  # Guardar los cambios en la base de datos
     nuevo_estado = contenido.estado
     # Actualizar el estado de la tarjeta si existe
-    if tarjeta:
-        actualizar_estado(request, tarjeta.id, nuevo_estado.descripcion)
-        tarjeta.estado = contenido.estado  # Actualiza el estado de la tarjeta al nuevo estado del contenido
-        tarjeta.save()  # Guarda los cambios en la tarjeta
-    
+
+    tarjeta = Tarjeta.objects.filter(contenido=contenido).first()
+    tarjeta.estado = nuevo_estado
+    tarjeta.save()
+        
     context = {
                     'titulo': contenido.titulo,
                 }      
