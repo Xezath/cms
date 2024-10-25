@@ -1,15 +1,18 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.urls import reverse
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from .models import Contenidos, Estado, Categoria, Subcategoria, Comentario
 from .forms import ContenidosForm, EditarContenidosForm, ComentarioForm
 from django.utils import timezone
 from Contenidos.models import Contenidos, Estado
 from Categoria.models import Categoria
 from Plantilla.models import Plantilla, Color, Margenes
+from django.core import mail
 from django.core.mail import send_mail
 from django.test import override_settings
-from django.core import mail
+import os
+
+
 
 class ContenidosModelTest(TestCase):
     def setUp(self):
@@ -154,7 +157,6 @@ class ComentarioFormTest(TestCase):
         self.assertIn(('can_modify', 'Puede editar contenido'), Contenidos._meta.permissions)
         self.assertIn(('can_delete', 'Puede eliminar contenido'), Contenidos._meta.permissions)
         self.assertIn(('can_viewInactive', 'Puede ver contenido inactivo'), Contenidos._meta.permissions)
-
 
 
 class EmailTest(TestCase):
