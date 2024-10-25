@@ -10,6 +10,21 @@ from django.views.decorators.http import require_POST
 @login_required
 @permission_required('TableroKanban.ver_propio_tablero', raise_exception=True)
 def tablero_kanban(request, tablero_id):
+    """
+    Vista para visualizar un tablero Kanban específico, sus columnas y tarjetas,
+    con acceso y visualización filtrados según el rol y permisos del usuario.
+
+    Args:
+        request (HttpRequest): Objeto HttpRequest que contiene datos de la solicitud.
+        tablero_id (int): ID del tablero a visualizar.
+
+    Returns:
+        HttpResponse: Renderiza la plantilla 'TableroKanban/tablero.html' con el contexto
+        del tablero, las tarjetas organizadas por estado y la autorización para cambiar estados.
+
+    Raises:
+        PermissionDenied: Si el usuario no tiene permisos para ver el tablero especificado.
+    """
     tablero = get_object_or_404(Tablero, id=tablero_id)
     columnas = tablero.columnas.prefetch_related('tarjetas').all()
 

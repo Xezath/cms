@@ -42,7 +42,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contenido:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">cms</a></li>
 </ul>
@@ -87,14 +87,19 @@
 <span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;TableroKanban.ver_propio_tablero&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">tablero_kanban</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">tablero_id</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Vista que muestra el tablero Kanban y sus tarjetas.</span>
+<span class="sd">    Vista para visualizar un tablero Kanban específico, sus columnas y tarjetas,</span>
+<span class="sd">    con acceso y visualización filtrados según el rol y permisos del usuario.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        request: El objeto de la solicitud HTTP.</span>
-<span class="sd">        tablero_id (int): El ID del tablero a mostrar.</span>
+<span class="sd">        request (HttpRequest): Objeto HttpRequest que contiene datos de la solicitud.</span>
+<span class="sd">        tablero_id (int): ID del tablero a visualizar.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        HttpResponse: Renderiza la plantilla del tablero con las tarjetas organizadas por estado.</span>
+<span class="sd">        HttpResponse: Renderiza la plantilla &#39;TableroKanban/tablero.html&#39; con el contexto</span>
+<span class="sd">        del tablero, las tarjetas organizadas por estado y la autorización para cambiar estados.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        PermissionDenied: Si el usuario no tiene permisos para ver el tablero especificado.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tablero</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Tablero</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">tablero_id</span><span class="p">)</span>
     <span class="n">columnas</span> <span class="o">=</span> <span class="n">tablero</span><span class="o">.</span><span class="n">columnas</span><span class="o">.</span><span class="n">prefetch_related</span><span class="p">(</span><span class="s1">&#39;tarjetas&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
@@ -102,11 +107,16 @@
     <span class="n">tarjetas_por_estado</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;Activas&#39;</span><span class="p">:</span> <span class="p">[],</span>
         <span class="s1">&#39;Inactivas&#39;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s1">&#39;Borrador&#39;</span><span class="p">:</span> <span class="p">[]</span>
+        <span class="s1">&#39;Borrador&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;Revision&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s1">&#39;Aceptadas&#39;</span><span class="p">:</span> <span class="p">[]</span>
     <span class="p">}</span>
 
     <span class="k">for</span> <span class="n">columna</span> <span class="ow">in</span> <span class="n">columnas</span><span class="p">:</span>
+        <span class="c1"># Permitir a los roles Administrador, Publicador y Editor ver las tarjetas en revisión de todos</span>
         <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__in</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Administrador&#39;</span><span class="p">,</span> <span class="s1">&#39;Publicador&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">tarjetas</span> <span class="o">=</span> <span class="n">columna</span><span class="o">.</span><span class="n">tarjetas</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__in</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Editor&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="n">columna</span><span class="o">.</span><span class="n">estado</span><span class="o">.</span><span class="n">descripcion</span> <span class="o">==</span> <span class="s1">&#39;Revision&#39;</span><span class="p">:</span>
             <span class="n">tarjetas</span> <span class="o">=</span> <span class="n">columna</span><span class="o">.</span><span class="n">tarjetas</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">tarjetas</span> <span class="o">=</span> <span class="n">columna</span><span class="o">.</span><span class="n">tarjetas</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">autor</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
@@ -118,8 +128,11 @@
                 <span class="n">tarjetas_por_estado</span><span class="p">[</span><span class="s1">&#39;Inactivas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tarjeta</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">tarjeta</span><span class="o">.</span><span class="n">columna</span><span class="o">.</span><span class="n">estado</span><span class="o">.</span><span class="n">descripcion</span> <span class="o">==</span> <span class="s1">&#39;Borrador&#39;</span><span class="p">:</span>
                 <span class="n">tarjetas_por_estado</span><span class="p">[</span><span class="s1">&#39;Borrador&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tarjeta</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">tarjeta</span><span class="o">.</span><span class="n">columna</span><span class="o">.</span><span class="n">estado</span><span class="o">.</span><span class="n">descripcion</span> <span class="o">==</span> <span class="s1">&#39;Revision&#39;</span><span class="p">:</span>
+                <span class="n">tarjetas_por_estado</span><span class="p">[</span><span class="s1">&#39;Revision&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tarjeta</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">tarjeta</span><span class="o">.</span><span class="n">columna</span><span class="o">.</span><span class="n">estado</span><span class="o">.</span><span class="n">descripcion</span> <span class="o">==</span> <span class="s1">&#39;Aceptado&#39;</span><span class="p">:</span>
+                <span class="n">tarjetas_por_estado</span><span class="p">[</span><span class="s1">&#39;Aceptadas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tarjeta</span><span class="p">)</span>
 
-    <span class="c1"># Verificar si el usuario tiene el permiso de cambiar estado de las tarjetas</span>
     <span class="n">puede_cambiar_estado</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">has_perm</span><span class="p">(</span><span class="s1">&#39;TableroKanban.cambiar_estado_tarjeta&#39;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;TableroKanban/tablero.html&#39;</span><span class="p">,</span> <span class="p">{</span>
@@ -152,7 +165,7 @@
             <span class="n">tarjeta</span> <span class="o">=</span> <span class="n">Tarjeta</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">tarjeta_id</span><span class="p">)</span>
             
             <span class="c1"># Buscar el estado correspondiente al nuevo estado</span>
-            <span class="n">estado</span> <span class="o">=</span> <span class="n">Estado</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">descripcion</span><span class="o">=</span><span class="n">nuevo_estado</span><span class="p">)</span>  <span class="c1"># Suponiendo que &#39;descripcion&#39; es el campo en Estado</span>
+            <span class="n">estado</span> <span class="o">=</span> <span class="n">Estado</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">descripcion</span><span class="o">=</span><span class="n">nuevo_estado</span><span class="p">)</span>  
             
             <span class="c1"># Buscar la columna correspondiente a ese estado en el mismo tablero</span>
             <span class="n">columna</span> <span class="o">=</span> <span class="n">Columna</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">estado</span><span class="o">=</span><span class="n">estado</span><span class="p">,</span> <span class="n">tablero</span><span class="o">=</span><span class="n">tarjeta</span><span class="o">.</span><span class="n">columna</span><span class="o">.</span><span class="n">tablero</span><span class="p">)</span>
@@ -163,9 +176,8 @@
             <span class="n">tarjeta</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 
             <span class="c1"># Sincronizar el estado del contenido relacionado</span>
-            <span class="c1"># Suponiendo que tienes una relación en Tarjeta a Contenido, por ejemplo: tarjeta.contenido</span>
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tarjeta</span><span class="p">,</span> <span class="s1">&#39;contenido&#39;</span><span class="p">):</span>
-                <span class="n">contenido</span> <span class="o">=</span> <span class="n">tarjeta</span><span class="o">.</span><span class="n">contenido</span>  <span class="c1"># Obtén el contenido relacionado</span>
+                <span class="n">contenido</span> <span class="o">=</span> <span class="n">tarjeta</span><span class="o">.</span><span class="n">contenido</span>  <span class="c1"># Obtiene el contenido relacionado</span>
                 <span class="n">contenido</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="n">estado</span>  <span class="c1"># Cambia el estado del contenido</span>
                 <span class="n">contenido</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>  <span class="c1"># Guarda los cambios</span>
             

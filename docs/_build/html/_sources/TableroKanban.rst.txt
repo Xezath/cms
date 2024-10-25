@@ -1,14 +1,8 @@
 TableroKanban Package
 ======================
 
-Subpackages
------------
-
 .. toctree::
    :maxdepth: 4
-
-Submodules
-----------
 
 TableroKanban.apps module
 ---------------------------

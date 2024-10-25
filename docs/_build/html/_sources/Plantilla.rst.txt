@@ -1,16 +1,8 @@
 Plantilla Package
 ==================
 
-Subpackages
------------
-
 .. toctree::
    :maxdepth: 4
-
-   Plantilla.migrations
-
-Submodules
-----------
 
 Plantilla.apps module
 ----------------------
@@ -36,13 +28,6 @@ Plantilla.models module
    :undoc-members:
    :show-inheritance:
 
-Plantilla.urls module
-----------------------
-
-.. automodule:: Plantilla.urls
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 Plantilla.views module
 -----------------------

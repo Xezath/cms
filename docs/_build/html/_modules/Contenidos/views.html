@@ -42,7 +42,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contenido:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">cms</a></li>
 </ul>
@@ -72,7 +72,7 @@
            <div itemprop="articleBody">
              
   <h1>Código fuente para Contenidos.views</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Contenidos</span><span class="p">,</span> <span class="n">Comentario</span>
+<span></span><span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Contenidos</span><span class="p">,</span> <span class="n">Comentario</span><span class="p">,</span> <span class="n">Estado</span>
 <span class="kn">from</span> <span class="nn">Categoria.models</span> <span class="kn">import</span> <span class="n">Categoria</span><span class="p">,</span> <span class="n">Subcategoria</span>
 <span class="kn">from</span> <span class="nn">.forms</span> <span class="kn">import</span> <span class="n">ContenidosForm</span><span class="p">,</span> <span class="n">EditarContenidosForm</span><span class="p">,</span> <span class="n">VisualizarContenidoForm</span><span class="p">,</span> <span class="n">ComentarioForm</span>
 <span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">get_object_or_404</span>
@@ -82,6 +82,11 @@
 <span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span><span class="p">,</span> <span class="n">Permission</span>
 <span class="kn">from</span> <span class="nn">TableroKanban.models</span> <span class="kn">import</span> <span class="n">Tablero</span><span class="p">,</span> <span class="n">Tarjeta</span>
 <span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">Q</span>
+<span class="kn">from</span> <span class="nn">TableroKanban.views</span> <span class="kn">import</span> <span class="n">actualizar_estado</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.core.mail</span> <span class="kn">import</span> <span class="n">send_mail</span><span class="p">,</span><span class="n">EmailMessage</span>
+<span class="kn">from</span> <span class="nn">django.template.loader</span> <span class="kn">import</span> <span class="n">render_to_string</span>
+
 
 <div class="viewcode-block" id="contenidos">
 <a class="viewcode-back" href="../../Contenidos.html#Contenidos.views.contenidos">[documentos]</a>
@@ -166,8 +171,7 @@
             <span class="n">descripcion</span><span class="o">=</span><span class="n">contenido</span><span class="o">.</span><span class="n">autor</span><span class="p">,</span>  
             <span class="n">orden</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>  <span class="c1"># Establecer un orden inicial</span>
         <span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;contenidos&#39;</span><span class="p">)</span>  <span class="c1"># Redirige a la lista de contenidos después de guardar</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;visualizar_contenido_borrador&#39;</span><span class="p">,</span> <span class="n">contenido</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
     
     <span class="c1"># Si el formulario no es válido, se vuelve a mostrar con los errores</span>
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;contenidos/crear.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;formulario&#39;</span><span class="p">:</span> <span class="n">formulario</span><span class="p">})</span></div>
@@ -177,10 +181,10 @@
 <div class="viewcode-block" id="editar_contenido">
 <a class="viewcode-back" href="../../Contenidos.html#Contenidos.views.editar_contenido">[documentos]</a>
 <span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Contenidos.change_contenidos&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nd">@login_required</span>
 <span class="k">def</span> <span class="nf">editar_contenido</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Vista para editar un contenido existente. También actualiza la tarjeta asociada en el tablero </span>
-<span class="sd">    Kanban si el estado del contenido cambia.</span>
+<span class="sd">    Vista para editar un contenido existente. También actualiza la tarjeta asociada en el tablero Kanban si el estado del contenido cambia.</span>
 
 <span class="sd">    Parámetros:</span>
 <span class="sd">    - request: HttpRequest object con la información de la solicitud.</span>
@@ -194,21 +198,21 @@
 
     <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
         <span class="n">formulario</span> <span class="o">=</span> <span class="n">EditarContenidosForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">instance</span><span class="o">=</span><span class="n">contenido</span><span class="p">)</span>
-        
+
         <span class="c1"># Actualiza el queryset de subcategorías basadas en la categoría seleccionada</span>
         <span class="n">categoria_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;categoria&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">categoria_id</span><span class="p">:</span>
             <span class="n">formulario</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;subcategoria&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">queryset</span> <span class="o">=</span> <span class="n">Subcategoria</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">categoriaPadre_id</span><span class="o">=</span><span class="n">categoria_id</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">formulario</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
-            <span class="n">nuevo_estado</span> <span class="o">=</span> <span class="n">formulario</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;estado&#39;</span><span class="p">]</span>  <span class="c1"># Obtener el nuevo estado del contenido</span>
-
+            <span class="c1"># Aquí no es necesario modificar el autor</span>
+            <span class="n">contenido</span> <span class="o">=</span> <span class="n">formulario</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># No guardar aún</span>
+            <span class="n">contenido</span><span class="o">.</span><span class="n">autor</span> <span class="o">=</span> <span class="n">contenido</span><span class="o">.</span><span class="n">autor</span>  <span class="c1"># Mantener el autor existente</span>
             <span class="n">contenido</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>  <span class="c1"># Guarda el contenido modificado</span>
-            
-            <span class="c1"># Actualizar el estado y la columna de la tarjeta</span>
+            <span class="n">nuevo_estado</span> <span class="o">=</span> <span class="n">formulario</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;estado&#39;</span><span class="p">]</span>            <span class="c1"># Actualizar el estado y la columna de la tarjeta</span>
             <span class="k">if</span> <span class="n">tarjeta</span><span class="p">:</span>
-                <span class="n">tarjeta</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="n">nuevo_estado</span>  <span class="c1"># Actualiza el estado de la tarjeta</span>
-                <span class="n">tarjeta</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>  <span class="c1"># Mueve la tarjeta a la columna correcta</span>
+                <span class="c1"># Llamada a la función actualizar_estado</span>
+                <span class="n">actualizar_estado</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">tarjeta</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">nuevo_estado</span><span class="o">.</span><span class="n">descripcion</span><span class="p">)</span>
 
             <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;contenidos&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -217,6 +221,7 @@
         <span class="n">formulario</span> <span class="o">=</span> <span class="n">EditarContenidosForm</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="n">contenido</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;contenidos/editar.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;formulario&#39;</span><span class="p">:</span> <span class="n">formulario</span><span class="p">})</span></div>
+
 
 
 
@@ -268,6 +273,7 @@
             <span class="n">comentario</span><span class="o">.</span><span class="n">usuario</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span>  <span class="c1"># Asignar el usuario autenticado</span>
             <span class="n">comentario</span><span class="o">.</span><span class="n">contenido</span> <span class="o">=</span> <span class="n">contenido</span>   <span class="c1"># Relacionar el comentario con el contenido actual</span>
             <span class="n">comentario</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
             <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;visualizar_contenido&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">contenido</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">comentario_form</span> <span class="o">=</span> <span class="n">ComentarioForm</span><span class="p">()</span>
@@ -320,14 +326,224 @@
 <span class="sd">    - HttpResponse que redirige a la página anterior o muestra la página de confirmación de eliminación.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">comentario</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Comentario</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">comentario_id</span><span class="p">)</span>
+    <span class="n">contenido</span> <span class="o">=</span> <span class="n">comentario</span><span class="o">.</span><span class="n">contenido</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Comentario encontrado: </span><span class="si">{</span><span class="n">comentario</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># Para asegurarse de que el comentario está siendo encontrado correctamente</span>
 
     <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span> <span class="o">==</span> <span class="n">comentario</span><span class="o">.</span><span class="n">usuario</span> <span class="ow">or</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">has_perm</span><span class="p">(</span><span class="s1">&#39;Contenidos.delete_comentario&#39;</span><span class="p">):</span>
             <span class="n">comentario</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
             <span class="n">messages</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Comentario eliminado con éxito.&#39;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;HTTP_REFERER&#39;</span><span class="p">,</span> <span class="s1">&#39;contenidos&#39;</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;visualizar_contenido&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">contenido</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;contenidos/confirmar_eliminacion_comentario.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;comentario&#39;</span><span class="p">:</span> <span class="n">comentario</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="visualizar_contenido_borrador">
+<a class="viewcode-back" href="../../Contenidos.html#Contenidos.views.visualizar_contenido_borrador">[documentos]</a>
+<span class="k">def</span> <span class="nf">visualizar_contenido_borrador</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista para visualizar un contenido en borrador.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    - request: HttpRequest object con la información de la solicitud.</span>
+<span class="sd">    - id: ID del contenido a visualizar.</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    - HttpResponse con la página &#39;contenidos/visualizar.html&#39; que muestra el contenido y los comentarios asociados.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">contenido</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Contenidos</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;contenidos/borrador.html&#39;</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s1">&#39;contenido&#39;</span><span class="p">:</span> <span class="n">contenido</span><span class="p">,</span>
+    <span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="visualizar_contenido_revision">
+<a class="viewcode-back" href="../../Contenidos.html#Contenidos.views.visualizar_contenido_revision">[documentos]</a>
+<span class="k">def</span> <span class="nf">visualizar_contenido_revision</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista para visualizar un contenido en revisión.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    - request: HttpRequest object con la información de la solicitud.</span>
+<span class="sd">    - id: ID del contenido a visualizar.</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    - HttpResponse con la página &#39;contenidos/visualizar.html&#39; que muestra el contenido y los comentarios asociados.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">contenido</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Contenidos</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;contenidos/revision.html&#39;</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s1">&#39;contenido&#39;</span><span class="p">:</span> <span class="n">contenido</span><span class="p">,</span>
+    <span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="visualizar_contenido_aceptado">
+<a class="viewcode-back" href="../../Contenidos.html#Contenidos.views.visualizar_contenido_aceptado">[documentos]</a>
+<span class="k">def</span> <span class="nf">visualizar_contenido_aceptado</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista para visualizar un contenido en revisión.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    - request: HttpRequest object con la información de la solicitud.</span>
+<span class="sd">    - id: ID del contenido a visualizar.</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    - HttpResponse con la página &#39;contenidos/visualizar.html&#39; que muestra el contenido y los comentarios asociados.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">contenido</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Contenidos</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;contenidos/aceptado_rev.html&#39;</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s1">&#39;contenido&#39;</span><span class="p">:</span> <span class="n">contenido</span><span class="p">,</span>
+<span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="enviar_a_revision">
+<a class="viewcode-back" href="../../Contenidos.html#Contenidos.views.enviar_a_revision">[documentos]</a>
+<span class="k">def</span> <span class="nf">enviar_a_revision</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista para enviar un contenido a revisión.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    - request: HttpRequest object con la información de la solicitud.</span>
+<span class="sd">    - id: ID del contenido a enviar a revisión.</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    - HttpResponse que redirige a la página anterior o muestra la página de contenidos.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Obtener el contenido con el ID proporcionado</span>
+    <span class="n">contenido</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Contenidos</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+    <span class="n">tarjeta</span> <span class="o">=</span> <span class="n">Tarjeta</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">contenido</span><span class="o">=</span><span class="n">contenido</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+    <span class="n">contenido</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Estado</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>  <span class="c1"># Asumiendo que el ID 4 corresponde al estado &quot;revisión&quot;</span>
+    <span class="n">contenido</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>  <span class="c1"># Guardar los cambios en la base de datos</span>
+    <span class="n">nuevo_estado</span> <span class="o">=</span> <span class="n">contenido</span><span class="o">.</span><span class="n">estado</span>
+    <span class="c1"># Actualizar el estado de la tarjeta si existe</span>
+    <span class="k">if</span> <span class="n">tarjeta</span><span class="p">:</span>
+        <span class="n">actualizar_estado</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">tarjeta</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">nuevo_estado</span><span class="o">.</span><span class="n">descripcion</span><span class="p">)</span>
+        <span class="n">tarjeta</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="n">contenido</span><span class="o">.</span><span class="n">estado</span>  <span class="c1"># Actualiza el estado de la tarjeta al nuevo estado del contenido</span>
+        <span class="n">tarjeta</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>  <span class="c1"># Guarda los cambios en la tarjeta</span>
+    
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;titulo&#39;</span><span class="p">:</span> <span class="n">contenido</span><span class="o">.</span><span class="n">titulo</span><span class="p">,</span>
+                <span class="p">}</span>      
+    <span class="n">html_template</span> <span class="o">=</span> <span class="s1">&#39;contenidos/en_revision.html&#39;</span>
+    <span class="n">html_message</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="n">html_template</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="s1">&#39;Cambio de estado de publicación&#39;</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">EmailMessage</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">html_message</span><span class="p">,</span> <span class="s1">&#39;cmseq052024@gmail.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">contenido</span><span class="o">.</span><span class="n">autor</span><span class="o">.</span><span class="n">email</span><span class="p">])</span>
+    <span class="n">message</span><span class="o">.</span><span class="n">content_subtype</span> <span class="o">=</span> <span class="s1">&#39;html&#39;</span>
+    <span class="n">message</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+    
+
+    <span class="c1"># Redirigir o devolver una respuesta</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;contenidos&#39;</span><span class="p">)</span>  <span class="c1"># Cambia a la vista a la que quieras redirigir</span></div>
+
+
+<div class="viewcode-block" id="aceptar_rechazar_contenido">
+<a class="viewcode-back" href="../../Contenidos.html#Contenidos.views.aceptar_rechazar_contenido">[documentos]</a>
+<span class="k">def</span> <span class="nf">aceptar_rechazar_contenido</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista para enviar un contenido a aceptado.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    - request: HttpRequest object con la información de la solicitud.</span>
+<span class="sd">    - id: ID del contenido a formatear.</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    - HttpResponse que redirige a la página anterior o muestra la página de contenidos.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Obtener el contenido con el ID proporcionado</span>
+    <span class="n">contenido</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Contenidos</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+    <span class="n">tarjeta</span> <span class="o">=</span> <span class="n">Tarjeta</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">contenido</span><span class="o">=</span><span class="n">contenido</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span> 
+    <span class="c1"># Cambiar el estado del contenido de 3 a 4</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">accion</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;accion&#39;</span><span class="p">)</span>
+        <span class="c1"># Cambiar el estado del contenido</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">accion</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span><span class="p">):</span> <span class="c1">#accion 0 es rechazado</span>
+            <span class="n">contenido</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Estado</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;titulo&#39;</span><span class="p">:</span> <span class="n">contenido</span><span class="o">.</span><span class="n">titulo</span><span class="p">,</span>
+                <span class="p">}</span>      
+            <span class="n">html_template</span> <span class="o">=</span> <span class="s1">&#39;contenidos/rechazado.html&#39;</span>
+            <span class="n">html_message</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="n">html_template</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+            <span class="n">subject</span> <span class="o">=</span> <span class="s1">&#39;Cambio de estado de publicación&#39;</span>
+            <span class="n">message</span><span class="o">=</span><span class="n">EmailMessage</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">html_message</span><span class="p">,</span> <span class="s1">&#39;cmseq052024@gmail.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">contenido</span><span class="o">.</span><span class="n">autor</span><span class="o">.</span><span class="n">email</span><span class="p">])</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">content_subtype</span> <span class="o">=</span> <span class="s1">&#39;html&#39;</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;titulo&#39;</span><span class="p">:</span> <span class="n">contenido</span><span class="o">.</span><span class="n">titulo</span><span class="p">,</span>
+                <span class="p">}</span>      
+            <span class="n">html_template</span> <span class="o">=</span> <span class="s1">&#39;contenidos/borrador_editor.html&#39;</span>
+            <span class="n">html_message</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="n">html_template</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+            <span class="n">subject</span> <span class="o">=</span> <span class="s1">&#39;Cambio de estado de publicación&#39;</span>
+            <span class="n">message</span><span class="o">=</span><span class="n">EmailMessage</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">html_message</span><span class="p">,</span> <span class="s1">&#39;cmseq052024@gmail.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">contenido</span><span class="o">.</span><span class="n">autor</span><span class="o">.</span><span class="n">email</span><span class="p">])</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">content_subtype</span> <span class="o">=</span> <span class="s1">&#39;html&#39;</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+
+
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># esto es para aceptado</span>
+            <span class="n">contenido</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Estado</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;titulo&#39;</span><span class="p">:</span> <span class="n">contenido</span><span class="o">.</span><span class="n">titulo</span><span class="p">,</span>
+                <span class="p">}</span>      
+            <span class="n">html_template</span> <span class="o">=</span> <span class="s1">&#39;contenidos/aceptado.html&#39;</span>
+            <span class="n">html_message</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="n">html_template</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+            <span class="n">subject</span> <span class="o">=</span> <span class="s1">&#39;Cambio de estado de publicación&#39;</span>
+            <span class="n">message</span><span class="o">=</span><span class="n">EmailMessage</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">html_message</span><span class="p">,</span> <span class="s1">&#39;cmseq052024@gmail.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">contenido</span><span class="o">.</span><span class="n">autor</span><span class="o">.</span><span class="n">email</span><span class="p">])</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">content_subtype</span> <span class="o">=</span> <span class="s1">&#39;html&#39;</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+
+        <span class="n">contenido</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>  <span class="c1"># Guardar los cambios en la base de datos</span>
+        <span class="n">nuevo_estado</span> <span class="o">=</span> <span class="n">contenido</span><span class="o">.</span><span class="n">estado</span>
+    <span class="c1"># Actualizar el estado de la tarjeta si existe</span>
+    <span class="n">tarjeta</span> <span class="o">=</span> <span class="n">Tarjeta</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">contenido</span><span class="o">=</span><span class="n">contenido</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+    <span class="n">tarjeta</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="n">nuevo_estado</span>
+    <span class="n">tarjeta</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="c1"># Redirigir o devolver una respuesta</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;contenidos&#39;</span><span class="p">)</span>  <span class="c1"># Cambia a la vista a la que quieras redirigir</span></div>
+
+
+<div class="viewcode-block" id="publicar_contenido">
+<a class="viewcode-back" href="../../Contenidos.html#Contenidos.views.publicar_contenido">[documentos]</a>
+<span class="k">def</span> <span class="nf">publicar_contenido</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vista para enviar un contenido a activo.</span>
+
+<span class="sd">    Parámetros:</span>
+<span class="sd">    - request: HttpRequest object con la información de la solicitud.</span>
+<span class="sd">    - id: ID del contenido a formatear.</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    - HttpResponse que redirige a la página anterior o muestra la página de contenidos.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Obtener el contenido con el ID proporcionado</span>
+    <span class="n">contenido</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Contenidos</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+    <span class="n">tarjeta</span> <span class="o">=</span> <span class="n">Tarjeta</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">contenido</span><span class="o">=</span><span class="n">contenido</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span> 
+    <span class="c1"># Cambiar el estado del contenido de 3 a 4</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">accion</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;accion&#39;</span><span class="p">)</span>
+        <span class="c1"># Cambiar el estado del contenido</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">accion</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span><span class="p">):</span> <span class="c1">#rechazar es decir envia a en revision</span>
+            <span class="n">contenido</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Estado</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#el contenido se publica y se va al estado de activo</span>
+            <span class="n">contenido</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Estado</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;titulo&#39;</span><span class="p">:</span> <span class="n">contenido</span><span class="o">.</span><span class="n">titulo</span><span class="p">,</span>
+                <span class="p">}</span>      
+            <span class="n">html_template</span> <span class="o">=</span> <span class="s1">&#39;contenidos/publicado.html&#39;</span>
+            <span class="n">html_message</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="n">html_template</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+            <span class="n">subject</span> <span class="o">=</span> <span class="s1">&#39;Cambio de estado de publicación&#39;</span>
+            <span class="n">message</span><span class="o">=</span><span class="n">EmailMessage</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">html_message</span><span class="p">,</span> <span class="s1">&#39;cmseq052024@gmail.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">contenido</span><span class="o">.</span><span class="n">autor</span><span class="o">.</span><span class="n">email</span><span class="p">])</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">content_subtype</span> <span class="o">=</span> <span class="s1">&#39;html&#39;</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+
+        <span class="n">contenido</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>  <span class="c1"># Guardar los cambios en la base de datos</span>
+        <span class="n">nuevo_estado</span> <span class="o">=</span> <span class="n">contenido</span><span class="o">.</span><span class="n">estado</span>
+    <span class="c1"># Actualizar el estado de la tarjeta si existe</span>
+    <span class="k">if</span> <span class="n">tarjeta</span><span class="p">:</span>
+        <span class="n">actualizar_estado</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">tarjeta</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">nuevo_estado</span><span class="o">.</span><span class="n">descripcion</span><span class="p">)</span>
+    <span class="c1"># Redirigir o devolver una respuesta</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;contenidos&#39;</span><span class="p">)</span>  <span class="c1"># Cambia a la vista a la que quieras redirigir</span></div>
 
 </pre></div>
 
