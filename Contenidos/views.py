@@ -176,6 +176,11 @@ def visualizar_contenido(request, id):
     - HttpResponse con la página 'contenidos/visualizar.html' que muestra el contenido y los comentarios asociados.
     """
     contenido = get_object_or_404(Contenidos, id=id)
+
+    # Incrementar el contador de lecturas
+    contenido.numero_lecturas += 1
+    contenido.save()
+
     comentarios = contenido.comentarios.all()  # Recuperar los comentarios relacionados con el contenido
 
     if request.method == 'POST':

@@ -63,6 +63,9 @@ class Contenidos(models.Model):
     """
     (ForeignKey): El estado del contenido.
     """
+
+    numero_lecturas = models.IntegerField(default=0)  # Campo para el contador de lecturas
+    
     def __str__(self):
         """
         Devuelve el título del contenido.

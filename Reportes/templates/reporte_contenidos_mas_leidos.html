@@ -1,0 +1,23 @@
+
+{% extends "base.html" %}
+
+{% block titulo %} Reportes {% endblock %}
+{% block contenido %}
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte de Contenidos Más Leídos</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Reporte: Top 10 Contenidos Más Leídos</h1>
+    <div id="grafico"></div>
+    <script>
+        var graphData = {{ graph_json|safe }};
+        Plotly.newPlot('grafico', graphData.data, graphData.layout);
+    </script>
+</body>
+</html>
+
+{% endblock %}

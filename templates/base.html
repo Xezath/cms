@@ -300,7 +300,10 @@
                         {% if perms.TableroKanban.view_tablero %}
                             <a class="nav-link {% if request.path == '/tablero_kanban/tablero/1/' %}active{% endif %}" href="{% url 'kanban:tablero_kanban' tablero_id=1 %}">Tablero Kanban</a>
                         {% endif %}
-                    </li>                                                 
+                    </li>  
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/reportes/' %}active{% endif %}" href="{% url 'reporte_contenidos_mas_leidos' %}">Reportes</a>
+                    </li>                                               
                     {% endif %}
                     {% if user.is_authenticated %}
                     <li class="nav-item">
