@@ -11,23 +11,41 @@ import plotly.graph_objs as go
 from datetime import datetime
 
 def reporte_contenidos_mas_leidos(request):
-    # Obtener los 10 artículos más leídos
-    top_contenidos = Contenidos.objects.order_by('-numero_lecturas')[:10]
+    graph_json = None  # Inicializamos el gráfico vacío por defecto
     
-    # Extraer los datos de los artículos para graficar
-    nombres = [contenido.titulo for contenido in top_contenidos]
-    lecturas = [contenido.numero_lecturas for contenido in top_contenidos]
+    if request.method == 'POST':
+        fecha_inicio_str = request.POST.get('fecha_inicio')
+        fecha_fin_str = request.POST.get('fecha_fin')
 
-    # Crear el gráfico usando Plotly
-    fig = px.bar(
-        x=nombres,
-        y=lecturas,
-        title="Top 10 Contenidos Más Leídos",
-        labels={'x': "Contenido", 'y': "Número de Lecturas"}
-    )
-    
-    # Convertir el gráfico a JSON para enviar al template
-    graph_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+        # Convertir las fechas de cadena a objetos datetime
+        fecha_inicio = datetime.strptime(fecha_inicio_str, '%Y-%m-%d')
+        fecha_fin = datetime.strptime(fecha_fin_str, '%Y-%m-%d')
+
+        # Filtrar los contenidos según el rango de fechas
+        top_contenidos = Contenidos.objects.filter(
+            fecha_publicacion__range=(fecha_inicio, fecha_fin)
+        ).order_by('-numero_lecturas')[:10]
+
+        # Extraer los datos de los artículos para graficar
+        nombres = [contenido.titulo for contenido in top_contenidos]
+        lecturas = [contenido.numero_lecturas for contenido in top_contenidos]
+
+        # Crear el gráfico de barras con Plotly
+        trace = go.Bar(
+            x=nombres,
+            y=lecturas,
+            name="Contenidos más leídos"
+        )
+        layout = go.Layout(
+            title=f"Top 10 Contenidos Más Leídos entre {fecha_inicio.date()} y {fecha_fin.date()}",
+            xaxis=dict(title='Contenido'),
+            yaxis=dict(title='Número de Lecturas')
+        )
+        fig = go.Figure(data=[trace], layout=layout)
+
+        # Convertir el gráfico a JSON para pasarlo a la plantilla
+        graph_json = fig.to_json()
+
     return render(request, 'reporte_contenidos_mas_leidos.html', {'graph_json': graph_json})
 
 
