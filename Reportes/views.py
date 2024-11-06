@@ -34,12 +34,12 @@ def reporte_contenidos_publicados_rechazados(request):
     graph_json = None  # Inicializamos el gráfico vacío por defecto
     
     if request.method == 'POST':
-        fecha_inicio = request.POST.get('fecha_inicio')
-        fecha_fin = request.POST.get('fecha_fin')
+        fecha_inicio_str = request.POST.get('fecha_inicio')
+        fecha_fin_str = request.POST.get('fecha_fin')
 
         # Convertir fechas a objetos datetime
-        fecha_inicio = timezone.datetime.strptime(fecha_inicio, '%Y-%m-%d')
-        fecha_fin = timezone.datetime.strptime(fecha_fin, '%Y-%m-%d')
+        fecha_inicio = timezone.datetime.strptime(fecha_inicio_str, '%Y-%m-%d')
+        fecha_fin = timezone.datetime.strptime(fecha_fin_str, '%Y-%m-%d')
 
         # Filtrar contenidos según el rango de fechas
         contenidos_publicados = Contenidos.objects.filter(estado_id=1, fecha_publicacion__range=(fecha_inicio, fecha_fin)).count()

@@ -12,6 +12,7 @@ from TableroKanban.views import actualizar_estado
 from django.conf import settings
 from django.core.mail import send_mail,EmailMessage
 from django.template.loader import render_to_string
+from django.utils import timezone
 
 
 @permission_required('Contenidos.view_contenidos', raise_exception=True)
@@ -367,6 +368,7 @@ def aceptar_rechazar_contenido(request, id):
         # Cambiar el estado del contenido
         if(accion == '0'): #accion 0 es rechazado
             contenido.estado = get_object_or_404(Estado, id=3)
+            contenido.fecha_de_rechazados = timezone.now()  # Asignar fecha de rechazo
             context = {
                     'titulo': contenido.titulo,
                 }      
@@ -431,6 +433,7 @@ def publicar_contenido(request, id):
             contenido.estado = get_object_or_404(Estado, id=4)
         else: #el contenido se publica y se va al estado de activo
             contenido.estado = get_object_or_404(Estado, id=1)
+            contenido.fecha_publicacion = timezone.now()  # O la fecha correspondiente
             context = {
                     'titulo': contenido.titulo,
                 }      
