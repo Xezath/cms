@@ -1,9 +1,8 @@
-
 {% extends "base.html" %}
 
 {% block titulo %} Reportes {% endblock %}
-{% block contenido %}
 
+{% block contenido %}
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -12,11 +11,25 @@
 </head>
 <body>
     <h1>Reporte: Top 10 Contenidos Más Leídos</h1>
-    <div id="grafico"></div>
-    <script>
-        var graphData = {{ graph_json|safe }};
-        Plotly.newPlot('grafico', graphData.data, graphData.layout);
-    </script>
+
+    <!-- Formulario para seleccionar el rango de fechas -->
+    <form method="post">
+        {% csrf_token %}
+        <label for="fecha_inicio">Fecha de inicio:</label>
+        <input type="date" name="fecha_inicio" required>
+        <label for="fecha_fin">Fecha de fin:</label>
+        <input type="date" name="fecha_fin" required>
+        <button type="submit">Generar reporte</button>
+    </form>
+
+    {% if graph_json %}
+        <h2>Reporte de contenidos más leídos entre {{ fecha_inicio }} y {{ fecha_fin }}</h2>
+        <div id="grafico"></div>
+        <script>
+            var graphData = {{ graph_json|safe }};
+            Plotly.newPlot('grafico', graphData.data, graphData.layout);
+        </script>
+    {% endif %}
 </body>
 </html>
 
