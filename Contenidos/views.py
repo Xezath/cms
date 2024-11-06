@@ -12,7 +12,7 @@ from TableroKanban.views import actualizar_estado
 from django.conf import settings
 from django.core.mail import send_mail,EmailMessage
 from django.template.loader import render_to_string
-
+from datetime import datetime
 
 @permission_required('Contenidos.view_contenidos', raise_exception=True)
 def contenidos(request):
@@ -367,6 +367,7 @@ def aceptar_rechazar_contenido(request, id):
         # Cambiar el estado del contenido
         if(accion == '0'): #accion 0 es rechazado
             contenido.estado = get_object_or_404(Estado, id=3)
+            contenido.fecha_de_rechazados = datetime.now()
             context = {
                     'titulo': contenido.titulo,
                 }      
@@ -429,8 +430,10 @@ def publicar_contenido(request, id):
         # Cambiar el estado del contenido
         if(accion == '0'): #rechazar es decir envia a en revision
             contenido.estado = get_object_or_404(Estado, id=4)
+            contenido.fecha_de_rechazados = datetime.now()
         else: #el contenido se publica y se va al estado de activo
             contenido.estado = get_object_or_404(Estado, id=1)
+            contenido.fecha_publicacion= datetime.now()
             context = {
                     'titulo': contenido.titulo,
                 }      
@@ -448,3 +451,4 @@ def publicar_contenido(request, id):
         actualizar_estado(request, tarjeta.id, nuevo_estado.descripcion)
     # Redirigir o devolver una respuesta
     return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir
+
