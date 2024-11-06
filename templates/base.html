@@ -302,7 +302,7 @@
                         {% endif %}
                     </li>  
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/reportes/' %}active{% endif %}" href="{% url 'reporte_contenidos_mas_leidos' %}">Reportes</a>
+                        <a class="nav-link {% if request.path == '/reportes/' %}active{% endif %}" href="{% url 'reporte_contenidos_publicados_rechazados' %}">Reportes</a>
                     </li>                                               
                     {% endif %}
                     {% if user.is_authenticated %}
