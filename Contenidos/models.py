@@ -44,9 +44,9 @@ class Contenidos(models.Model):
     (DateTimeField): La fecha de creación del contenido.
     """
 
-    fecha_publicacion = models.DateTimeField(null=True, blank=True)  # Fecha de publicación
+    fecha_publicacion = models.DateTimeField(null=True, blank=True, editable=False)  # Fecha de publicación
 
-    fecha_de_rechazados = models.DateTimeField(null=True, blank=True)  # Fecha de rechazo
+    fecha_de_rechazados = models.DateTimeField(null=True, blank=True, editable=False)  # Fecha de rechazo
 
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True)  # Categoría asociada
     """
