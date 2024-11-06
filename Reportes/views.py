@@ -8,6 +8,7 @@ from django.db.models import Count
 from django.http import HttpResponse
 from plotly.offline import plot
 import plotly.graph_objs as go
+from datetime import datetime
 
 def reporte_contenidos_mas_leidos(request):
     # Obtener los 10 artículos más leídos
@@ -38,8 +39,8 @@ def reporte_contenidos_publicados_rechazados(request):
         fecha_fin_str = request.POST.get('fecha_fin')
 
         # Convertir fechas a objetos datetime
-        fecha_inicio = timezone.datetime.strptime(fecha_inicio_str, '%Y-%m-%d')
-        fecha_fin = timezone.datetime.strptime(fecha_fin_str, '%Y-%m-%d')
+        fecha_inicio = datetime.strptime(fecha_inicio_str, '%Y-%m-%d')
+        fecha_fin = datetime.strptime(fecha_fin_str, '%Y-%m-%d')
 
         # Filtrar contenidos según el rango de fechas
         contenidos_publicados = Contenidos.objects.filter(estado_id=1, fecha_publicacion__range=(fecha_inicio, fecha_fin)).count()
