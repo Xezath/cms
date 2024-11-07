@@ -10,6 +10,7 @@ from plotly.offline import plot
 import plotly.graph_objs as go
 from datetime import datetime
 from django.db.models import Avg, F, ExpressionWrapper, fields, DurationField
+from datetime import timedelta
 
 def reporte_contenidos_mas_leidos(request):
     graph_json = None  # Inicializamos el gráfico vacío por defecto
@@ -20,7 +21,7 @@ def reporte_contenidos_mas_leidos(request):
 
         # Convertir las fechas de cadena a objetos datetime
         fecha_inicio = datetime.strptime(fecha_inicio_str, '%Y-%m-%d')
-        fecha_fin = datetime.strptime(fecha_fin_str, '%Y-%m-%d')
+        fecha_fin = datetime.strptime(fecha_fin_str, '%Y-%m-%d') + timedelta(days=1) - timedelta(seconds=1)
 
         # Filtrar los contenidos según el rango de fechas
         top_contenidos = Contenidos.objects.filter(
@@ -59,7 +60,7 @@ def reporte_contenidos_publicados_rechazados(request):
 
         # Convertir fechas a objetos datetime
         fecha_inicio = datetime.strptime(fecha_inicio_str, '%Y-%m-%d')
-        fecha_fin = datetime.strptime(fecha_fin_str, '%Y-%m-%d')
+        fecha_fin = datetime.strptime(fecha_fin_str, '%Y-%m-%d')+ timedelta(days=1) - timedelta(seconds=1)
 
         # Filtrar contenidos según el rango de fechas
         contenidos_publicados = Contenidos.objects.filter(estado_id=1, fecha_publicacion__range=(fecha_inicio, fecha_fin)).count()
@@ -80,13 +81,13 @@ def reporte_contenidos_publicados_rechazados(request):
             x=fechas,
             y=publicados,
             name='Publicados',
-            marker_color='crimson'  # Color azul para 'Publicados'
+            marker_color='crimson'  # Color crimson para 'Publicados'
         )
         trace_rechazados = go.Bar(
             x=fechas,
             y=rechazados,
             name='Rechazados',
-            marker_color='lightslategrey'  # Color rojo para 'Rechazados'
+            marker_color='lightslategrey'  # Color lightslategrey para 'Rechazados'
         )
 
         # Crear el layout con barmode='stack'
@@ -120,7 +121,7 @@ def reporte_promedio_tiempo_revision(request):
 
         # Convertir fechas a objetos datetime
         fecha_inicio = datetime.strptime(fecha_inicio_str, '%Y-%m-%d')
-        fecha_fin = datetime.strptime(fecha_fin_str, '%Y-%m-%d')
+        fecha_fin = datetime.strptime(fecha_fin_str, '%Y-%m-%d')+ timedelta(days=1) - timedelta(seconds=1)
 
         # Filtrar contenidos según el rango de fechas
         contenidos = Contenidos.objects.filter(
