@@ -186,7 +186,7 @@ def reporte_contenidos_inactivos(request):
 
         # Convertir las fechas de cadena a objetos datetime
         fecha_inicio = datetime.strptime(fecha_inicio_str, '%Y-%m-%d')
-        fecha_fin = datetime.strptime(fecha_fin_str, '%Y-%m-%d')
+        fecha_fin = datetime.strptime(fecha_fin_str, '%Y-%m-%d')+ timedelta(days=1) - timedelta(seconds=1)
 
         # Filtrar los contenidos en el rango de fechas especificado
         contenidos_inactivos = Contenidos.objects.filter(
