@@ -212,6 +212,14 @@
                 color: #a3a3a3;
             }
 
+            /* General: Alineación de los botones dentro del div .reportes */
+            .reportes {
+            display: flex;               /* Usamos flexbox para alinear los botones */
+            justify-content: center;     /* Centrar los botones horizontalmente */
+            gap: 20px;                   /* Espacio entre los botones */
+            margin-top: 20px;            /* Espacio superior para los botones */
+            flex-wrap: wrap;             /* Asegura que los botones se ajusten en pantallas pequeñas */
+        }
         </style>
     </head>
     <body>
@@ -302,7 +310,7 @@
                         {% endif %}
                     </li>  
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/reportes/' %}active{% endif %}" href="{% url 'reporte_promedio_tiempo_revision' %}">Reportes</a>
+                        <a class="nav-link {% if request.path == '/reportes/' %}active{% endif %}" href="{% url 'reporte_principal' %}">Reportes</a>
                     </li>                                               
                     {% endif %}
                     {% if user.is_authenticated %}
