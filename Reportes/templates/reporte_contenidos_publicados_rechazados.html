@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 
 {% block titulo %} Reportes {% endblock %}
@@ -27,12 +26,11 @@
         <button type="submit">Generar reporte</button>
     </form>
 
-    <!-- Gráfico generado -->
-    <div>
+    <!-- Contenedor para el gráfico -->
+    <div style="width: 100%; height: 500px; margin-top: 20px;">
         {{ graph_json|safe }}
     </div>
 </body>
 </html>
-
 
 {% endblock %}
