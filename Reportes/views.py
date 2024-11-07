@@ -69,14 +69,35 @@ def reporte_contenidos_publicados_rechazados(request):
         print(f"Contenidos Publicados: {contenidos_publicados}")
         print(f"Contenidos Rechazados: {contenidos_rechazados}")
         
-        # Crear los datos del gráfico de líneas
-        fechas = ['Publicados', 'Rechazados']  # Etiquetas para el eje X
-        cantidades = [contenidos_publicados, contenidos_rechazados]  # Cantidades para el eje Y
+        # Crear los datos del gráfico de barras apiladas
+        fechas = ['Contenidos']  # Etiqueta para el eje X
+        publicados = [contenidos_publicados]  # Cantidad de contenidos publicados
+        rechazados = [contenidos_rechazados]  # Cantidad de contenidos rechazados
 
-        # Crear el gráfico de líneas
-        trace = go.Scatter(x=fechas, y=cantidades, mode='lines+markers', name='Contenidos')
-        layout = go.Layout(title='Contenidos Publicados y Rechazados', xaxis=dict(title='Estado'), yaxis=dict(title='Cantidad'))
-        fig = go.Figure(data=[trace], layout=layout)
+        # Crear el gráfico de barras apiladas con colores azul y rojo
+        trace_publicados = go.Bar(
+            x=fechas,
+            y=publicados,
+            name='Publicados',
+            marker_color='crimson'  # Color azul para 'Publicados'
+        )
+        trace_rechazados = go.Bar(
+            x=fechas,
+            y=rechazados,
+            name='Rechazados',
+            marker_color='lightslategrey'  # Color rojo para 'Rechazados'
+        )
+
+        # Crear el layout con barmode='stack'
+        layout = go.Layout(
+            title='Contenidos Publicados y Rechazados',
+            xaxis=dict(title='Estado'),
+            yaxis=dict(title='Cantidad'),
+            barmode='stack'  # Apilar las barras
+        )
+
+        # Crear la figura con los dos trazos (barras apiladas)
+        fig = go.Figure(data=[trace_publicados, trace_rechazados], layout=layout)
 
         # Convertir el gráfico a JSON para pasarlo a la plantilla
         graph_json = plot(fig, output_type='div')
