@@ -126,6 +126,13 @@ def editar_contenido(request, id):
             # Aquí no es necesario modificar el autor
             contenido = formulario.save(commit=False)  # No guardar aún
             contenido.autor = contenido.autor  # Mantener el autor existente
+            
+            if contenido.estado.id == 2:
+                contenido.fecha_de_inactivacion = datetime.now()
+
+            if contenido.estado.id == 1:
+                contenido.fecha_publicacion = datetime.now()
+
             contenido.save()  # Guarda el contenido modificado
             nuevo_estado = formulario.cleaned_data['estado']            # Actualizar el estado y la columna de la tarjeta
             if tarjeta:

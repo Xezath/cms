@@ -169,3 +169,99 @@ def reporte_promedio_tiempo_revision(request):
         'contenidos_tiempos': contenidos_tiempos,
         'promedio_tiempo': promedio_tiempo
     })
+
+
+
+from datetime import datetime
+import pandas as pd
+import plotly.graph_objects as go
+import plotly.io as pio
+
+def reporte_contenidos_inactivos(request):
+    graph_json = None  # Inicializamos el gráfico vacío por defecto
+
+    if request.method == 'POST':
+        fecha_inicio_str = request.POST.get('fecha_inicio')
+        fecha_fin_str = request.POST.get('fecha_fin')
+
+        # Convertir las fechas de cadena a objetos datetime
+        fecha_inicio = datetime.strptime(fecha_inicio_str, '%Y-%m-%d')
+        fecha_fin = datetime.strptime(fecha_fin_str, '%Y-%m-%d')
+
+        # Filtrar los contenidos en el rango de fechas especificado
+        contenidos_inactivos = Contenidos.objects.filter(
+            estado_id=2,
+            fecha_de_inactivacion__range=(fecha_inicio, fecha_fin)
+        ).values('fecha_de_inactivacion')
+
+        contenidos_activos = Contenidos.objects.filter(
+            estado_id=1,
+            fecha_publicacion__range=(fecha_inicio, fecha_fin)
+        ).values('fecha_publicacion')
+
+        # Crear listas de fechas y estados
+        fechas_inactivos = [contenido['fecha_de_inactivacion'] for contenido in contenidos_inactivos]
+        fechas_activos = [contenido['fecha_publicacion'] for contenido in contenidos_activos]
+
+        # Crear un DataFrame para el gráfico
+        data = {
+            'Fecha': fechas_inactivos + fechas_activos,
+            'Estado': ['Inactivo'] * len(fechas_inactivos) + ['Activo'] * len(fechas_activos)
+        }
+
+        # Crear la figura usando go.Figure y añadir la información como gráfico de barras
+        import plotly.graph_objects as go
+        import plotly.figure_factory as ff
+
+        # Add table data
+        table_data = [['']]
+
+        # Initialize a figure with ff.create_table(table_data)
+        fig = ff.create_table(table_data, height_constant=60)
+
+        # Add graph data
+        teams = ['Estado']
+        GFPG = [contenidos_activos.count()]
+        GAPG = [contenidos_inactivos.count()]
+
+        # Make traces for graph
+        trace1 = go.Bar(x=teams, y=GFPG, xaxis='x2', yaxis='y2',
+                        marker=dict(color='#0099ff'),
+                        name='Activos')
+        trace2 = go.Bar(x=teams, y=GAPG, xaxis='x2', yaxis='y2',
+                        marker=dict(color='#404040'),
+                        name='Inactivos')
+
+        # Add trace data to figure
+        fig.add_traces([trace1, trace2])
+
+        # initialize xaxis2 and yaxis2
+        fig['layout']['xaxis2'] = {}
+        fig['layout']['yaxis2'] = {}
+
+        # Edit layout for subplots
+        fig.layout.yaxis.update({'domain': [0, .45]})
+        fig.layout.yaxis2.update({'domain': [.6, 1]})
+
+        # The graph's yaxis2 MUST BE anchored to the graph's xaxis2 and vice versa
+        fig.layout.yaxis2.update({'anchor': 'x2'})
+        fig.layout.xaxis2.update({'anchor': 'y2'})
+        fig.layout.yaxis2.update({'title': 'Cantidad'})
+
+        # Update the margins to add a title and see graph x-labels.
+        fig.layout.margin.update({'t':75, 'l':50})
+        fig.layout.update({'title': 'Contenidos activos e inactivos'})
+
+        # Update the height because adding a graph vertically will interact with
+        # the plot height calculated for the table
+        fig.layout.update({'height':800})
+
+        # Plot!
+        graph_json = plot(fig, output_type='div')
+    
+    return render(request, 'reporte_contenidos_inactivos.html', {'graph_json': graph_json})
+
+from django.shortcuts import render
+
+def reporte_principal(request):
+    return render(request, 'reporte_principal.html')

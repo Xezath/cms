@@ -48,6 +48,8 @@ class Contenidos(models.Model):
 
     fecha_de_rechazados = models.DateTimeField(null=True, blank=True, editable=False)  # Fecha de rechazo
 
+    fecha_de_inactivacion = models.DateTimeField(null=True, blank=True, editable=False) # Fecha de inactivación
+
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True)  # Categoría asociada
     """
     (ForeignKey): La categoría asociada al contenido.

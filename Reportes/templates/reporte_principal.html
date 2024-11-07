@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block titulo %} Reportes Generales {% endblock %}
+
+{% block contenido %}
+    <h1>Selecciona un Reporte</h1>
+    <div class="reportes">
+        <a href="{% url 'reporte_contenidos_mas_leidos' %}" class="btn btn-primary">Reporte de Contenidos Más Leídos</a>
+        <a href="{% url 'reporte_contenidos_publicados_rechazados' %}" class="btn btn-primary">Reporte de Contenidos Publicados y Rechazados</a>
+        <a href="{% url 'reporte_contenidos_inactivos' %}" class="btn btn-primary">Reporte de Contenidos Inactivos</a>
+        <a href="{% url 'reporte_promedio_tiempo_revision' %}" class="btn btn-primary">Reporte de Promedio de Tiempo de Revisión</a>
+        <!-- Agregar otros botones según sea necesario -->
+    </div>
+{% endblock %}
