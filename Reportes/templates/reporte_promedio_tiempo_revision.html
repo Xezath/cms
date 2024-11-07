@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block titulo %} Reporte de Promedio de Tiempo de Revisión {% endblock %}
+{% block contenido %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte Promedio Tiempo de Revisión</title>
+</head>
+<body>
+    <h1>Reporte Promedio de Tiempo de Revisión de Artículos</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <label for="fecha_inicio">Fecha de Inicio:</label>
+        <input type="date" name="fecha_inicio" required>
+        <label for="fecha_fin">Fecha de Fin:</label>
+        <input type="date" name="fecha_fin" required>
+        <button type="submit">Generar Reporte</button>
+    </form>
+
+    {% if promedio_tiempo %}
+        <h2>Promedio de Tiempo de Revisión: {{ promedio_tiempo }}</h2>
+    {% endif %}
+
+    {% if contenidos_tiempos %}
+        <h3>Detalles de los Contenidos:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Tiempo de Revisión</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contenido, tiempo in contenidos_tiempos %}
+                    <tr>
+                        <td>{{ contenido.titulo }}</td>
+                        <td>{{ contenido.autor }}</td>
+                        <td>{{ tiempo }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay contenidos disponibles en el rango de fechas seleccionado.</p>
+    {% endif %}
+
+    <div>
+        <h3>Gráfico de Contenidos por Fecha de Publicación</h3>
+        <div>{{ graph_json|safe }}</div>
+    </div>
+
+</body>
+</html>
+
+{% endblock %}
