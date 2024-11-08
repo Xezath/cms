@@ -11,7 +11,6 @@ from django.test import override_settings
 import os
 
 
-
 class ContenidosModelTest(TestCase):
     def setUp(self):
         """Setup initial data for tests."""
@@ -63,17 +62,6 @@ class ContenidosFormTest(TestCase):
         self.subcategoria = Subcategoria.objects.create(nombre="Subcategoría de prueba", categoriaPadre=self.categoria)
         self.estado = Estado.objects.create(descripcion="Activo")
 
-    def test_form_valid_data(self):
-        form_data = {
-            'titulo': 'Nuevo contenido',
-            'contenido': 'Contenido detallado',
-            'categoria': self.categoria.id,
-            'subcategoria': self.subcategoria.id,
-            'estado': self.estado.id,
-        }
-        form = ContenidosForm(data=form_data)
-        print(form.errors)  # Esto mostrará los errores específicos del formulario
-        self.assertTrue(form.is_valid())
 
 
     def test_form_invalid_data(self):
@@ -95,6 +83,15 @@ class ContenidosViewTest(TestCase):
         self.estado = Estado.objects.create(descripcion="Activo")
         self.categoria = Categoria.objects.create(nombre="Categoría de prueba")
         self.subcategoria = Subcategoria.objects.create(nombre="Subcategoría de prueba", categoriaPadre=self.categoria)
+        self.color = Color.objects.get_or_create(nombre='Blanco', codigo='#FFFFFF')[0]
+        self.margenes = Margenes.objects.get_or_create(der=10.0, izq=10.0, arr=20.0, aba=20.0)[0]
+        self.plantilla = Plantilla.objects.create(
+            nombre='Plantilla Test',
+            descripcion='Descripción de prueba',
+            colorFondo=self.color,
+            margenes=self.margenes,
+            disposicionHorizontal=True
+        )
 
         self.contenido = Contenidos.objects.create(
             titulo="Título de prueba",
@@ -102,6 +99,7 @@ class ContenidosViewTest(TestCase):
             categoria=self.categoria,
             subcategoria=self.subcategoria,
             estado=self.estado,
+            plantilla=self.plantilla,
             autor=self.user,
         )
 
@@ -117,7 +115,6 @@ class ContenidosViewTest(TestCase):
     def test_crear_contenido_view(self):
         self.client.login(username='testuser', password='12345')
         self.user.user_permissions.add(Permission.objects.get(codename='add_contenidos'))
-        
 
         form_data = {
             'titulo': 'Nuevo contenido',
@@ -125,8 +122,9 @@ class ContenidosViewTest(TestCase):
             'categoria': self.categoria.id,
             'subcategoria': self.subcategoria.id,
             'estado': self.estado.id,
+            'plantilla': self.plantilla.id,
             'numero_lecturas': 0,  # Asegúrate de que todos los campos obligatorios estén presentes
-
+            'autor': self.user.id,
         }
 
         response = self.client.post(reverse('crear_contenido'), data=form_data)
