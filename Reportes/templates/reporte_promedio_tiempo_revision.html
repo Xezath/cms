@@ -9,6 +9,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reporte Promedio Tiempo de Revisión</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="date"] {
+            margin: 5px;
+            padding: 5px;
+        }
+        button {
+            padding: 7px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .graph-container {
+            margin-top: 30px;
+            width: 100%;
+        }
+        .graph-container div {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     <h1>Reporte Promedio de Tiempo de Revisión de Contenidos</h1>
@@ -33,7 +82,7 @@
                 <tr>
                     <th>Título</th>
                     <th>Autor</th>
-                    <th>Tiempo de Revisión</th>
+                    <th>Tiempo de Revisión (hh:mm:ss)</th>
                 </tr>
             </thead>
             <tbody>
@@ -50,12 +99,15 @@
         <p>No hay contenidos disponibles en el rango de fechas seleccionado.</p>
     {% endif %}
 
-    <div>
+    <div class="graph-container">
         <h3>Promedio Diario de Tiempo de Revisión por Fecha de Publicación</h3>
+        <!-- El gráfico se inserta aquí -->
         <div>{{ graph_json|safe }}</div>
     </div>
 
 </body>
 </html>
+
+
 
 {% endblock %}
