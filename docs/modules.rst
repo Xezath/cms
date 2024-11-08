@@ -2,12 +2,13 @@ cms
 ===
 
 .. toctree::
-   :maxdepth: 7
+   :maxdepth: 8
 
    Categoria
    Plantilla
    Contenidos
    TableroKanban
    Usuario
+   Reportes
    cms
    manage

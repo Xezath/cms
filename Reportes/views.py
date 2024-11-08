@@ -13,6 +13,16 @@ from django.db.models import Avg, F, ExpressionWrapper, fields, DurationField
 from datetime import timedelta
 
 def reporte_contenidos_mas_leidos(request):
+    """
+    Genera un reporte de los contenidos más leídos dentro de la página en un rango de fechas especificado.
+    Presenta un gráfico de barras con los contenidos más leídos entre las fechas seleccionadas.
+    
+    Args:
+        request: Objeto HttpRequest que contiene datos sobre la solicitud de usuario.
+    
+    Returns:
+        HttpResponse: Renderiza la plantilla 'reporte_contenidos_mas_leidos.html' con el gráfico en formato JSON.
+    """
     graph_json = None  # Inicializamos el gráfico vacío por defecto
     
     if request.method == 'POST':
@@ -52,6 +62,16 @@ def reporte_contenidos_mas_leidos(request):
 
 
 def reporte_contenidos_publicados_rechazados(request):
+    """
+    Genera un reporte de contenidos publicados y rechazados en un rango de fechas.
+    Muestra un gráfico de barras apiladas para visualizar la cantidad de contenidos en ambos estados.
+
+    Args:
+        request: Objeto HttpRequest que contiene datos sobre la solicitud de usuario.
+
+    Returns:
+        HttpResponse: Renderiza la plantilla 'reporte_contenidos_publicados_rechazados.html' con el gráfico en formato JSON.
+    """
     graph_json = None  # Inicializamos el gráfico vacío por defecto
     
     if request.method == 'POST':
@@ -108,6 +128,16 @@ def reporte_contenidos_publicados_rechazados(request):
 
 
 def reporte_promedio_tiempo_revision(request):
+    """
+    Calcula el promedio de tiempo de revisión entre la creación y la publicación de contenidos en un rango de fechas.
+    Muestra un gráfico de líneas con la cantidad de contenidos revisados y un resumen del tiempo promedio.
+
+    Args:
+        request: Objeto HttpRequest que contiene datos sobre la solicitud de usuario.
+
+    Returns:
+        HttpResponse: Renderiza la plantilla 'reporte_promedio_tiempo_revision.html' con el gráfico y los tiempos de revisión.
+    """
     graph_json = None  # Inicializamos el gráfico vacío por defecto
     tiempos_revision = []  # Lista para almacenar los tiempos de revisión formateados
     contenidos_tiempos = []  # Lista para almacenar los contenidos con tiempos de revisión formateados
@@ -178,6 +208,16 @@ import plotly.graph_objects as go
 import plotly.io as pio
 
 def reporte_contenidos_inactivos(request):
+    """
+    Genera un reporte de contenidos inactivos en un rango de fechas, mostrando una comparación con los contenidos activos.
+    Muestra un gráfico de barras con la cantidad de contenidos activos e inactivos.
+
+    Args:
+        request: Objeto HttpRequest que contiene datos sobre la solicitud de usuario.
+
+    Returns:
+        HttpResponse: Renderiza la plantilla 'reporte_contenidos_inactivos.html' con el gráfico de contenidos activos e inactivos.
+    """
     graph_json = None  # Inicializamos el gráfico vacío por defecto
 
     if request.method == 'POST':
