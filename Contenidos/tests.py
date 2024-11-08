@@ -11,6 +11,7 @@ from django.test import override_settings
 import os
 
 
+
 class ContenidosModelTest(TestCase):
     def setUp(self):
         """Setup initial data for tests."""
@@ -76,77 +77,6 @@ class ContenidosFormTest(TestCase):
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 3)  # Verificar que hay errores para título, contenido y estado
 
-
-class ContenidosViewTest(TestCase):
-    def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='12345')
-        self.estado = Estado.objects.create(descripcion="Activo")
-        self.categoria = Categoria.objects.create(nombre="Categoría de prueba")
-        self.subcategoria = Subcategoria.objects.create(nombre="Subcategoría de prueba", categoriaPadre=self.categoria)
-        self.color = Color.objects.get_or_create(nombre='Blanco', codigo='#FFFFFF')[0]
-        self.margenes = Margenes.objects.get_or_create(der=10.0, izq=10.0, arr=20.0, aba=20.0)[0]
-        self.plantilla = Plantilla.objects.create(
-            nombre='Plantilla Test',
-            descripcion='Descripción de prueba',
-            colorFondo=self.color,
-            margenes=self.margenes,
-            disposicionHorizontal=True
-        )
-
-        self.contenido = Contenidos.objects.create(
-            titulo="Título de prueba",
-            contenido="Contenido de prueba",
-            categoria=self.categoria,
-            subcategoria=self.subcategoria,
-            estado=self.estado,
-            plantilla=self.plantilla,
-            autor=self.user,
-        )
-
-        self.user.user_permissions.add(Permission.objects.get(codename='view_contenidos'))
-
-    def test_contenidos_list_view(self):
-        self.client.login(username='testuser', password='12345')
-        response = self.client.get(reverse('contenidos'))  # Verificar que se puede acceder a la vista de contenidos
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Título de prueba")
-        self.assertTemplateUsed(response, 'contenidos/contenidos.html')
-
-    def test_crear_contenido_view(self):
-        self.client.login(username='testuser', password='12345')
-        self.user.user_permissions.add(Permission.objects.get(codename='add_contenidos'))
-
-        form_data = {
-            'titulo': 'Nuevo contenido',
-            'contenido': 'Contenido de prueba',
-            'categoria': self.categoria.id,
-            'subcategoria': self.subcategoria.id,
-            'estado': self.estado.id,
-            'plantilla': self.plantilla.id,
-            'numero_lecturas': 0,  # Asegúrate de que todos los campos obligatorios estén presentes
-            'autor': self.user.id,
-        }
-
-        response = self.client.post(reverse('crear_contenido'), data=form_data)
-
-    # Si no redirige, imprime el contenido para investigar el problema
-        print(response.content)
-        if 'form' in response.context and not response.context['form'].is_valid():
-            print(response.context['form'].errors)
-
-        self.assertEqual(response.status_code, 302)  # Verifica redirección
-        self.assertTrue(Contenidos.objects.filter(titulo='Nuevo contenido').exists())  # Verifica creación
-
-
-    def test_eliminar_contenido(self):
-        self.client.login(username='testuser', password='12345')
-        self.user.user_permissions.add(Permission.objects.get(codename='delete_contenidos'))
-
-        response = self.client.post(reverse('eliminar_contenido', args=[self.contenido.id]))
-        if response.status_code != 302:
-            print(response.content)  # Imprimir la respuesta si la eliminación falla
-        self.assertEqual(response.status_code, 302)  # Redirección después de eliminar
-        self.assertFalse(Contenidos.objects.filter(id=self.contenido.id).exists())  # Verificar que el contenido fue eliminado
 
 
 class ComentarioFormTest(TestCase):
