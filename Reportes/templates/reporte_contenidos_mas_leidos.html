@@ -23,7 +23,6 @@
     </form>
 
     {% if graph_json %}
-        <h2>Reporte de contenidos más leídos entre {{ fecha_inicio }} y {{ fecha_fin }}</h2>
         <div id="grafico"></div>
         <script>
             var graphData = {{ graph_json|safe }};
