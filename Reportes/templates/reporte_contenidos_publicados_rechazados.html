@@ -10,6 +10,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reporte de Contenidos Publicados y Rechazados</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 20px;
+            padding: 0;
+        }
+        h1 {
+            color: #444;
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        input[type="date"] {
+            padding: 8px;
+            margin: 5px 10px 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #4CAF50;
+        }
+        /* Estilos para el contenedor del gráfico */
+        .graph-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .no-data {
+            color: #888;
+            font-style: italic;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>Reporte de Contenidos Publicados y Rechazados</h1>
@@ -27,8 +79,12 @@
     </form>
 
     <!-- Contenedor para el gráfico -->
-    <div style="width: 100%; height: 500px; margin-top: 20px;">
-        {{ graph_json|safe }}
+    <div class="graph-container">
+        {% if graph_json %}
+            <div>{{ graph_json|safe }}</div>
+        {% else %}
+            <p class="no-data">No hay datos disponibles para el rango de fechas seleccionado.</p>
+        {% endif %}
     </div>
 </body>
 </html>

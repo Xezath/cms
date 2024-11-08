@@ -12,13 +12,20 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            color: #333;
             margin: 20px;
+            padding: 0;
         }
         h1 {
-            color: #333;
+            color: #444;
+            margin-bottom: 20px;
         }
         form {
             margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
         label {
             font-weight: bold;
@@ -50,12 +57,15 @@
         th {
             background-color: #f2f2f2;
         }
+        /* Estilos para el contenedor del gráfico */
         .graph-container {
-            margin-top: 30px;
-            width: 100%;
+            margin: 30px auto;
+            text-align: center;
         }
         .graph-container div {
             width: 100%;
+            height: 500px;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -82,7 +92,7 @@
                 <tr>
                     <th>Título</th>
                     <th>Autor</th>
-                    <th>Tiempo de Revisión (hh:mm:ss)</th>
+                    <th>Tiempo de Revisión</th>
                 </tr>
             </thead>
             <tbody>
@@ -96,18 +106,15 @@
             </tbody>
         </table>
     {% else %}
-        <p>No hay contenidos disponibles en el rango de fechas seleccionado.</p>
+        <p class="no-data">No hay contenidos disponibles en el rango de fechas seleccionado.</p>
     {% endif %}
 
     <div class="graph-container">
         <h3>Promedio Diario de Tiempo de Revisión por Fecha de Publicación</h3>
-        <!-- El gráfico se inserta aquí -->
         <div>{{ graph_json|safe }}</div>
     </div>
 
 </body>
 </html>
-
-
 
 {% endblock %}
