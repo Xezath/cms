@@ -4,8 +4,6 @@ from django.contrib.auth.models import User, Permission
 from .models import Contenidos, Estado, Categoria, Subcategoria, Comentario
 from .forms import ContenidosForm, EditarContenidosForm, ComentarioForm
 from django.utils import timezone
-from Contenidos.models import Contenidos, Estado
-from Categoria.models import Categoria
 from Plantilla.models import Plantilla, Color, Margenes
 from django.core import mail
 from django.core.mail import send_mail
@@ -19,18 +17,17 @@ class ContenidosModelTest(TestCase):
         """Setup initial data for tests."""
         # Elimina los datos antiguos antes de crear nuevos
         Estado.objects.all().delete()
-        # Create instances of Categoria and Margenes
+        # Crear instancias necesarias
         self.categoria = Categoria.objects.create(nombre='Categoria Test')
+        self.estado = Estado.objects.create(descripcion="Activo")
+        self.color = Color.objects.create(nombre='Blanco', codigo='#FFFFFF')
         self.margenes = Margenes.objects.create(
             der=10.0,
             izq=10.0,
             arr=20.0,
             aba=20.0
         )
-        self.color = Color.objects.create(
-            nombre='Blanco',
-            codigo='#FFFFFF'
-        )
+
         self.plantilla = Plantilla.objects.create(
             nombre='Plantilla Test',
             descripcion='Descripción de prueba',
@@ -39,7 +36,7 @@ class ContenidosModelTest(TestCase):
             disposicionHorizontal=True
         )
 
-        self.estado, created = Estado.objects.get_or_create(descripcion='Activo')
+        self.user = User.objects.create_user(username='testuser', password='testpassword') 
         
         # Create a Contenidos instance
         self.contenido = Contenidos.objects.create(
@@ -47,13 +44,14 @@ class ContenidosModelTest(TestCase):
             contenido="Contenido de prueba",
             categoria=self.categoria,
             plantilla=self.plantilla,
-            estado=self.estado
+            estado=self.estado,
+            autor=self.user 
         )
 
     def test_contenidos_creation(self):
         self.assertEqual(self.contenido.titulo, "Título de prueba")
         self.assertEqual(self.contenido.autor.username, "testuser")
-        self.assertEqual(self.contenido.estado.descripcion, "Publicado")
+        self.assertEqual(self.contenido.estado.descripcion, "Activo")
 
     def test_contenidos_str_method(self):
         self.assertEqual(str(self.contenido), "Título de prueba")
@@ -63,7 +61,7 @@ class ContenidosFormTest(TestCase):
     def setUp(self):
         self.categoria = Categoria.objects.create(nombre="Categoría de prueba")
         self.subcategoria = Subcategoria.objects.create(nombre="Subcategoría de prueba", categoriaPadre=self.categoria)
-        self.estado = Estado.objects.create(descripcion="Publicado")
+        self.estado = Estado.objects.create(descripcion="Activo")
 
     def test_form_valid_data(self):
         form_data = {
@@ -74,7 +72,9 @@ class ContenidosFormTest(TestCase):
             'estado': self.estado.id,
         }
         form = ContenidosForm(data=form_data)
+        print(form.errors)  # Esto mostrará los errores específicos del formulario
         self.assertTrue(form.is_valid())
+
 
     def test_form_invalid_data(self):
         form_data = {
@@ -86,13 +86,13 @@ class ContenidosFormTest(TestCase):
         }
         form = ContenidosForm(data=form_data)
         self.assertFalse(form.is_valid())
-        self.assertEqual(len(form.errors), 2)  # Debería haber 2 errores (en título y contenido)
+        self.assertEqual(len(form.errors), 3)  # Verificar que hay errores para título, contenido y estado
 
 
 class ContenidosViewTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='12345')
-        self.estado = Estado.objects.create(descripcion="Publicado")
+        self.estado = Estado.objects.create(descripcion="Activo")
         self.categoria = Categoria.objects.create(nombre="Categoría de prueba")
         self.subcategoria = Subcategoria.objects.create(nombre="Subcategoría de prueba", categoriaPadre=self.categoria)
 
@@ -117,31 +117,55 @@ class ContenidosViewTest(TestCase):
     def test_crear_contenido_view(self):
         self.client.login(username='testuser', password='12345')
         self.user.user_permissions.add(Permission.objects.get(codename='add_contenidos'))
+        
 
         form_data = {
             'titulo': 'Nuevo contenido',
             'contenido': 'Contenido de prueba',
             'categoria': self.categoria.id,
             'subcategoria': self.subcategoria.id,
-            'estado': self.estado.id
+            'estado': self.estado.id,
+            'numero_lecturas': 0,  # Asegúrate de que todos los campos obligatorios estén presentes
+
         }
+
         response = self.client.post(reverse('crear_contenido'), data=form_data)
-        self.assertEqual(response.status_code, 302)  # Redirección después de crear el contenido
-        self.assertTrue(Contenidos.objects.filter(titulo='Nuevo contenido').exists())  # Verificar que el contenido fue creado
+
+    # Si no redirige, imprime el contenido para investigar el problema
+        print(response.content)
+        if 'form' in response.context and not response.context['form'].is_valid():
+            print(response.context['form'].errors)
+
+        self.assertEqual(response.status_code, 302)  # Verifica redirección
+        self.assertTrue(Contenidos.objects.filter(titulo='Nuevo contenido').exists())  # Verifica creación
+
 
     def test_eliminar_contenido(self):
         self.client.login(username='testuser', password='12345')
         self.user.user_permissions.add(Permission.objects.get(codename='delete_contenidos'))
 
         response = self.client.post(reverse('eliminar_contenido', args=[self.contenido.id]))
-        self.assertEqual(response.status_code, 302)  # Redirección tras eliminar
-        self.assertFalse(Contenidos.objects.filter(id=self.contenido.id).exists())  # El contenido ya no debe existir
+        if response.status_code != 302:
+            print(response.content)  # Imprimir la respuesta si la eliminación falla
+        self.assertEqual(response.status_code, 302)  # Redirección después de eliminar
+        self.assertFalse(Contenidos.objects.filter(id=self.contenido.id).exists())  # Verificar que el contenido fue eliminado
+
 
 class ComentarioFormTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='12345')
-        self.estado = Estado.objects.create(descripcion="Publicado")
+        self.estado = Estado.objects.create(descripcion="Activo")
         self.categoria = Categoria.objects.create(nombre="Categoría de prueba")
+        self.color = Color.objects.get_or_create(nombre='Blanco', codigo='#FFFFFF')[0]
+        self.margenes = Margenes.objects.get_or_create(der=10.0, izq=10.0, arr=20.0, aba=20.0)[0]
+        self.plantilla = Plantilla.objects.create(
+            nombre='Plantilla Test',
+            descripcion='Descripción de prueba',
+            colorFondo=self.color,
+            margenes=self.margenes,
+            disposicionHorizontal=True
+        )  
+
         self.contenido = Contenidos.objects.create(
             titulo="Título de prueba",
             contenido="Contenido de prueba",
@@ -149,7 +173,8 @@ class ComentarioFormTest(TestCase):
             plantilla=self.plantilla,
             estado=self.estado
         )
-        self.assertAlmostEqual(contenido.fecha_creacion, timezone.now(), delta=timezone.timedelta(seconds=1))
+
+        self.assertAlmostEqual(self.contenido.fecha_creacion, timezone.now(), delta=timezone.timedelta(seconds=1))
     
     def test_permissions(self):
         """Test the permissions defined in the Meta class."""
