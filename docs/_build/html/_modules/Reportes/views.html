@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reportes.views &mdash; documentación de CMS - 1.0</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=4936afed"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/translations.js?v=d190bf04"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            CMS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenido:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">cms</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">CMS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Código de módulo</a></li>
+      <li class="breadcrumb-item active">Reportes.views</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fuente para Reportes.views</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">get_object_or_404</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Contenidos</span><span class="p">,</span> <span class="n">Estado</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">plotly</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
+<span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">Count</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="kn">import</span> <span class="n">plot</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objs</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">Avg</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">ExpressionWrapper</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">DurationField</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+
+<div class="viewcode-block" id="reporte_contenidos_mas_leidos">
+<a class="viewcode-back" href="../../Reportes.html#Reportes.views.reporte_contenidos_mas_leidos">[documentos]</a>
+<span class="k">def</span> <span class="nf">reporte_contenidos_mas_leidos</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Genera un reporte de los contenidos más leídos dentro de la página en un rango de fechas especificado.</span>
+<span class="sd">    Presenta un gráfico de barras con los contenidos más leídos entre las fechas seleccionadas.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        request: Objeto HttpRequest que contiene datos sobre la solicitud de usuario.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        HttpResponse: Renderiza la plantilla &#39;reporte_contenidos_mas_leidos.html&#39; con el gráfico en formato JSON.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">graph_json</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Inicializamos el gráfico vacío por defecto</span>
+    
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">fecha_inicio_str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fecha_inicio&#39;</span><span class="p">)</span>
+        <span class="n">fecha_fin_str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fecha_fin&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Convertir las fechas de cadena a objetos datetime</span>
+        <span class="n">fecha_inicio</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">fecha_inicio_str</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">fecha_fin</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">fecha_fin_str</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Filtrar los contenidos según el rango de fechas</span>
+        <span class="n">top_contenidos</span> <span class="o">=</span> <span class="n">Contenidos</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">fecha_publicacion__range</span><span class="o">=</span><span class="p">(</span><span class="n">fecha_inicio</span><span class="p">,</span> <span class="n">fecha_fin</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;-numero_lecturas&#39;</span><span class="p">)[:</span><span class="mi">10</span><span class="p">]</span>
+
+        <span class="c1"># Extraer los datos de los artículos para graficar</span>
+        <span class="n">nombres</span> <span class="o">=</span> <span class="p">[</span><span class="n">contenido</span><span class="o">.</span><span class="n">titulo</span> <span class="k">for</span> <span class="n">contenido</span> <span class="ow">in</span> <span class="n">top_contenidos</span><span class="p">]</span>
+        <span class="n">lecturas</span> <span class="o">=</span> <span class="p">[</span><span class="n">contenido</span><span class="o">.</span><span class="n">numero_lecturas</span> <span class="k">for</span> <span class="n">contenido</span> <span class="ow">in</span> <span class="n">top_contenidos</span><span class="p">]</span>
+
+        <span class="c1"># Crear el gráfico de barras con Plotly</span>
+        <span class="n">trace</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Bar</span><span class="p">(</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">nombres</span><span class="p">,</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">lecturas</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Contenidos más leídos&quot;</span>
+        <span class="p">)</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Top 10 Contenidos Más Leídos entre </span><span class="si">{</span><span class="n">fecha_inicio</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="si">}</span><span class="s2"> y </span><span class="si">{</span><span class="n">fecha_fin</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">xaxis</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Contenido&#39;</span><span class="p">),</span>
+            <span class="n">yaxis</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Número de Lecturas&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">trace</span><span class="p">],</span> <span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">)</span>
+
+        <span class="c1"># Convertir el gráfico a JSON para pasarlo a la plantilla</span>
+        <span class="n">graph_json</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">to_json</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;reporte_contenidos_mas_leidos.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;graph_json&#39;</span><span class="p">:</span> <span class="n">graph_json</span><span class="p">})</span></div>
+
+
+
+<div class="viewcode-block" id="reporte_contenidos_publicados_rechazados">
+<a class="viewcode-back" href="../../Reportes.html#Reportes.views.reporte_contenidos_publicados_rechazados">[documentos]</a>
+<span class="k">def</span> <span class="nf">reporte_contenidos_publicados_rechazados</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Genera un reporte de contenidos publicados y rechazados en un rango de fechas.</span>
+<span class="sd">    Muestra un gráfico de barras apiladas para visualizar la cantidad de contenidos en ambos estados.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        request: Objeto HttpRequest que contiene datos sobre la solicitud de usuario.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        HttpResponse: Renderiza la plantilla &#39;reporte_contenidos_publicados_rechazados.html&#39; con el gráfico en formato JSON.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">graph_json</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Inicializamos el gráfico vacío por defecto</span>
+    
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">fecha_inicio_str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fecha_inicio&#39;</span><span class="p">)</span>
+        <span class="n">fecha_fin_str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fecha_fin&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Convertir fechas a objetos datetime</span>
+        <span class="n">fecha_inicio</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">fecha_inicio_str</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">fecha_fin</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">fecha_fin_str</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Filtrar contenidos según el rango de fechas</span>
+        <span class="n">contenidos_publicados</span> <span class="o">=</span> <span class="n">Contenidos</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">estado_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fecha_publicacion__range</span><span class="o">=</span><span class="p">(</span><span class="n">fecha_inicio</span><span class="p">,</span> <span class="n">fecha_fin</span><span class="p">))</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+        <span class="n">contenidos_rechazados</span> <span class="o">=</span> <span class="n">Contenidos</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">estado_id</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fecha_de_rechazados__range</span><span class="o">=</span><span class="p">(</span><span class="n">fecha_inicio</span><span class="p">,</span> <span class="n">fecha_fin</span><span class="p">))</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+
+        <span class="c1"># Imprimir valores para depuración</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fecha Inicio: </span><span class="si">{</span><span class="n">fecha_inicio</span><span class="si">}</span><span class="s2">, Fecha Fin: </span><span class="si">{</span><span class="n">fecha_fin</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Contenidos Publicados: </span><span class="si">{</span><span class="n">contenidos_publicados</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Contenidos Rechazados: </span><span class="si">{</span><span class="n">contenidos_rechazados</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Crear los datos del gráfico de barras apiladas</span>
+        <span class="n">fechas</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Contenidos&#39;</span><span class="p">]</span>  <span class="c1"># Etiqueta para el eje X</span>
+        <span class="n">publicados</span> <span class="o">=</span> <span class="p">[</span><span class="n">contenidos_publicados</span><span class="p">]</span>  <span class="c1"># Cantidad de contenidos publicados</span>
+        <span class="n">rechazados</span> <span class="o">=</span> <span class="p">[</span><span class="n">contenidos_rechazados</span><span class="p">]</span>  <span class="c1"># Cantidad de contenidos rechazados</span>
+
+        <span class="c1"># Crear el gráfico de barras apiladas con colores azul y rojo</span>
+        <span class="n">trace_publicados</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Bar</span><span class="p">(</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">fechas</span><span class="p">,</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">publicados</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Publicados&#39;</span><span class="p">,</span>
+            <span class="n">marker_color</span><span class="o">=</span><span class="s1">&#39;crimson&#39;</span>  <span class="c1"># Color crimson para &#39;Publicados&#39;</span>
+        <span class="p">)</span>
+        <span class="n">trace_rechazados</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Bar</span><span class="p">(</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">fechas</span><span class="p">,</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">rechazados</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Rechazados&#39;</span><span class="p">,</span>
+            <span class="n">marker_color</span><span class="o">=</span><span class="s1">&#39;lightslategrey&#39;</span>  <span class="c1"># Color lightslategrey para &#39;Rechazados&#39;</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Crear el layout con barmode=&#39;stack&#39;</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Contenidos Publicados y Rechazados&#39;</span><span class="p">,</span>
+            <span class="n">xaxis</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Estado&#39;</span><span class="p">),</span>
+            <span class="n">yaxis</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Cantidad&#39;</span><span class="p">),</span>
+            <span class="n">barmode</span><span class="o">=</span><span class="s1">&#39;stack&#39;</span>  <span class="c1"># Apilar las barras</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Crear la figura con los dos trazos (barras apiladas)</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">trace_publicados</span><span class="p">,</span> <span class="n">trace_rechazados</span><span class="p">],</span> <span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">)</span>
+
+        <span class="c1"># Convertir el gráfico a JSON para pasarlo a la plantilla</span>
+        <span class="n">graph_json</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">output_type</span><span class="o">=</span><span class="s1">&#39;div&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;reporte_contenidos_publicados_rechazados.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;graph_json&#39;</span><span class="p">:</span> <span class="n">graph_json</span><span class="p">})</span></div>
+
+
+
+<div class="viewcode-block" id="reporte_promedio_tiempo_revision">
+<a class="viewcode-back" href="../../Reportes.html#Reportes.views.reporte_promedio_tiempo_revision">[documentos]</a>
+<span class="k">def</span> <span class="nf">reporte_promedio_tiempo_revision</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calcula el promedio de tiempo de revisión entre la creación y la publicación de contenidos en un rango de fechas.</span>
+<span class="sd">    Muestra un gráfico de líneas con la cantidad de contenidos revisados y un resumen del tiempo promedio.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        request: Objeto HttpRequest que contiene datos sobre la solicitud de usuario.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        HttpResponse: Renderiza la plantilla &#39;reporte_promedio_tiempo_revision.html&#39; con el gráfico y los tiempos de revisión.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">graph_json</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Inicializamos el gráfico vacío por defecto</span>
+    <span class="n">tiempos_revision</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Lista para almacenar los tiempos de revisión formateados</span>
+    <span class="n">contenidos_tiempos</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Lista para almacenar los contenidos con tiempos de revisión formateados</span>
+    <span class="n">total_tiempo_revision</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Variable para acumular el total de tiempo de revisión</span>
+    <span class="n">total_contenidos</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Variable para contar el número total de contenidos</span>
+    <span class="n">promedio_tiempo</span> <span class="o">=</span> <span class="s2">&quot;No hay contenidos disponibles para calcular el promedio.&quot;</span>  <span class="c1"># Valor predeterminado</span>
+
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">fecha_inicio_str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fecha_inicio&#39;</span><span class="p">)</span>
+        <span class="n">fecha_fin_str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fecha_fin&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Convertir fechas a objetos datetime</span>
+        <span class="n">fecha_inicio</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">fecha_inicio_str</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">fecha_fin</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">fecha_fin_str</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Filtrar contenidos según el rango de fechas</span>
+        <span class="n">contenidos</span> <span class="o">=</span> <span class="n">Contenidos</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">fecha_creacion__range</span><span class="o">=</span><span class="p">(</span><span class="n">fecha_inicio</span><span class="p">,</span> <span class="n">fecha_fin</span><span class="p">),</span> 
+            <span class="n">fecha_publicacion__isnull</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+        
+        <span class="c1"># Si hay contenidos, calcular los tiempos de revisión y el promedio</span>
+        <span class="k">if</span> <span class="n">contenidos</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="c1"># Calcular el tiempo de revisión en horas, minutos y segundos</span>
+            <span class="k">for</span> <span class="n">contenido</span> <span class="ow">in</span> <span class="n">contenidos</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">contenido</span><span class="o">.</span><span class="n">fecha_creacion</span> <span class="ow">and</span> <span class="n">contenido</span><span class="o">.</span><span class="n">fecha_publicacion</span><span class="p">:</span>
+                    <span class="n">tiempo_revision</span> <span class="o">=</span> <span class="n">contenido</span><span class="o">.</span><span class="n">fecha_publicacion</span> <span class="o">-</span> <span class="n">contenido</span><span class="o">.</span><span class="n">fecha_creacion</span>
+                    <span class="n">total_tiempo_revision</span> <span class="o">+=</span> <span class="n">tiempo_revision</span><span class="o">.</span><span class="n">seconds</span>  <span class="c1"># Acumulamos el tiempo total</span>
+                    <span class="n">total_contenidos</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># Contamos los contenidos</span>
+
+                    <span class="n">horas</span> <span class="o">=</span> <span class="n">tiempo_revision</span><span class="o">.</span><span class="n">seconds</span> <span class="o">//</span> <span class="mi">3600</span>
+                    <span class="n">minutos</span> <span class="o">=</span> <span class="p">(</span><span class="n">tiempo_revision</span><span class="o">.</span><span class="n">seconds</span> <span class="o">%</span> <span class="mi">3600</span><span class="p">)</span> <span class="o">//</span> <span class="mi">60</span>
+                    <span class="n">segundos</span> <span class="o">=</span> <span class="n">tiempo_revision</span><span class="o">.</span><span class="n">seconds</span> <span class="o">%</span> <span class="mi">60</span>
+                    <span class="n">tiempo_formateado</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">horas</span><span class="si">}</span><span class="s2">h </span><span class="si">{</span><span class="n">minutos</span><span class="si">}</span><span class="s2">m </span><span class="si">{</span><span class="n">segundos</span><span class="si">}</span><span class="s2">s&quot;</span>
+                    <span class="n">tiempos_revision</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tiempo_formateado</span><span class="p">)</span>
+                    <span class="n">contenidos_tiempos</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">contenido</span><span class="p">,</span> <span class="n">tiempo_formateado</span><span class="p">))</span>
+
+            <span class="c1"># Calcular el promedio de tiempo de revisión (si hay contenidos)</span>
+            <span class="n">promedio_segundos</span> <span class="o">=</span> <span class="n">total_tiempo_revision</span> <span class="o">/</span> <span class="n">total_contenidos</span>
+            <span class="n">promedio_horas</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">promedio_segundos</span> <span class="o">//</span> <span class="mi">3600</span><span class="p">)</span>
+            <span class="n">promedio_minutos</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">promedio_segundos</span> <span class="o">%</span> <span class="mi">3600</span><span class="p">)</span> <span class="o">//</span> <span class="mi">60</span><span class="p">)</span>
+            <span class="n">promedio_segundos</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">promedio_segundos</span> <span class="o">%</span> <span class="mi">60</span><span class="p">)</span>
+            <span class="n">promedio_tiempo</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">promedio_horas</span><span class="si">}</span><span class="s2">h </span><span class="si">{</span><span class="n">promedio_minutos</span><span class="si">}</span><span class="s2">m </span><span class="si">{</span><span class="n">promedio_segundos</span><span class="si">}</span><span class="s2">s&quot;</span>
+        
+        <span class="c1"># Crear los datos del gráfico de líneas (para mostrar la cantidad de contenidos por fecha de publicación)</span>
+        <span class="n">fechas</span> <span class="o">=</span> <span class="p">[</span><span class="n">contenido</span><span class="o">.</span><span class="n">fecha_publicacion</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">contenido</span> <span class="ow">in</span> <span class="n">contenidos</span><span class="p">]</span>  <span class="c1"># Fechas de publicación</span>
+        <span class="n">cantidades</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">contenidos</span><span class="p">]</span>  <span class="c1"># Solo contar 1 por cada contenido</span>
+
+        <span class="c1"># Crear el gráfico de líneas</span>
+        <span class="n">trace</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">fechas</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">cantidades</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines+markers&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Contenidos&#39;</span><span class="p">)</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Promedio de Tiempo de Revisión por Contenido&#39;</span><span class="p">,</span> <span class="n">xaxis</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Fecha de Publicación&#39;</span><span class="p">),</span> <span class="n">yaxis</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Cantidad de Contenidos&#39;</span><span class="p">))</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">trace</span><span class="p">],</span> <span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">)</span>
+
+        <span class="c1"># Convertir el gráfico a JSON para pasarlo a la plantilla</span>
+        <span class="n">graph_json</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">output_type</span><span class="o">=</span><span class="s1">&#39;div&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;reporte_promedio_tiempo_revision.html&#39;</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s1">&#39;graph_json&#39;</span><span class="p">:</span> <span class="n">graph_json</span><span class="p">,</span> 
+        <span class="s1">&#39;contenidos_tiempos&#39;</span><span class="p">:</span> <span class="n">contenidos_tiempos</span><span class="p">,</span>
+        <span class="s1">&#39;promedio_tiempo&#39;</span><span class="p">:</span> <span class="n">promedio_tiempo</span>
+    <span class="p">})</span></div>
+
+
+
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="kn">import</span> <span class="nn">plotly.io</span> <span class="k">as</span> <span class="nn">pio</span>
+
+<div class="viewcode-block" id="reporte_contenidos_inactivos">
+<a class="viewcode-back" href="../../Reportes.html#Reportes.views.reporte_contenidos_inactivos">[documentos]</a>
+<span class="k">def</span> <span class="nf">reporte_contenidos_inactivos</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Genera un reporte de contenidos inactivos en un rango de fechas, mostrando una comparación con los contenidos activos.</span>
+<span class="sd">    Muestra un gráfico de barras con la cantidad de contenidos activos e inactivos.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        request: Objeto HttpRequest que contiene datos sobre la solicitud de usuario.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        HttpResponse: Renderiza la plantilla &#39;reporte_contenidos_inactivos.html&#39; con el gráfico de contenidos activos e inactivos.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">graph_json</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Inicializamos el gráfico vacío por defecto</span>
+
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">fecha_inicio_str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fecha_inicio&#39;</span><span class="p">)</span>
+        <span class="n">fecha_fin_str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fecha_fin&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Convertir las fechas de cadena a objetos datetime</span>
+        <span class="n">fecha_inicio</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">fecha_inicio_str</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">fecha_fin</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">fecha_fin_str</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Filtrar los contenidos en el rango de fechas especificado</span>
+        <span class="n">contenidos_inactivos</span> <span class="o">=</span> <span class="n">Contenidos</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">estado_id</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">fecha_de_inactivacion__range</span><span class="o">=</span><span class="p">(</span><span class="n">fecha_inicio</span><span class="p">,</span> <span class="n">fecha_fin</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="s1">&#39;fecha_de_inactivacion&#39;</span><span class="p">)</span>
+
+        <span class="n">contenidos_activos</span> <span class="o">=</span> <span class="n">Contenidos</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">estado_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">fecha_publicacion__range</span><span class="o">=</span><span class="p">(</span><span class="n">fecha_inicio</span><span class="p">,</span> <span class="n">fecha_fin</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="s1">&#39;fecha_publicacion&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Crear listas de fechas y estados</span>
+        <span class="n">fechas_inactivos</span> <span class="o">=</span> <span class="p">[</span><span class="n">contenido</span><span class="p">[</span><span class="s1">&#39;fecha_de_inactivacion&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">contenido</span> <span class="ow">in</span> <span class="n">contenidos_inactivos</span><span class="p">]</span>
+        <span class="n">fechas_activos</span> <span class="o">=</span> <span class="p">[</span><span class="n">contenido</span><span class="p">[</span><span class="s1">&#39;fecha_publicacion&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">contenido</span> <span class="ow">in</span> <span class="n">contenidos_activos</span><span class="p">]</span>
+
+        <span class="c1"># Crear un DataFrame para el gráfico</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Fecha&#39;</span><span class="p">:</span> <span class="n">fechas_inactivos</span> <span class="o">+</span> <span class="n">fechas_activos</span><span class="p">,</span>
+            <span class="s1">&#39;Estado&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Inactivo&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">fechas_inactivos</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Activo&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">fechas_activos</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Crear la figura usando go.Figure y añadir la información como gráfico de barras</span>
+        <span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+        <span class="kn">import</span> <span class="nn">plotly.figure_factory</span> <span class="k">as</span> <span class="nn">ff</span>
+
+        <span class="c1"># Add table data</span>
+        <span class="n">table_data</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;&#39;</span><span class="p">]]</span>
+
+        <span class="c1"># Initialize a figure with ff.create_table(table_data)</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="n">table_data</span><span class="p">,</span> <span class="n">height_constant</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+
+        <span class="c1"># Add graph data</span>
+        <span class="n">teams</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Estado&#39;</span><span class="p">]</span>
+        <span class="n">GFPG</span> <span class="o">=</span> <span class="p">[</span><span class="n">contenidos_activos</span><span class="o">.</span><span class="n">count</span><span class="p">()]</span>
+        <span class="n">GAPG</span> <span class="o">=</span> <span class="p">[</span><span class="n">contenidos_inactivos</span><span class="o">.</span><span class="n">count</span><span class="p">()]</span>
+
+        <span class="c1"># Make traces for graph</span>
+        <span class="n">trace1</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Bar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">teams</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">GFPG</span><span class="p">,</span> <span class="n">xaxis</span><span class="o">=</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="n">yaxis</span><span class="o">=</span><span class="s1">&#39;y2&#39;</span><span class="p">,</span>
+                        <span class="n">marker</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;#0099ff&#39;</span><span class="p">),</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Activos&#39;</span><span class="p">)</span>
+        <span class="n">trace2</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Bar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">teams</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">GAPG</span><span class="p">,</span> <span class="n">xaxis</span><span class="o">=</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="n">yaxis</span><span class="o">=</span><span class="s1">&#39;y2&#39;</span><span class="p">,</span>
+                        <span class="n">marker</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;#404040&#39;</span><span class="p">),</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Inactivos&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Add trace data to figure</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">add_traces</span><span class="p">([</span><span class="n">trace1</span><span class="p">,</span> <span class="n">trace2</span><span class="p">])</span>
+
+        <span class="c1"># initialize xaxis2 and yaxis2</span>
+        <span class="n">fig</span><span class="p">[</span><span class="s1">&#39;layout&#39;</span><span class="p">][</span><span class="s1">&#39;xaxis2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">fig</span><span class="p">[</span><span class="s1">&#39;layout&#39;</span><span class="p">][</span><span class="s1">&#39;yaxis2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Edit layout for subplots</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;domain&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">.45</span><span class="p">]})</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">yaxis2</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;domain&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">.6</span><span class="p">,</span> <span class="mi">1</span><span class="p">]})</span>
+
+        <span class="c1"># The graph&#39;s yaxis2 MUST BE anchored to the graph&#39;s xaxis2 and vice versa</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">yaxis2</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;anchor&#39;</span><span class="p">:</span> <span class="s1">&#39;x2&#39;</span><span class="p">})</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">xaxis2</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;anchor&#39;</span><span class="p">:</span> <span class="s1">&#39;y2&#39;</span><span class="p">})</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">yaxis2</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Cantidad&#39;</span><span class="p">})</span>
+
+        <span class="c1"># Update the margins to add a title and see graph x-labels.</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">margin</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;t&#39;</span><span class="p">:</span><span class="mi">75</span><span class="p">,</span> <span class="s1">&#39;l&#39;</span><span class="p">:</span><span class="mi">50</span><span class="p">})</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Contenidos activos e inactivos&#39;</span><span class="p">})</span>
+
+        <span class="c1"># Update the height because adding a graph vertically will interact with</span>
+        <span class="c1"># the plot height calculated for the table</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;height&#39;</span><span class="p">:</span><span class="mi">800</span><span class="p">})</span>
+
+        <span class="c1"># Plot!</span>
+        <span class="n">graph_json</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">output_type</span><span class="o">=</span><span class="s1">&#39;div&#39;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;reporte_contenidos_inactivos.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;graph_json&#39;</span><span class="p">:</span> <span class="n">graph_json</span><span class="p">})</span></div>
+
+
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+
+<div class="viewcode-block" id="reporte_principal">
+<a class="viewcode-back" href="../../Reportes.html#Reportes.views.reporte_principal">[documentos]</a>
+<span class="k">def</span> <span class="nf">reporte_principal</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;reporte_principal.html&#39;</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2024, Equipo5.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

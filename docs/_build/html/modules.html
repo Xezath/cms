@@ -53,6 +53,7 @@
 <li class="toctree-l2"><a class="reference internal" href="Contenidos.html">Contenidos Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="TableroKanban.html">TableroKanban Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Usuario.html">Usuario Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Reportes.html">Reportes Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cms.html">cms package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
 </ul>
@@ -361,9 +362,13 @@
 <li class="toctree-l4"><a class="reference internal" href="Contenidos.html#Contenidos.models.Contenidos.estado"><code class="docutils literal notranslate"><span class="pre">Contenidos.estado</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="Contenidos.html#Contenidos.models.Contenidos.estado_id"><code class="docutils literal notranslate"><span class="pre">Contenidos.estado_id</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="Contenidos.html#Contenidos.models.Contenidos.fecha_creacion"><code class="docutils literal notranslate"><span class="pre">Contenidos.fecha_creacion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Contenidos.html#Contenidos.models.Contenidos.fecha_de_inactivacion"><code class="docutils literal notranslate"><span class="pre">Contenidos.fecha_de_inactivacion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Contenidos.html#Contenidos.models.Contenidos.fecha_de_rechazados"><code class="docutils literal notranslate"><span class="pre">Contenidos.fecha_de_rechazados</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Contenidos.html#Contenidos.models.Contenidos.fecha_publicacion"><code class="docutils literal notranslate"><span class="pre">Contenidos.fecha_publicacion</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="Contenidos.html#Contenidos.models.Contenidos.get_next_by_fecha_creacion"><code class="docutils literal notranslate"><span class="pre">Contenidos.get_next_by_fecha_creacion()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="Contenidos.html#Contenidos.models.Contenidos.get_previous_by_fecha_creacion"><code class="docutils literal notranslate"><span class="pre">Contenidos.get_previous_by_fecha_creacion()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="Contenidos.html#Contenidos.models.Contenidos.id"><code class="docutils literal notranslate"><span class="pre">Contenidos.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Contenidos.html#Contenidos.models.Contenidos.numero_lecturas"><code class="docutils literal notranslate"><span class="pre">Contenidos.numero_lecturas</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="Contenidos.html#Contenidos.models.Contenidos.objects"><code class="docutils literal notranslate"><span class="pre">Contenidos.objects</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="Contenidos.html#Contenidos.models.Contenidos.plantilla"><code class="docutils literal notranslate"><span class="pre">Contenidos.plantilla</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="Contenidos.html#Contenidos.models.Contenidos.plantilla_id"><code class="docutils literal notranslate"><span class="pre">Contenidos.plantilla_id</span></code></a></li>
@@ -551,6 +556,26 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Usuario.html#module-Usuario">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Reportes.html">Reportes Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Reportes.html#module-Reportes.apps">Reportes.apps module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Reportes.html#Reportes.apps.ReportesConfig"><code class="docutils literal notranslate"><span class="pre">ReportesConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Reportes.html#Reportes.apps.ReportesConfig.default_auto_field"><code class="docutils literal notranslate"><span class="pre">ReportesConfig.default_auto_field</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Reportes.html#Reportes.apps.ReportesConfig.name"><code class="docutils literal notranslate"><span class="pre">ReportesConfig.name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Reportes.html#module-Reportes.views">Reportes.views module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Reportes.html#Reportes.views.reporte_contenidos_inactivos"><code class="docutils literal notranslate"><span class="pre">reporte_contenidos_inactivos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reportes.html#Reportes.views.reporte_contenidos_mas_leidos"><code class="docutils literal notranslate"><span class="pre">reporte_contenidos_mas_leidos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reportes.html#Reportes.views.reporte_contenidos_publicados_rechazados"><code class="docutils literal notranslate"><span class="pre">reporte_contenidos_publicados_rechazados()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reportes.html#Reportes.views.reporte_principal"><code class="docutils literal notranslate"><span class="pre">reporte_principal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reportes.html#Reportes.views.reporte_promedio_tiempo_revision"><code class="docutils literal notranslate"><span class="pre">reporte_promedio_tiempo_revision()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Reportes.html#module-Reportes">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="cms.html">cms package</a><ul>
