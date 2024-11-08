@@ -3,12 +3,6 @@
 {% block titulo %} Reportes {% endblock %}
 {% block contenido %}
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reporte de Contenidos Publicados y Rechazados</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         /* Estilos generales */
@@ -62,8 +56,7 @@
             margin-top: 20px;
         }
     </style>
-</head>
-<body>
+
     <h1>Reporte de Contenidos Publicados y Rechazados</h1>
     
     <!-- Formulario para seleccionar el rango de fechas -->
@@ -86,7 +79,6 @@
             <p class="no-data">No hay datos disponibles para el rango de fechas seleccionado.</p>
         {% endif %}
     </div>
-</body>
-</html>
+
 
 {% endblock %}

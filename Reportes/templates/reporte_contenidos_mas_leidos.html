@@ -1,96 +1,66 @@
 {% extends "base.html" %}
 
-{% block titulo %} Reportes {% endblock %}
+{% block titulo %}Reportes Generales{% endblock %}
 
 {% block contenido %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reporte de Contenidos Más Leídos</title>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <style>
-        /* Estilos generales */
-        body {
-            font-family: Arial, sans-serif;
-            color: #333;
-            margin: 20px;
-            padding: 0;
-        }
-        h1 {
-            color: #444;
-            margin-bottom: 20px;
-        }
-        form {
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        label {
-            font-weight: bold;
-            margin-right: 10px;
-        }
-        input[type="date"] {
-            padding: 8px;
-            margin: 5px 10px 5px 0;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-        }
-        button {
-            padding: 8px 15px;
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        button:hover {
-            background-color: #4CAF50;
-        }
-        /* Estilos para el contenedor del gráfico */
-        .graph-container {
-            margin-top: 30px;
-            text-align: center;
-        }
-        .no-data {
-            color: #888;
-            font-style: italic;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Reporte: Top 10 Contenidos Más Leídos</h1>
+<h1>Selecciona un Reporte</h1>
 
-    <!-- Formulario para seleccionar el rango de fechas -->
-    <form method="post" action="">
-        {% csrf_token %}
-        <label for="fecha_inicio">Fecha de inicio:</label>
-        <input type="date" id="fecha_inicio" name="fecha_inicio" required>
-        
-        <label for="fecha_fin">Fecha de fin:</label>
-        <input type="date" id="fecha_fin" name="fecha_fin" required>
-        
-        <button type="submit">Generar reporte</button>
-    </form>
+<!-- Formulario de selección de fechas -->
+<form method="post" action="">
+    {% csrf_token %}
+    <label for="fecha_inicio">Fecha de inicio:</label>
+    <input type="date" id="fecha_inicio" name="fecha_inicio" required>
 
-    <!-- Contenedor del gráfico -->
-    <div class="graph-container">
-        {% if graph_json %}
-            <div id="grafico"></div>
-            <script>
-                var graphData = {{ graph_json|safe }};
-                Plotly.newPlot('grafico', graphData.data, graphData.layout);
-            </script>
-        {% else %}
-            <p class="no-data">No hay datos disponibles para el rango de fechas seleccionado.</p>
-        {% endif %}
-    </div>
-</body>
-</html>
+    <label for="fecha_fin">Fecha de fin:</label>
+    <input type="date" id="fecha_fin" name="fecha_fin" required>
+
+    <button type="submit">Generar reporte</button>
+</form>
+
+<!-- Gráficos -->
+<div class="graph-container">
+    {% if graph_json1 %}
+        <div id="grafico1">{{ graph_json1|safe }}</div>
+    {% endif %}
+    {% if graph_json2 %}
+        <div id="grafico2">{{ graph_json2|safe }}</div>
+    {% endif %}
+    {% if graph_json3 %}
+        <div id="grafico3">{{ graph_json3|safe }}</div>
+    {% endif %}
+    {% if graph_json4 %}
+        <div id="grafico4">{{ graph_json4|safe }}</div>
+    {% endif %}
+</div>
+
+<!-- Reporte de tiempo de revisión -->
+{% if promedio_tiempo %}
+    <h2>Promedio de Tiempo de Revisión: {{ promedio_tiempo }}</h2>
+{% endif %}
+
+<!-- Detalles de los contenidos y sus tiempos -->
+{% if contenidos_tiempos %}
+    <h3>Detalles de los Contenidos:</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Tiempo de Revisión</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contenido, tiempo in contenidos_tiempos %}
+                <tr>
+                    <td>{{ contenido.titulo }}</td>
+                    <td>{{ contenido.autor }}</td>
+                    <td>{{ tiempo }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No hay contenidos disponibles en el rango de fechas seleccionado.</p>
+{% endif %}
 
 {% endblock %}

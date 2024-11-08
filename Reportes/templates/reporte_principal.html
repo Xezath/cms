@@ -1,14 +1,88 @@
 {% extends "base.html" %}
 
-{% block titulo %} Reportes Generales {% endblock %}
+{% block titulo %}Reportes Generales{% endblock %}
 
 {% block contenido %}
-    <h1>Selecciona un Reporte</h1>
-    <div class="reportes">
-        <a href="{% url 'reporte_contenidos_mas_leidos' %}" class="btn btn-primary">Reporte de Contenidos Más Leídos</a>
-        <a href="{% url 'reporte_contenidos_publicados_rechazados' %}" class="btn btn-primary">Reporte de Contenidos Publicados y Rechazados</a>
-        <a href="{% url 'reporte_contenidos_inactivos' %}" class="btn btn-primary">Reporte de Contenidos Inactivos</a>
-        <a href="{% url 'reporte_promedio_tiempo_revision' %}" class="btn btn-primary">Reporte de Promedio de Tiempo de Revisión</a>
-        <!-- Agregar otros botones según sea necesario -->
-    </div>
+<h1>Selecciona un Reporte</h1>
+<div class="reportes">
+    <!-- Aquí irán otros botones si deseas añadirlos más tarde -->
+</div>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<style>
+    /* Estilos generales */
+    body { font-family: Arial, sans-serif; color: #333; margin: 20px; padding: 0; }
+    h1 { color: #444; margin-bottom: 20px; }
+    form { margin-bottom: 20px; padding: 15px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; }
+    label { font-weight: bold; margin-right: 10px; }
+    input[type="date"] { padding: 8px; margin: 5px 10px 5px 0; border: 1px solid #ddd; border-radius: 3px; }
+    button { padding: 8px 15px; background-color: #4CAF50; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 14px; }
+    button:hover { background-color: #4CAF50; }
+    .graph-container { margin-top: 30px; text-align: center; }
+    .no-data { color: #888; font-style: italic; margin-top: 20px; }
+</style>
+
+<!-- Formulario para seleccionar el reporte y el rango de fechas -->
+<form method="post" action="">
+    {% csrf_token %}
+    <label for="reporte_tipo">Seleccione el reporte:</label>
+    <select id="reporte_tipo" name="reporte_tipo" required>
+        <option value="mas_leidos">Top 10 Contenidos Más Leídos</option>
+        <option value="publicados_rechazados">Contenidos Publicados y Rechazados</option>
+        <option value="activos_inactivos">Contenidos Activos e Inactivos</option>
+        <option value="tiempo_revision">Promedio de Tiempo de Revisión</option>
+    </select>
+
+    <label for="fecha_inicio">Fecha de inicio:</label>
+    <input type="date" id="fecha_inicio" name="fecha_inicio" required>
+
+    <label for="fecha_fin">Fecha de fin:</label>
+    <input type="date" id="fecha_fin" name="fecha_fin" required>
+
+    <button type="submit">Generar reporte</button>
+</form>
+
+<!-- Contenedor de gráficos y reportes -->
+<div class="graph-container">
+    {% if graph_json %}
+        <div id="grafico"></div>
+        <script>
+            var graphData = {{ graph_json|safe }};
+            Plotly.newPlot('grafico', graphData.data, graphData.layout);
+        </script>
+    {% else %}
+        <p class="no-data">No hay datos disponibles para el rango de fechas seleccionado.</p>
+    {% endif %}
+</div>
+
+<!-- Muestra el reporte específico basado en el tipo de reporte -->
+{% if reporte_tipo == 'tiempo_revision' %}
+    {% if contenido_data.promedio_tiempo %}
+        <h2>Promedio Total de Tiempo de Revisión: {{ contenido_data.promedio_tiempo }}</h2>
+    {% endif %}
+    {% if contenido_data.contenidos_tiempos %}
+        <h3>Detalles de los Contenidos:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Tiempo de Revisión</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contenido, tiempo in contenido_data.contenidos_tiempos %}
+                    <tr>
+                        <td>{{ contenido.titulo }}</td>
+                        <td>{{ contenido.autor }}</td>
+                        <td>{{ tiempo }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="no-data">No hay contenidos disponibles en el rango de fechas seleccionado.</p>
+    {% endif %}
+{% endif %}
+
 {% endblock %}
