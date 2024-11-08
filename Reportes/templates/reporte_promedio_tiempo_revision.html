@@ -11,7 +11,7 @@
     <title>Reporte Promedio Tiempo de Revisión</title>
 </head>
 <body>
-    <h1>Reporte Promedio de Tiempo de Revisión de Artículos</h1>
+    <h1>Reporte Promedio de Tiempo de Revisión de Contenidos</h1>
 
     <form method="POST">
         {% csrf_token %}
@@ -23,7 +23,7 @@
     </form>
 
     {% if promedio_tiempo %}
-        <h2>Promedio de Tiempo de Revisión: {{ promedio_tiempo }}</h2>
+        <h2>Promedio Total de Tiempo de Revisión: {{ promedio_tiempo }}</h2>
     {% endif %}
 
     {% if contenidos_tiempos %}
@@ -51,7 +51,7 @@
     {% endif %}
 
     <div>
-        <h3>Gráfico de Contenidos por Fecha de Publicación</h3>
+        <h3>Promedio Diario de Tiempo de Revisión por Fecha de Publicación</h3>
         <div>{{ graph_json|safe }}</div>
     </div>
 
