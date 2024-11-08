@@ -184,7 +184,7 @@ def reporte_promedio_tiempo_revision(request):
                     contenidos_tiempos.append((contenido, tiempo_formateado))
 
                     # Agregar el tiempo de revisión en segundos al día correspondiente
-                    fecha_publicacion = contenido.fecha_publicacion.date()
+                    fecha_publicacion = contenido.fecha_publicacion
                     tiempos_por_dia[fecha_publicacion].append(tiempo_revision.seconds)
 
             # Calcular el promedio total de tiempo de revisión
@@ -198,15 +198,22 @@ def reporte_promedio_tiempo_revision(request):
             fechas = []
             promedios_diarios = []
 
-            # Calcular el promedio diario de tiempo de revisión en horas
+            # Calcular el promedio diario de tiempo de revisión en formato hh:mm:ss
             for fecha, tiempos in tiempos_por_dia.items():
-                promedio_dia = sum(tiempos) / len(tiempos)  # Promedio en segundos
+                promedio_dia_segundos = sum(tiempos) / len(tiempos)  # Promedio en segundos
+                promedio_dia_horas = promedio_dia_segundos // 3600
+                promedio_dia_minutos = (promedio_dia_segundos % 3600) // 60
+                promedio_dia_segundos = promedio_dia_segundos % 60
+
+                # Convertir promedio a formato hh:mm:ss
+                promedio_dia_formateado = f"{int(promedio_dia_horas)}h {int(promedio_dia_minutos)}m {int(promedio_dia_segundos)}s"
+
                 fechas.append(fecha)
-                promedios_diarios.append(promedio_dia / 3600)  # Convertir a horas para el gráfico
+                promedios_diarios.append(promedio_dia_formateado)  # Usar el formato hh:mm:ss
 
             # Crear el gráfico de promedio de tiempo de revisión
-            trace = go.Scatter(x=fechas, y=promedios_diarios, mode='lines+markers', name='Promedio de Tiempo de Revisión (horas)')
-            layout = go.Layout(title='Promedio Diario de Tiempo de Revisión', xaxis=dict(title='Fecha de Publicación'), yaxis=dict(title='Promedio en Horas'))
+            trace = go.Scatter(x=promedios_diarios, y=fechas, mode='lines+markers', name='Promedio de Tiempo de Revisión')
+            layout = go.Layout(title='Promedio Diario de Tiempo de Revisión', xaxis=dict(title='Promedio de Tiempo de Revisión'), yaxis=dict(title='Fecha de Publicación'))
             fig = go.Figure(data=[trace], layout=layout)
 
             # Convertir el gráfico a JSON para pasarlo a la plantilla
@@ -217,7 +224,6 @@ def reporte_promedio_tiempo_revision(request):
         'contenidos_tiempos': contenidos_tiempos,
         'promedio_tiempo': promedio_tiempo
     })
-
 
 def reporte_contenidos_inactivos(request):
     """
