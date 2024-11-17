@@ -3,7 +3,12 @@
 {% block titulo %} Reporte de Promedio de Tiempo de Revisión {% endblock %}
 {% block contenido %}
 
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte Promedio Tiempo de Revisión</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -63,7 +68,8 @@
             margin-top: 10px;
         }
     </style>
-
+</head>
+<body>
     <h1>Reporte Promedio de Tiempo de Revisión de Contenidos</h1>
 
     <form method="POST">
@@ -108,5 +114,7 @@
         <div>{{ graph_json|safe }}</div>
     </div>
 
+</body>
+</html>
 
 {% endblock %}

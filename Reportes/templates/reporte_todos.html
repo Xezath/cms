@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block titulo %} Reportes Generales {% endblock %}
+
+{% block contenido %}
+
+    <h1>Todos los Reportes</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="fecha_inicio">Fecha Inicio:</label>
+        <input type="date" name="fecha_inicio" required>
+        <label for="fecha_fin">Fecha Fin:</label>
+        <input type="date" name="fecha_fin" required>
+        <button type="submit">Generar Reportes</button>
+    </form>
+
+    {% if graph_contenidos_mas_leidos or graph_contenidos_publicados_rechazados or graph_promedio_tiempo_revision or graph_contenidos_inactivos %}
+        <h2>Contenidos Más Leídos</h2>
+        <div>{{ graph_contenidos_mas_leidos|safe }}</div>
+
+        <h2>Contenidos Publicados y Rechazados</h2>
+        <div>{{ graph_contenidos_publicados_rechazados|safe }}</div>
+
+        <h2>Promedio de Tiempo de Revisión</h2>
+        <div>{{ graph_promedio_tiempo_revision|safe }}</div>
+
+        <h2>Contenidos Activos e Inactivos</h2>
+        <div>{{ graph_contenidos_inactivos|safe }}</div>
+    {% endif %}
+
+{% endblock %}
