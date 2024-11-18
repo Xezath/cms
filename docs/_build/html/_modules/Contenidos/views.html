@@ -86,7 +86,7 @@
 <span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
 <span class="kn">from</span> <span class="nn">django.core.mail</span> <span class="kn">import</span> <span class="n">send_mail</span><span class="p">,</span><span class="n">EmailMessage</span>
 <span class="kn">from</span> <span class="nn">django.template.loader</span> <span class="kn">import</span> <span class="n">render_to_string</span>
-
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
 <div class="viewcode-block" id="contenidos">
 <a class="viewcode-back" href="../../Contenidos.html#Contenidos.views.contenidos">[documentos]</a>
@@ -178,9 +178,9 @@
 
 
 
+<span class="c1">#@permission_required(&#39;Contenidos.change_contenidos&#39;, raise_exception=True)</span>
 <div class="viewcode-block" id="editar_contenido">
 <a class="viewcode-back" href="../../Contenidos.html#Contenidos.views.editar_contenido">[documentos]</a>
-<span class="nd">@permission_required</span><span class="p">(</span><span class="s1">&#39;Contenidos.change_contenidos&#39;</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="nd">@login_required</span>
 <span class="k">def</span> <span class="nf">editar_contenido</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -208,6 +208,13 @@
             <span class="c1"># Aquí no es necesario modificar el autor</span>
             <span class="n">contenido</span> <span class="o">=</span> <span class="n">formulario</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># No guardar aún</span>
             <span class="n">contenido</span><span class="o">.</span><span class="n">autor</span> <span class="o">=</span> <span class="n">contenido</span><span class="o">.</span><span class="n">autor</span>  <span class="c1"># Mantener el autor existente</span>
+            
+            <span class="k">if</span> <span class="n">contenido</span><span class="o">.</span><span class="n">estado</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">contenido</span><span class="o">.</span><span class="n">fecha_de_inactivacion</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">contenido</span><span class="o">.</span><span class="n">estado</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">contenido</span><span class="o">.</span><span class="n">fecha_publicacion</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
             <span class="n">contenido</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>  <span class="c1"># Guarda el contenido modificado</span>
             <span class="n">nuevo_estado</span> <span class="o">=</span> <span class="n">formulario</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;estado&#39;</span><span class="p">]</span>            <span class="c1"># Actualizar el estado y la columna de la tarjeta</span>
             <span class="k">if</span> <span class="n">tarjeta</span><span class="p">:</span>
@@ -264,6 +271,11 @@
 <span class="sd">    - HttpResponse con la página &#39;contenidos/visualizar.html&#39; que muestra el contenido y los comentarios asociados.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">contenido</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Contenidos</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+
+    <span class="c1"># Incrementar el contador de lecturas</span>
+    <span class="n">contenido</span><span class="o">.</span><span class="n">numero_lecturas</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">contenido</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
     <span class="n">comentarios</span> <span class="o">=</span> <span class="n">contenido</span><span class="o">.</span><span class="n">comentarios</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>  <span class="c1"># Recuperar los comentarios relacionados con el contenido</span>
 
     <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
@@ -273,6 +285,17 @@
             <span class="n">comentario</span><span class="o">.</span><span class="n">usuario</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span>  <span class="c1"># Asignar el usuario autenticado</span>
             <span class="n">comentario</span><span class="o">.</span><span class="n">contenido</span> <span class="o">=</span> <span class="n">contenido</span>   <span class="c1"># Relacionar el comentario con el contenido actual</span>
             <span class="n">comentario</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="c1">#Si se crea el comentario, se envia una notificación por correo al autor</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;titulo&#39;</span><span class="p">:</span> <span class="n">contenido</span><span class="o">.</span><span class="n">titulo</span><span class="p">,</span>
+                <span class="p">}</span>      
+            <span class="n">html_template</span> <span class="o">=</span> <span class="s1">&#39;contenidos/comentado.html&#39;</span>
+            <span class="n">html_message</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="n">html_template</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+            <span class="n">subject</span> <span class="o">=</span> <span class="s1">&#39;Alguien comentó tu publicación&#39;</span>
+            <span class="n">message</span><span class="o">=</span><span class="n">EmailMessage</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">html_message</span><span class="p">,</span> <span class="s1">&#39;cmseq052024@gmail.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">contenido</span><span class="o">.</span><span class="n">autor</span><span class="o">.</span><span class="n">email</span><span class="p">])</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">content_subtype</span> <span class="o">=</span> <span class="s1">&#39;html&#39;</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+
 
             <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;visualizar_contenido&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">contenido</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -418,11 +441,11 @@
     <span class="n">contenido</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>  <span class="c1"># Guardar los cambios en la base de datos</span>
     <span class="n">nuevo_estado</span> <span class="o">=</span> <span class="n">contenido</span><span class="o">.</span><span class="n">estado</span>
     <span class="c1"># Actualizar el estado de la tarjeta si existe</span>
-    <span class="k">if</span> <span class="n">tarjeta</span><span class="p">:</span>
-        <span class="n">actualizar_estado</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">tarjeta</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">nuevo_estado</span><span class="o">.</span><span class="n">descripcion</span><span class="p">)</span>
-        <span class="n">tarjeta</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="n">contenido</span><span class="o">.</span><span class="n">estado</span>  <span class="c1"># Actualiza el estado de la tarjeta al nuevo estado del contenido</span>
-        <span class="n">tarjeta</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>  <span class="c1"># Guarda los cambios en la tarjeta</span>
-    
+
+    <span class="n">tarjeta</span> <span class="o">=</span> <span class="n">Tarjeta</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">contenido</span><span class="o">=</span><span class="n">contenido</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+    <span class="n">tarjeta</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="n">nuevo_estado</span>
+    <span class="n">tarjeta</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        
     <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
                     <span class="s1">&#39;titulo&#39;</span><span class="p">:</span> <span class="n">contenido</span><span class="o">.</span><span class="n">titulo</span><span class="p">,</span>
                 <span class="p">}</span>      
@@ -460,6 +483,7 @@
         <span class="c1"># Cambiar el estado del contenido</span>
         <span class="k">if</span><span class="p">(</span><span class="n">accion</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span><span class="p">):</span> <span class="c1">#accion 0 es rechazado</span>
             <span class="n">contenido</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Estado</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+            <span class="n">contenido</span><span class="o">.</span><span class="n">fecha_de_rechazados</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
             <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
                     <span class="s1">&#39;titulo&#39;</span><span class="p">:</span> <span class="n">contenido</span><span class="o">.</span><span class="n">titulo</span><span class="p">,</span>
                 <span class="p">}</span>      
@@ -525,8 +549,10 @@
         <span class="c1"># Cambiar el estado del contenido</span>
         <span class="k">if</span><span class="p">(</span><span class="n">accion</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span><span class="p">):</span> <span class="c1">#rechazar es decir envia a en revision</span>
             <span class="n">contenido</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Estado</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <span class="n">contenido</span><span class="o">.</span><span class="n">fecha_de_rechazados</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span> <span class="c1">#el contenido se publica y se va al estado de activo</span>
             <span class="n">contenido</span><span class="o">.</span><span class="n">estado</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Estado</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">contenido</span><span class="o">.</span><span class="n">fecha_publicacion</span><span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
             <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
                     <span class="s1">&#39;titulo&#39;</span><span class="p">:</span> <span class="n">contenido</span><span class="o">.</span><span class="n">titulo</span><span class="p">,</span>
                 <span class="p">}</span>      
@@ -544,6 +570,7 @@
         <span class="n">actualizar_estado</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">tarjeta</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">nuevo_estado</span><span class="o">.</span><span class="n">descripcion</span><span class="p">)</span>
     <span class="c1"># Redirigir o devolver una respuesta</span>
     <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;contenidos&#39;</span><span class="p">)</span>  <span class="c1"># Cambia a la vista a la que quieras redirigir</span></div>
+
 
 </pre></div>
 

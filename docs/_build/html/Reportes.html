@@ -59,11 +59,11 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-Reportes.views">Reportes.views module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#Reportes.views.reporte_contenidos_inactivos"><code class="docutils literal notranslate"><span class="pre">reporte_contenidos_inactivos()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#Reportes.views.reporte_contenidos_mas_leidos"><code class="docutils literal notranslate"><span class="pre">reporte_contenidos_mas_leidos()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#Reportes.views.reporte_contenidos_publicados_rechazados"><code class="docutils literal notranslate"><span class="pre">reporte_contenidos_publicados_rechazados()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#Reportes.views.reporte_principal"><code class="docutils literal notranslate"><span class="pre">reporte_principal()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#Reportes.views.reporte_promedio_tiempo_revision"><code class="docutils literal notranslate"><span class="pre">reporte_promedio_tiempo_revision()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Reportes.views.generar_reporte_contenidos_inactivos"><code class="docutils literal notranslate"><span class="pre">generar_reporte_contenidos_inactivos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Reportes.views.generar_reporte_contenidos_mas_leidos"><code class="docutils literal notranslate"><span class="pre">generar_reporte_contenidos_mas_leidos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Reportes.views.generar_reporte_contenidos_publicados_rechazados"><code class="docutils literal notranslate"><span class="pre">generar_reporte_contenidos_publicados_rechazados()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Reportes.views.generar_reporte_promedio_tiempo_revision"><code class="docutils literal notranslate"><span class="pre">generar_reporte_promedio_tiempo_revision()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Reportes.views.reporte_todos"><code class="docutils literal notranslate"><span class="pre">reporte_todos()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-Reportes">Module contents</a></li>
@@ -128,61 +128,37 @@
 <section id="module-Reportes.views">
 <span id="reportes-views-module"></span><h2>Reportes.views module<a class="headerlink" href="#module-Reportes.views" title="Link to this heading"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="Reportes.views.reporte_contenidos_inactivos">
-<span class="sig-prename descclassname"><span class="pre">Reportes.views.</span></span><span class="sig-name descname"><span class="pre">reporte_contenidos_inactivos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Reportes/views.html#reporte_contenidos_inactivos"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Reportes.views.reporte_contenidos_inactivos" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="Reportes.views.generar_reporte_contenidos_inactivos">
+<span class="sig-prename descclassname"><span class="pre">Reportes.views.</span></span><span class="sig-name descname"><span class="pre">generar_reporte_contenidos_inactivos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fecha_inicio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fecha_fin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Reportes/views.html#generar_reporte_contenidos_inactivos"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Reportes.views.generar_reporte_contenidos_inactivos" title="Link to this definition"></a></dt>
 <dd><p>Genera un reporte de contenidos inactivos en un rango de fechas, mostrando una comparación con los contenidos activos.
 Muestra un gráfico de barras con la cantidad de contenidos activos e inactivos.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>request: Objeto HttpRequest que contiene datos sobre la solicitud de usuario.</p>
-</dd>
-<dt>Returns:</dt><dd><p>HttpResponse: Renderiza la plantilla “reporte_contenidos_inactivos.html” con el gráfico de contenidos activos e inactivos.</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="Reportes.views.reporte_contenidos_mas_leidos">
-<span class="sig-prename descclassname"><span class="pre">Reportes.views.</span></span><span class="sig-name descname"><span class="pre">reporte_contenidos_mas_leidos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Reportes/views.html#reporte_contenidos_mas_leidos"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Reportes.views.reporte_contenidos_mas_leidos" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="Reportes.views.generar_reporte_contenidos_mas_leidos">
+<span class="sig-prename descclassname"><span class="pre">Reportes.views.</span></span><span class="sig-name descname"><span class="pre">generar_reporte_contenidos_mas_leidos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fecha_inicio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fecha_fin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Reportes/views.html#generar_reporte_contenidos_mas_leidos"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Reportes.views.generar_reporte_contenidos_mas_leidos" title="Link to this definition"></a></dt>
 <dd><p>Genera un reporte de los contenidos más leídos dentro de la página en un rango de fechas especificado.
 Presenta un gráfico de barras con los contenidos más leídos entre las fechas seleccionadas.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>request: Objeto HttpRequest que contiene datos sobre la solicitud de usuario.</p>
-</dd>
-<dt>Returns:</dt><dd><p>HttpResponse: Renderiza la plantilla “reporte_contenidos_mas_leidos.html” con el gráfico en formato JSON.</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="Reportes.views.reporte_contenidos_publicados_rechazados">
-<span class="sig-prename descclassname"><span class="pre">Reportes.views.</span></span><span class="sig-name descname"><span class="pre">reporte_contenidos_publicados_rechazados</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Reportes/views.html#reporte_contenidos_publicados_rechazados"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Reportes.views.reporte_contenidos_publicados_rechazados" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="Reportes.views.generar_reporte_contenidos_publicados_rechazados">
+<span class="sig-prename descclassname"><span class="pre">Reportes.views.</span></span><span class="sig-name descname"><span class="pre">generar_reporte_contenidos_publicados_rechazados</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fecha_inicio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fecha_fin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Reportes/views.html#generar_reporte_contenidos_publicados_rechazados"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Reportes.views.generar_reporte_contenidos_publicados_rechazados" title="Link to this definition"></a></dt>
 <dd><p>Genera un reporte de contenidos publicados y rechazados en un rango de fechas.
 Muestra un gráfico de barras apiladas para visualizar la cantidad de contenidos en ambos estados.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>request: Objeto HttpRequest que contiene datos sobre la solicitud de usuario.</p>
-</dd>
-<dt>Returns:</dt><dd><p>HttpResponse: Renderiza la plantilla “reporte_contenidos_publicados_rechazados.html” con el gráfico en formato JSON.</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="Reportes.views.reporte_principal">
-<span class="sig-prename descclassname"><span class="pre">Reportes.views.</span></span><span class="sig-name descname"><span class="pre">reporte_principal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Reportes/views.html#reporte_principal"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Reportes.views.reporte_principal" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="Reportes.views.reporte_promedio_tiempo_revision">
-<span class="sig-prename descclassname"><span class="pre">Reportes.views.</span></span><span class="sig-name descname"><span class="pre">reporte_promedio_tiempo_revision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Reportes/views.html#reporte_promedio_tiempo_revision"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Reportes.views.reporte_promedio_tiempo_revision" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="Reportes.views.generar_reporte_promedio_tiempo_revision">
+<span class="sig-prename descclassname"><span class="pre">Reportes.views.</span></span><span class="sig-name descname"><span class="pre">generar_reporte_promedio_tiempo_revision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fecha_inicio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fecha_fin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Reportes/views.html#generar_reporte_promedio_tiempo_revision"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Reportes.views.generar_reporte_promedio_tiempo_revision" title="Link to this definition"></a></dt>
 <dd><p>Calcula el promedio de tiempo de revisión entre la creación y la publicación de contenidos en un rango de fechas.
 Muestra un gráfico de líneas con la cantidad de contenidos revisados y un resumen del tiempo promedio.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>request: Objeto HttpRequest que contiene datos sobre la solicitud de usuario.</p>
-</dd>
-<dt>Returns:</dt><dd><p>HttpResponse: Renderiza la plantilla “reporte_promedio_tiempo_revision.html” con el gráfico y los tiempos de revisión.</p>
-</dd>
-</dl>
 </dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Reportes.views.reporte_todos">
+<span class="sig-prename descclassname"><span class="pre">Reportes.views.</span></span><span class="sig-name descname"><span class="pre">reporte_todos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Reportes/views.html#reporte_todos"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Reportes.views.reporte_todos" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
 </section>
 <section id="module-Reportes">
