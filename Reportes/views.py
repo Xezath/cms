@@ -130,7 +130,7 @@ def generar_reporte_promedio_tiempo_revision(fecha_inicio, fecha_fin):
         # Crear un gráfico vacío para manejar el caso de que no haya datos
         layout = go.Layout(title='No hay datos para el rango de fechas seleccionado', xaxis=dict(title='Fecha'), yaxis=dict(title='Promedio de Tiempo de Revisión'))
         fig = go.Figure(layout=layout)
-    return plot(fig, output_type='div')
+    return {'grafico': plot(fig, output_type='div'), 'promedio_tiempo': promedio_tiempo, 'contenidos_tiempos': contenidos_tiempos}
 
 
 def generar_reporte_contenidos_inactivos(fecha_inicio, fecha_fin):
