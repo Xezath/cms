@@ -125,7 +125,12 @@ def generar_reporte_promedio_tiempo_revision(fecha_inicio, fecha_fin):
         trace = go.Scatter(x=promedios_diarios, y=fechas, mode='lines+markers', name='Promedio de Tiempo de Revisión')
         layout = go.Layout(title='Promedio Diario de Tiempo de Revisión', xaxis=dict(title='Promedio de Tiempo de Revisión'), yaxis=dict(title='Fecha de Publicación'))
         fig = go.Figure(data=[trace], layout=layout)
-    return plot(fig, output_type='div')
+    
+    else:
+        # Crear un gráfico vacío para manejar el caso de que no haya datos
+        layout = go.Layout(title='No hay datos para el rango de fechas seleccionado', xaxis=dict(title='Fecha'), yaxis=dict(title='Promedio de Tiempo de Revisión'))
+        fig = go.Figure(layout=layout)
+    return {'grafico': plot(fig, output_type='div'), 'promedio_tiempo': promedio_tiempo, 'contenidos_tiempos': contenidos_tiempos}
 
 
 def generar_reporte_contenidos_inactivos(fecha_inicio, fecha_fin):

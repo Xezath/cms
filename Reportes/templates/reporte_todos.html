@@ -4,6 +4,66 @@
 
 {% block contenido %}
 
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        color: #333;
+        margin: 0px;
+        padding: 0;
+    }
+    h1 {
+        color: #444;
+        margin-bottom: 20px;
+    }
+    form {
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    label {
+        font-weight: bold;
+    }
+    input[type="date"] {
+        margin: 5px;
+        padding: 5px;
+    }
+    button {
+        padding: 7px 15px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    /* Estilos para el contenedor del gráfico */
+    .graph-container {
+        margin: 30px auto;
+        text-align: center;
+    }
+    .graph-container div {
+        width: 100%;
+        height: 500px;
+        margin-top: 10px;
+    }
+</style>
+
     <h1>Todos los Reportes</h1>
     <form method="POST">
         {% csrf_token %}
@@ -22,10 +82,44 @@
         <div>{{ graph_contenidos_publicados_rechazados|safe }}</div>
 
         <h2>Promedio de Tiempo de Revisión</h2>
-        <div>{{ graph_promedio_tiempo_revision|safe }}</div>
+        <div>{{ graph_promedio_tiempo_revision.grafico|safe }}</div>
+
+        <h2>Promedio Total de Tiempo de Revisión: {{ graph_promedio_tiempo_revision.promedio_tiempo }}</h2>
+
+        
+        <h3>Detalles de los Contenidos:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Tiempo de Revisión</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contenido, tiempo in graph_promedio_tiempo_revision.contenidos_tiempos %}
+                    <tr>
+                        <td>{{ contenido.titulo }}</td>
+                        <td>{{ contenido.autor }}</td>
+                        <td>{{ tiempo }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
 
         <h2>Contenidos Activos e Inactivos</h2>
         <div>{{ graph_contenidos_inactivos|safe }}</div>
+
+
+
+
+        
+    
+
+
+
+
     {% endif %}
 
 {% endblock %}
