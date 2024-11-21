@@ -72,14 +72,14 @@ class Contenidos(models.Model):
     (ForeignKey): El estado del contenido.
     """
 
-    numero_lecturas = models.IntegerField(default=0)  # Campo para el contador de lecturas
-    historial = models.TextField(blank=True)
+    numero_lecturas = models.IntegerField(default=0, editable=False)  # Campo para el contador de lecturas
+    historial = models.TextField(blank=True, editable=False)
     
     def agregar_historial(self, accion, detalles=""):
         """
         Agrega un registro al historial del contenido.
         """
-        nuevo_historial = f"{accion} - {detalles} ({now()})\n"
+        nuevo_historial = f"{accion} - {detalles} ({timezone.now()})\n"
         self.historial += nuevo_historial
         self.save()
 
