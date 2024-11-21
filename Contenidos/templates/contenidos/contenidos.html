@@ -97,6 +97,7 @@
                                 {% if perms.Contenidos.delete_contenidos %}
                                     <a class="btn btn-danger" href="{% url 'eliminar_contenido' contenido.id %}" role="button">Eliminar</a>
                                 {% endif %}
+                                <a class="btn btn-secondary" href="{% url 'ver_historial' contenido.id %}" role="button">Ver Historial</a> <!-- Nuevo botón para ver historial -->
                             </div>
                             {% endif %}
                         </div>

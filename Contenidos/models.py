@@ -1,6 +1,7 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 from django.utils import timezone
+from django.utils.timezone import now
 from django.contrib.auth.models import User
 from Categoria.models import Categoria, Subcategoria
 from Plantilla.models import Plantilla
@@ -72,7 +73,16 @@ class Contenidos(models.Model):
     """
 
     numero_lecturas = models.IntegerField(default=0)  # Campo para el contador de lecturas
+    historial = models.TextField(blank=True)
     
+    def agregar_historial(self, accion, detalles=""):
+        """
+        Agrega un registro al historial del contenido.
+        """
+        nuevo_historial = f"{accion} - {detalles} ({now()})\n"
+        self.historial += nuevo_historial
+        self.save()
+
     def __str__(self):
         """
         Devuelve el título del contenido.

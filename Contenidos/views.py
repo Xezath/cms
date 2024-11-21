@@ -74,6 +74,9 @@ def crear_contenido(request):
         contenido.autor = request.user  # Asigna el autor al contenido
         contenido.save()  # Guarda el contenido en la base de datos
 
+        # Agregar un registro de historial indicando que el contenido fue creado
+        contenido.agregar_historial("Creado", "El contenido ha sido creado.")
+
         tablero = Tablero.objects.first()  # Obtener el tablero por defecto
 
         # Buscar la columna que coincida con el estado del contenido recién creado
@@ -112,6 +115,7 @@ def editar_contenido(request, id):
     - HttpResponse que redirige a la lista de contenidos si la edición se completa con éxito, o muestra la página 'contenidos/editar.html' con el formulario si no es válido.
     """
     contenido = get_object_or_404(Contenidos, id=id)
+    estado_anterior= contenido.estado
     tarjeta = Tarjeta.objects.filter(contenido=contenido).first()  # Buscar la tarjeta relacionada con el contenido
 
     if request.method == 'POST':
@@ -126,7 +130,6 @@ def editar_contenido(request, id):
             # Aquí no es necesario modificar el autor
             contenido = formulario.save(commit=False)  # No guardar aún
             contenido.autor = contenido.autor  # Mantener el autor existente
-            
             if contenido.estado.id == 2:
                 contenido.fecha_de_inactivacion = datetime.now()
 
@@ -134,10 +137,16 @@ def editar_contenido(request, id):
                 contenido.fecha_publicacion = datetime.now()
 
             contenido.save()  # Guarda el contenido modificado
+            contenido.agregar_historial("Modificado", "El contenido ha sido modificado.")
+            
             nuevo_estado = formulario.cleaned_data['estado']            # Actualizar el estado y la columna de la tarjeta
             if tarjeta:
                 # Llamada a la función actualizar_estado
                 actualizar_estado(request, tarjeta.id, nuevo_estado.descripcion)
+            
+            if estado_anterior != nuevo_estado:
+                contenido.agregar_historial(f"Paso de estado '{estado_anterior}' a estado '{nuevo_estado}'")
+
 
             return redirect('contenidos')
         else:
@@ -183,7 +192,7 @@ def visualizar_contenido(request, id):
     - HttpResponse con la página 'contenidos/visualizar.html' que muestra el contenido y los comentarios asociados.
     """
     contenido = get_object_or_404(Contenidos, id=id)
-
+    historial = contenido.historial.split("\n")
     # Incrementar el contador de lecturas
     contenido.numero_lecturas += 1
     contenido.save()
@@ -216,7 +225,8 @@ def visualizar_contenido(request, id):
     return render(request, 'contenidos/visualizar.html', {
         'contenido': contenido,
         'comentarios': comentarios,
-        'comentario_form': comentario_form
+        'comentario_form': comentario_form,
+        'historial': historial
     })
 
 
@@ -330,16 +340,17 @@ def enviar_a_revision(request, id):
     """
     # Obtener el contenido con el ID proporcionado
     contenido = get_object_or_404(Contenidos, id=id)
+    estado_anterior= contenido.estado
     tarjeta = Tarjeta.objects.filter(contenido=contenido).first()
     contenido.estado = get_object_or_404(Estado, id=4)  # Asumiendo que el ID 4 corresponde al estado "revisión"
     contenido.save()  # Guardar los cambios en la base de datos
     nuevo_estado = contenido.estado
     # Actualizar el estado de la tarjeta si existe
-
+    
     tarjeta = Tarjeta.objects.filter(contenido=contenido).first()
     tarjeta.estado = nuevo_estado
     tarjeta.save()
-        
+    
     context = {
                     'titulo': contenido.titulo,
                 }      
@@ -349,7 +360,10 @@ def enviar_a_revision(request, id):
     message=EmailMessage(subject, html_message, 'cmseq052024@gmail.com', [contenido.autor.email])
     message.content_subtype = 'html'
     message.send()
-    
+    if estado_anterior != nuevo_estado:
+        contenido.agregar_historial(f"Paso de estado '{estado_anterior}' a estado '{nuevo_estado}'")
+        
+    contenido.agregar_historial("Cambio de estado", "El contenido fue enviado a revision.")
 
     # Redirigir o devolver una respuesta
     return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir
@@ -394,6 +408,8 @@ def aceptar_rechazar_contenido(request, id):
             message=EmailMessage(subject, html_message, 'cmseq052024@gmail.com', [contenido.autor.email])
             message.content_subtype = 'html'
             message.send()
+            contenido.agregar_historial("Cambio de estado", "El contenido ha sido rechazado.")
+            contenido.agregar_historial("Cambio de estado", "El contenido ha sido enviado a borrador.")
 
 
         else: # esto es para aceptado
@@ -407,6 +423,7 @@ def aceptar_rechazar_contenido(request, id):
             message=EmailMessage(subject, html_message, 'cmseq052024@gmail.com', [contenido.autor.email])
             message.content_subtype = 'html'
             message.send()
+            contenido.agregar_historial("Cambio de estado", "El contenido ha sido aceptado.")
 
         contenido.save()  # Guardar los cambios en la base de datos
         nuevo_estado = contenido.estado
@@ -438,6 +455,8 @@ def publicar_contenido(request, id):
         if(accion == '0'): #rechazar es decir envia a en revision
             contenido.estado = get_object_or_404(Estado, id=4)
             contenido.fecha_de_rechazados = datetime.now()
+            contenido.agregar_historial("Cambio de estado", "El contenido ha sido rechazado.")
+            contenido.agregar_historial("Cambio de estado", "El contenido ha sido enviado a revision.")
         else: #el contenido se publica y se va al estado de activo
             contenido.estado = get_object_or_404(Estado, id=1)
             contenido.fecha_publicacion= datetime.now()
@@ -450,6 +469,7 @@ def publicar_contenido(request, id):
             message=EmailMessage(subject, html_message, 'cmseq052024@gmail.com', [contenido.autor.email])
             message.content_subtype = 'html'
             message.send()
+            contenido.agregar_historial("Cambio de estado", "El contenido se encuentra activo.")
 
         contenido.save()  # Guardar los cambios en la base de datos
         nuevo_estado = contenido.estado
@@ -459,3 +479,6 @@ def publicar_contenido(request, id):
     # Redirigir o devolver una respuesta
     return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir
 
+def ver_historial(request, id):
+    contenido = get_object_or_404(Contenidos, id=id)
+    return render(request, 'contenidos/historial.html', {'contenido': contenido})
