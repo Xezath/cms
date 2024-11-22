@@ -79,7 +79,8 @@ class Contenidos(models.Model):
         """
         Agrega un registro al historial del contenido.
         """
-        nuevo_historial = f"{accion} - {detalles} ({timezone.now()})\n"
+        fecha = now().strftime("%Y-%m-%d %H:%M")
+        nuevo_historial = f"{accion} - {detalles} ({fecha})\n"
         self.historial += nuevo_historial
         self.save()
 

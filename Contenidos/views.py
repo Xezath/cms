@@ -206,6 +206,7 @@ def visualizar_contenido(request, id):
             comentario.usuario = request.user  # Asignar el usuario autenticado
             comentario.contenido = contenido   # Relacionar el comentario con el contenido actual
             comentario.save()
+            contenido.agregar_historial("Comentarios", "Se ha agregado un nuevo comentario.")
             #Si se crea el comentario, se envia una notificación por correo al autor
             context = {
                     'titulo': contenido.titulo,
@@ -272,6 +273,7 @@ def eliminar_comentario(request, comentario_id):
         if request.user == comentario.usuario or request.user.has_perm('Contenidos.delete_comentario'):
             comentario.delete()
             messages.success(request, 'Comentario eliminado con éxito.')
+            contenido.agregar_historial("Comentarios", "Se ha eliminado un comentario.")
             return redirect('visualizar_contenido', id=contenido.id)
 
     return render(request, 'contenidos/confirmar_eliminacion_comentario.html', {'comentario': comentario})
