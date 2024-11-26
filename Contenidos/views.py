@@ -19,8 +19,10 @@ def contenidos(request):
     """
     Muestra una lista de todos los contenidos disponibles, permitiendo filtrarlos por categoría, 
     subcategoría o autor. También carga las listas necesarias para realizar los filtros.
+
     Parámetros:
     - request: HttpRequest object con la información de la solicitud.
+
     Retorna:
     - HttpResponse con la página 'contenidos/contenidos.html', que incluye la lista de contenidos y los filtros.
     """
@@ -61,6 +63,8 @@ def crear_contenido(request):
     Vista para crear un nuevo contenido. Una vez creado, se asocia una tarjeta en el tablero Kanban 
     al contenido creado.
 
+    Esta accion es agregada al historial del contenido con el estado inicial que se seleccionó.
+
     Parámetros:
     - request: HttpRequest object con la información de la solicitud.
 
@@ -74,8 +78,11 @@ def crear_contenido(request):
         contenido.autor = request.user  # Asigna el autor al contenido
         contenido.save()  # Guarda el contenido en la base de datos
 
-        # Agregar un registro de historial indicando que el contenido fue creado
-        contenido.agregar_historial("Creado", "El contenido ha sido creado.")
+        # Registrar el estado inicial en el historial
+        contenido.agregar_historial(
+            "Creado",
+            f"El contenido ha sido creado y se encuentra en estado '{contenido.estado.descripcion}'."
+        )
 
         tablero = Tablero.objects.first()  # Obtener el tablero por defecto
 
@@ -101,6 +108,7 @@ def crear_contenido(request):
     return render(request, 'contenidos/crear.html', {'formulario': formulario})
 
 
+
 #@permission_required('Contenidos.change_contenidos', raise_exception=True)
 @login_required
 def editar_contenido(request, id):
@@ -113,6 +121,8 @@ def editar_contenido(request, id):
 
     Retorna:
     - HttpResponse que redirige a la lista de contenidos si la edición se completa con éxito, o muestra la página 'contenidos/editar.html' con el formulario si no es válido.
+    
+    Esta accion es agregada al historial del contenido.
     """
     contenido = get_object_or_404(Contenidos, id=id)
     estado_anterior= contenido.estado
@@ -145,7 +155,7 @@ def editar_contenido(request, id):
                 actualizar_estado(request, tarjeta.id, nuevo_estado.descripcion)
             
             if estado_anterior != nuevo_estado:
-                contenido.agregar_historial(f"Paso de estado '{estado_anterior}' a estado '{nuevo_estado}'")
+                contenido.agregar_historial(f"Cambio de estado '{estado_anterior}' a estado '{nuevo_estado}'")
 
 
             return redirect('contenidos')
@@ -206,7 +216,6 @@ def visualizar_contenido(request, id):
             comentario.usuario = request.user  # Asignar el usuario autenticado
             comentario.contenido = contenido   # Relacionar el comentario con el contenido actual
             comentario.save()
-            contenido.agregar_historial("Comentarios", "Se ha agregado un nuevo comentario.")
             #Si se crea el comentario, se envia una notificación por correo al autor
             context = {
                     'titulo': contenido.titulo,
@@ -273,7 +282,6 @@ def eliminar_comentario(request, comentario_id):
         if request.user == comentario.usuario or request.user.has_perm('Contenidos.delete_comentario'):
             comentario.delete()
             messages.success(request, 'Comentario eliminado con éxito.')
-            contenido.agregar_historial("Comentarios", "Se ha eliminado un comentario.")
             return redirect('visualizar_contenido', id=contenido.id)
 
     return render(request, 'contenidos/confirmar_eliminacion_comentario.html', {'comentario': comentario})
@@ -339,6 +347,8 @@ def enviar_a_revision(request, id):
 
     Retorna:
     - HttpResponse que redirige a la página anterior o muestra la página de contenidos.
+
+    Esta accion es agregada al historial del contenido como parte de un cambio de estado.
     """
     # Obtener el contenido con el ID proporcionado
     contenido = get_object_or_404(Contenidos, id=id)
@@ -363,7 +373,7 @@ def enviar_a_revision(request, id):
     message.content_subtype = 'html'
     message.send()
     if estado_anterior != nuevo_estado:
-        contenido.agregar_historial(f"Paso de estado '{estado_anterior}' a estado '{nuevo_estado}'")
+        contenido.agregar_historial(f"Cambio de estado '{estado_anterior}' a estado '{nuevo_estado}'")
         
     contenido.agregar_historial("Cambio de estado", "El contenido fue enviado a revision.")
 
@@ -380,6 +390,8 @@ def aceptar_rechazar_contenido(request, id):
 
     Retorna:
     - HttpResponse que redirige a la página anterior o muestra la página de contenidos.
+
+    Esta accion es agregada al historial del contenido como parte de un cambio de estado.
     """
     # Obtener el contenido con el ID proporcionado
     contenido = get_object_or_404(Contenidos, id=id)
@@ -446,6 +458,8 @@ def publicar_contenido(request, id):
 
     Retorna:
     - HttpResponse que redirige a la página anterior o muestra la página de contenidos.
+
+    Esta accion es agregada al historial del contenido como parte de un cambio de estado.
     """
     # Obtener el contenido con el ID proporcionado
     contenido = get_object_or_404(Contenidos, id=id)
@@ -482,5 +496,8 @@ def publicar_contenido(request, id):
     return redirect('contenidos')  # Cambia a la vista a la que quieras redirigir
 
 def ver_historial(request, id):
+    """
+    Vista que permite visualizar el historial de un contenido especifico
+    """
     contenido = get_object_or_404(Contenidos, id=id)
     return render(request, 'contenidos/historial.html', {'contenido': contenido})

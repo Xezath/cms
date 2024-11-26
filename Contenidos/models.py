@@ -44,13 +44,18 @@ class Contenidos(models.Model):
     """
     (DateTimeField): La fecha de creación del contenido.
     """
-
     fecha_publicacion = models.DateTimeField(null=True, blank=True, editable=False)  # Fecha de publicación
-
+    """
+    (DateTimeField): Fecha en la que un contenido fue publicado
+    """
     fecha_de_rechazados = models.DateTimeField(null=True, blank=True, editable=False)  # Fecha de rechazo
-
+    """
+    (DateTimeField): Fecha en la que un contenido fue rechazado
+    """
     fecha_de_inactivacion = models.DateTimeField(null=True, blank=True, editable=False) # Fecha de inactivación
-
+    """
+    (DateTimeField): Fecha en la que un contenido fue puesto como inactivo
+    """
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True)  # Categoría asociada
     """
     (ForeignKey): La categoría asociada al contenido.
@@ -73,7 +78,15 @@ class Contenidos(models.Model):
     """
 
     numero_lecturas = models.IntegerField(default=0, editable=False)  # Campo para el contador de lecturas
+    """
+    (IntegerField): Donde se cuenta el numero de visualizaciones de cada contenido
+    """
+
     historial = models.TextField(blank=True, editable=False)
+    """
+    (TextField): Campo donde se almacena cada accion que se realizo sobre el contenido, desde la creacion hasta todos los estados por los que pasa
+    """
+
     
     def agregar_historial(self, accion, detalles=""):
         """
