@@ -78,6 +78,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.eliminar_contenido"><code class="docutils literal notranslate"><span class="pre">eliminar_contenido()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.enviar_a_revision"><code class="docutils literal notranslate"><span class="pre">enviar_a_revision()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.publicar_contenido"><code class="docutils literal notranslate"><span class="pre">publicar_contenido()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.ver_historial"><code class="docutils literal notranslate"><span class="pre">ver_historial()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.visualizar_contenido"><code class="docutils literal notranslate"><span class="pre">visualizar_contenido()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.visualizar_contenido_aceptado"><code class="docutils literal notranslate"><span class="pre">visualizar_contenido_aceptado()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Contenidos.views.visualizar_contenido_borrador"><code class="docutils literal notranslate"><span class="pre">visualizar_contenido_borrador()</span></code></a></li>
@@ -238,7 +239,7 @@ subcategorías basadas en la categoría seleccionada.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.forms.ContenidosForm.base_fields">
-<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'autor':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'categoria':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'contenido':</span> <span class="pre">&lt;ckeditor.fields.RichTextFormField</span> <span class="pre">object&gt;,</span> <span class="pre">'estado':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'numero_lecturas':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'plantilla':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'subcategoria':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'titulo':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Contenidos.forms.ContenidosForm.base_fields" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'autor':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'categoria':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'contenido':</span> <span class="pre">&lt;ckeditor.fields.RichTextFormField</span> <span class="pre">object&gt;,</span> <span class="pre">'estado':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'plantilla':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'subcategoria':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'titulo':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Contenidos.forms.ContenidosForm.base_fields" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -330,7 +331,7 @@ los datos sin opción de modificación.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.forms.VisualizarContenidoForm.base_fields">
-<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'autor':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'categoria':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'contenido':</span> <span class="pre">&lt;ckeditor.fields.RichTextFormField</span> <span class="pre">object&gt;,</span> <span class="pre">'estado':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'numero_lecturas':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'plantilla':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'subcategoria':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'titulo':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Contenidos.forms.VisualizarContenidoForm.base_fields" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'autor':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'categoria':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'contenido':</span> <span class="pre">&lt;ckeditor.fields.RichTextFormField</span> <span class="pre">object&gt;,</span> <span class="pre">'estado':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'plantilla':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'subcategoria':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'titulo':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#Contenidos.forms.VisualizarContenidoForm.base_fields" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -441,6 +442,12 @@ object the first time, the query is executed.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="Contenidos.models.Contenidos.agregar_historial">
+<span class="sig-name descname"><span class="pre">agregar_historial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detalles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/models.html#Contenidos.agregar_historial"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.models.Contenidos.agregar_historial" title="Link to this definition"></a></dt>
+<dd><p>Agrega un registro al historial del contenido.</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Contenidos.autor">
 <span class="sig-name descname"><span class="pre">autor</span></span><a class="headerlink" href="#Contenidos.models.Contenidos.autor" title="Link to this definition"></a></dt>
@@ -504,22 +511,19 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Contenidos.fecha_de_inactivacion">
 <span class="sig-name descname"><span class="pre">fecha_de_inactivacion</span></span><a class="headerlink" href="#Contenidos.models.Contenidos.fecha_de_inactivacion" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>(DateTimeField): Fecha en la que un contenido fue puesto como inactivo</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Contenidos.fecha_de_rechazados">
 <span class="sig-name descname"><span class="pre">fecha_de_rechazados</span></span><a class="headerlink" href="#Contenidos.models.Contenidos.fecha_de_rechazados" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>(DateTimeField): Fecha en la que un contenido fue rechazado</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Contenidos.fecha_publicacion">
 <span class="sig-name descname"><span class="pre">fecha_publicacion</span></span><a class="headerlink" href="#Contenidos.models.Contenidos.fecha_publicacion" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>(DateTimeField): Fecha en la que un contenido fue publicado</p>
 </dd></dl>
 
 <dl class="py method">
@@ -533,6 +537,12 @@ object the first time, the query is executed.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="Contenidos.models.Contenidos.historial">
+<span class="sig-name descname"><span class="pre">historial</span></span><a class="headerlink" href="#Contenidos.models.Contenidos.historial" title="Link to this definition"></a></dt>
+<dd><p>(TextField): Campo donde se almacena cada accion que se realizo sobre el contenido, desde la creacion hasta todos los estados por los que pasa</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Contenidos.id">
 <span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#Contenidos.models.Contenidos.id" title="Link to this definition"></a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -542,8 +552,7 @@ object the first time, the query is executed.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Contenidos.models.Contenidos.numero_lecturas">
 <span class="sig-name descname"><span class="pre">numero_lecturas</span></span><a class="headerlink" href="#Contenidos.models.Contenidos.numero_lecturas" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>(IntegerField): Donde se cuenta el numero de visualizaciones de cada contenido</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -689,6 +698,7 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 - id: ID del contenido a formatear.</p>
 <p>Retorna:
 - HttpResponse que redirige a la página anterior o muestra la página de contenidos.</p>
+<p>Esta accion es agregada al historial del contenido como parte de un cambio de estado.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -706,10 +716,10 @@ Se utiliza en la vista de creación y edición de contenidos.</p>
 <dt class="sig sig-object py" id="Contenidos.views.contenidos">
 <span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">contenidos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#contenidos"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.contenidos" title="Link to this definition"></a></dt>
 <dd><p>Muestra una lista de todos los contenidos disponibles, permitiendo filtrarlos por categoría, 
-subcategoría o autor. También carga las listas necesarias para realizar los filtros.
-Parámetros:
-- request: HttpRequest object con la información de la solicitud.
-Retorna:
+subcategoría o autor. También carga las listas necesarias para realizar los filtros.</p>
+<p>Parámetros:
+- request: HttpRequest object con la información de la solicitud.</p>
+<p>Retorna:
 - HttpResponse con la página “contenidos/contenidos.html”, que incluye la lista de contenidos y los filtros.</p>
 </dd></dl>
 
@@ -718,6 +728,7 @@ Retorna:
 <span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">crear_contenido</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#crear_contenido"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.crear_contenido" title="Link to this definition"></a></dt>
 <dd><p>Vista para crear un nuevo contenido. Una vez creado, se asocia una tarjeta en el tablero Kanban 
 al contenido creado.</p>
+<p>Esta accion es agregada al historial del contenido con el estado inicial que se seleccionó.</p>
 <p>Parámetros:
 - request: HttpRequest object con la información de la solicitud.</p>
 <p>Retorna:
@@ -733,6 +744,7 @@ al contenido creado.</p>
 - id: ID del contenido a editar.</p>
 <p>Retorna:
 - HttpResponse que redirige a la lista de contenidos si la edición se completa con éxito, o muestra la página “contenidos/editar.html” con el formulario si no es válido.</p>
+<p>Esta accion es agregada al historial del contenido.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -767,6 +779,7 @@ adecuados puede eliminarlo. Solicita confirmación antes de proceder con la elim
 - id: ID del contenido a enviar a revisión.</p>
 <p>Retorna:
 - HttpResponse que redirige a la página anterior o muestra la página de contenidos.</p>
+<p>Esta accion es agregada al historial del contenido como parte de un cambio de estado.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -778,6 +791,13 @@ adecuados puede eliminarlo. Solicita confirmación antes de proceder con la elim
 - id: ID del contenido a formatear.</p>
 <p>Retorna:
 - HttpResponse que redirige a la página anterior o muestra la página de contenidos.</p>
+<p>Esta accion es agregada al historial del contenido como parte de un cambio de estado.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Contenidos.views.ver_historial">
+<span class="sig-prename descclassname"><span class="pre">Contenidos.views.</span></span><span class="sig-name descname"><span class="pre">ver_historial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Contenidos/views.html#ver_historial"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Contenidos.views.ver_historial" title="Link to this definition"></a></dt>
+<dd><p>Vista que permite visualizar el historial de un contenido especifico</p>
 </dd></dl>
 
 <dl class="py function">

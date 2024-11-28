@@ -1,6 +1,7 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 from django.utils import timezone
+from django.utils.timezone import now
 from django.contrib.auth.models import User
 from Categoria.models import Categoria, Subcategoria
 from Plantilla.models import Plantilla
@@ -43,13 +44,18 @@ class Contenidos(models.Model):
     """
     (DateTimeField): La fecha de creación del contenido.
     """
-
     fecha_publicacion = models.DateTimeField(null=True, blank=True, editable=False)  # Fecha de publicación
-
+    """
+    (DateTimeField): Fecha en la que un contenido fue publicado
+    """
     fecha_de_rechazados = models.DateTimeField(null=True, blank=True, editable=False)  # Fecha de rechazo
-
+    """
+    (DateTimeField): Fecha en la que un contenido fue rechazado
+    """
     fecha_de_inactivacion = models.DateTimeField(null=True, blank=True, editable=False) # Fecha de inactivación
-
+    """
+    (DateTimeField): Fecha en la que un contenido fue puesto como inactivo
+    """
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True)  # Categoría asociada
     """
     (ForeignKey): La categoría asociada al contenido.
@@ -71,8 +77,26 @@ class Contenidos(models.Model):
     (ForeignKey): El estado del contenido.
     """
 
-    numero_lecturas = models.IntegerField(default=0)  # Campo para el contador de lecturas
+    numero_lecturas = models.IntegerField(default=0, editable=False)  # Campo para el contador de lecturas
+    """
+    (IntegerField): Donde se cuenta el numero de visualizaciones de cada contenido
+    """
+
+    historial = models.TextField(blank=True, editable=False)
+    """
+    (TextField): Campo donde se almacena cada accion que se realizo sobre el contenido, desde la creacion hasta todos los estados por los que pasa
+    """
+
     
+    def agregar_historial(self, accion, detalles=""):
+        """
+        Agrega un registro al historial del contenido.
+        """
+        fecha = now().strftime("%Y-%m-%d %H:%M")
+        nuevo_historial = f"{accion} - {detalles} ({fecha})\n"
+        self.historial += nuevo_historial
+        self.save()
+
     def __str__(self):
         """
         Devuelve el título del contenido.
