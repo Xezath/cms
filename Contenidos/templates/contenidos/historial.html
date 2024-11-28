@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block Titulo %} Historial de {{ contenido.titulo }} {% endblock %}
+
+{% block contenido %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h4>Historial de "{{ contenido.titulo }}"</h4>
+        </div>
+        <div class="card-body">
+            <pre>{{ contenido.historial }}</pre>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary" href="{% url 'visualizar_contenido' contenido.id %}" role="button">Volver al contenido</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
