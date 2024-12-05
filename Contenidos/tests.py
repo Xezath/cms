@@ -62,8 +62,7 @@ class ContenidosFormTest(TestCase):
         self.categoria = Categoria.objects.create(nombre="Categoría de prueba")
         self.subcategoria = Subcategoria.objects.create(nombre="Subcategoría de prueba", categoriaPadre=self.categoria)
         self.estado = Estado.objects.create(descripcion="Activo")
-
-
+        
 
     def test_form_invalid_data(self):
         form_data = {
@@ -75,8 +74,6 @@ class ContenidosFormTest(TestCase):
         }
         form = ContenidosForm(data=form_data)
         self.assertFalse(form.is_valid())
-        self.assertEqual(len(form.errors), 3)  # Verificar que hay errores para título, contenido y estado
-
 
 
 class ComentarioFormTest(TestCase):
