@@ -1,6 +1,7 @@
 from django.test import TestCase, RequestFactory
 from django.urls import reverse
 from datetime import datetime, timedelta
+from django.utils import timezone
 from .models import Contenidos, Estado
 from .views import (
     generar_reporte_contenidos_mas_leidos,
@@ -25,21 +26,28 @@ class ReporteTestCase(TestCase):
         self.contenido1 = Contenidos.objects.create(
             titulo="Contenido 1",
             estado=self.estado_activo,
-            fecha_publicacion=self.fecha_hoy,
+            fecha_creacion=self.fecha_pasada,  # Fecha dentro del rango de prueba
+            fecha_publicacion=self.fecha_hoy,  # Fecha de publicación dentro del rango de prueba
             numero_lecturas=100,
         )
+
         self.contenido2 = Contenidos.objects.create(
             titulo="Contenido 2",
             estado=self.estado_inactivo,
-            fecha_de_inactivacion=self.fecha_hoy,
+            fecha_creacion=self.fecha_pasada,  # Fecha dentro del rango de prueba
+            fecha_de_inactivacion=self.fecha_hoy,  # Fecha de inactivación dentro del rango
             numero_lecturas=50,
         )
+
         self.contenido3 = Contenidos.objects.create(
             titulo="Contenido 3",
             estado=self.estado_rechazado,
-            fecha_de_rechazados=self.fecha_hoy,
+            fecha_creacion=self.fecha_pasada,  # Fecha dentro del rango de prueba
+            fecha_de_rechazados=self.fecha_hoy,  # Fecha de rechazo dentro del rango
             numero_lecturas=25,
         )
+
+
 
     def test_generar_reporte_contenidos_mas_leidos(self):
         fecha_inicio = self.fecha_pasada
@@ -63,11 +71,17 @@ class ReporteTestCase(TestCase):
     def test_generar_reporte_promedio_tiempo_revision(self):
         fecha_inicio = self.fecha_pasada
         fecha_fin = self.fecha_hoy
-        div = generar_reporte_promedio_tiempo_revision(fecha_inicio, fecha_fin)
+        resultado = generar_reporte_promedio_tiempo_revision(fecha_inicio, fecha_fin)
+        promedio = resultado['promedio_tiempo']
+        
+        # Verifica que el promedio tenga el formato adecuado
+        self.assertIn("h", promedio)  # Asegura que haya horas
+        self.assertIn("m", promedio)  # Asegura que haya minutos
+        self.assertIn("s", promedio)  # Asegura que haya segundos
 
-        self.assertIn("Promedio", div)
-        self.assertIn("h", div)  # Asegurar formato de tiempo
-        self.assertIn("m", div)
+        # En caso de que se calcule correctamente el promedio
+        self.assertNotEqual(promedio, "No hay contenidos disponibles para calcular el promedio.")
+
 
     def test_generar_reporte_contenidos_inactivos(self):
         fecha_inicio = self.fecha_pasada
