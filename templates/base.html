@@ -309,9 +309,11 @@
                             <a class="nav-link {% if request.path == '/tablero_kanban/tablero/1/' %}active{% endif %}" href="{% url 'kanban:tablero_kanban' tablero_id=1 %}">Tablero Kanban</a>
                         {% endif %}
                     </li>  
+                    {% if perms.Contenidos.can_viewReportes %}
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/reportes/' %}active{% endif %}" href="{% url 'reporte_todos' %}">Reportes</a>
                     </li>                                               
+                    {% endif %}
                     {% endif %}
                     {% if user.is_authenticated %}
                     <li class="nav-item">
