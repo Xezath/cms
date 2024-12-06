@@ -104,9 +104,9 @@ class Tarjeta(models.Model):
                 # Busca la columna correspondiente al estado
                 self.columna = Columna.objects.get(estado=self.estado)
             except Columna.DoesNotExist:
-                raise ValueError(f"No se encontró una columna para el estado {self.estado}.")
+                raise ValueError(f"No se encontró una columna para el estado '{self.estado.descripcion}'.")
+        super().save(*args, **kwargs)
         
-        super(Tarjeta, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.titulo} ({self.columna.nombre})"

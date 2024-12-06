@@ -5,6 +5,7 @@ from .models import Contenidos, Estado, Categoria, Subcategoria, Comentario
 from .forms import ContenidosForm, EditarContenidosForm, ComentarioForm
 from django.utils import timezone
 from Plantilla.models import Plantilla, Color, Margenes
+from TableroKanban.models import Tarjeta, Tablero, Columna
 from django.core import mail
 from django.core.mail import send_mail
 from django.test import override_settings
@@ -75,6 +76,63 @@ class ContenidosFormTest(TestCase):
         form = ContenidosForm(data=form_data)
         self.assertFalse(form.is_valid())
 
+class EditarContenidoTest(TestCase):
+    def setUp(self):
+        # Configuración inicial de cliente y usuario
+        self.client = Client()
+        self.user = User.objects.create_user(username="testuser", password="testpassword")
+        self.client.login(username="testuser", password="testpassword")
+
+        # Crear datos básicos
+        self.estado_activo = Estado.objects.create(descripcion="Activo")
+        self.estado_por_hacer = Estado.objects.create(descripcion="Por hacer")
+        self.categoria = Categoria.objects.create(nombre="Categoría Test")
+
+        # Crear un tablero y columnas relacionadas
+        self.tablero = Tablero.objects.create(nombre="Tablero Test", descripcion="Descripción del tablero")
+        self.columna = Columna.objects.create(
+            nombre="Por hacer",
+            tablero=self.tablero,
+            estado=self.estado_por_hacer,
+            orden=1
+        )
+
+        # Crear contenido asociado a la tarjeta
+        self.contenido = Contenidos.objects.create(
+            titulo="Contenido de prueba",
+            contenido="Descripción del contenido",
+            categoria=self.categoria,
+            estado=self.estado_activo,
+            autor=self.user
+        )
+
+        # Crear una tarjeta asociada
+        self.tarjeta = Tarjeta.objects.create(
+            contenido=self.contenido,
+            autor=self.user,
+            columna=self.columna,
+            titulo="Tarjeta de prueba",
+            estado=self.estado_por_hacer,
+            descripcion="Descripción de la tarjeta",
+            orden=1
+        )
+
+
+    def test_cambio_estado_actualiza_tarjeta(self):
+        # Simular cambio de estado
+        estado_en_progreso = Estado.objects.create(descripcion="En progreso")
+        columna_en_progreso = Columna.objects.create(
+            nombre="En progreso",
+            tablero=self.tablero,
+            estado=estado_en_progreso,
+            orden=2
+        )
+
+        self.tarjeta.estado = estado_en_progreso
+        self.tarjeta.save()
+
+        # Verificar que la tarjeta se movió a la columna correspondiente
+        self.assertEqual(self.tarjeta.columna, columna_en_progreso)
 
 class ComentarioFormTest(TestCase):
     def setUp(self):
