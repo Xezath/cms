@@ -123,3 +123,34 @@ class EmailTest(TestCase):
         self.assertEqual(sent_email.body, message)
         self.assertEqual(sent_email.from_email, from_email)
         self.assertEqual(sent_email.to, recipient_list)
+
+
+class ContenidosHistorialTest(TestCase):
+    def setUp(self):
+        """Setup initial data for testing historial functionality."""
+        # Crear datos necesarios
+        self.categoria = Categoria.objects.create(nombre="Categoría Test")
+        self.estado = Estado.objects.create(descripcion="Activo")
+        self.user = User.objects.create_user(username="testuser", password="testpassword")
+        self.contenido = Contenidos.objects.create(
+            titulo="Contenido de prueba",
+            contenido="Este es un contenido de prueba",
+            categoria=self.categoria,
+            estado=self.estado,
+            autor=self.user
+        )
+
+    def test_agregar_historial(self):
+        """Test para validar la funcionalidad de agregar_historial."""
+        # Acción 1
+        self.contenido.agregar_historial("Creación", "Contenido creado por el autor.")
+        self.assertIn("Creación - Contenido creado por el autor", self.contenido.historial)
+        
+        # Acción 2
+        self.contenido.agregar_historial("Edición", "Se actualizó el título del contenido.")
+        self.assertIn("Edición - Se actualizó el título del contenido", self.contenido.historial)
+        
+        # Verificar que ambas acciones están en el historial
+        historial = self.contenido.historial
+        self.assertIn("Creación - Contenido creado por el autor", historial)
+        self.assertIn("Edición - Se actualizó el título del contenido", historial)
