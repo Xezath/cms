@@ -310,9 +310,9 @@
                         {% endif %}
                     </li>  
                     {% if perms.Contenidos.can_viewReportes %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/reportes/' %}active{% endif %}" href="{% url 'reporte_todos' %}">Reportes</a>
-                    </li>                                               
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/reportes/' %}active{% endif %}" href="{% url 'reporte_todos' %}">Reportes</a>
+                        </li>                                          
                     {% endif %}
                     {% endif %}
                     {% if user.is_authenticated %}
