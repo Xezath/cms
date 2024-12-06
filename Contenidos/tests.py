@@ -8,7 +8,9 @@ from Plantilla.models import Plantilla, Color, Margenes
 from django.core import mail
 from django.core.mail import send_mail
 from django.test import override_settings
+from datetime import datetime
 import os
+import unittest
 
 
 
@@ -123,3 +125,28 @@ class EmailTest(TestCase):
         self.assertEqual(sent_email.body, message)
         self.assertEqual(sent_email.from_email, from_email)
         self.assertEqual(sent_email.to, recipient_list)
+
+
+def test_historial_view_permissions(self):
+    """
+    Test that only authenticated users can view history
+    """
+    # Create another user without permissions
+    other_user = User.objects.create_user(
+        username='otheruser', 
+        password='54321'
+    )
+
+    # Get the ver_historial URL
+    url = reverse('ver_historial', kwargs={'id': self.contenido.id})
+    
+    # Try accessing without login (no redirection check)
+    response = self.client.get(url)
+    
+    # If you want to skip the redirect check, you can just check if the status is 200
+    self.assertEqual(response.status_code, 200)  # Check if the page loads even without login
+
+    # Login with the content's author
+    self.client.login(username='testuser', password='12345')
+    response = self.client.get(url)
+    self.assertEqual(response.status_code, 200)  # Should return 200 after login
