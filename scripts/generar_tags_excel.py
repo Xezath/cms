@@ -1,11 +1,12 @@
 import requests
 import openpyxl
 from datetime import datetime
+from decouple import config
 
 # Configuración
 repo_owner = "Xezath"  # Tu nombre de usuario en GitHub
 repo_name = "cms"  # El nombre de tu repositorio
-token = "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"  # Tu token de acceso personal de GitHub
+token = config('TOKEN_GITHUB') # Tu token de acceso personal de GitHub
 github_api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/tags"
 
 # Encabezados para la autenticación
