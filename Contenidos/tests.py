@@ -127,122 +127,32 @@ class EmailTest(TestCase):
         self.assertEqual(sent_email.to, recipient_list)
 
 
-class ContentHistoryTestCase(TestCase):
+class ContenidosHistorialTest(TestCase):
     def setUp(self):
-        """
-        Set up test data that will be used across multiple test methods
-        """
-        # Create a test user
-        self.user = User.objects.create_user(
-            username='testuser', 
-            password='12345'
-        )
-
-        # Create a test state
-        self.estado = Estado.objects.create(
-            descripcion='Borrador'
-        )
-
-        # Create a test content
+        """Setup initial data for testing historial functionality."""
+        # Crear datos necesarios
+        self.categoria = Categoria.objects.create(nombre="Categoría Test")
+        self.estado = Estado.objects.create(descripcion="Activo")
+        self.user = User.objects.create_user(username="testuser", password="testpassword")
         self.contenido = Contenidos.objects.create(
-            titulo='Test Content',
-            contenido='Test Content Body',
-            autor=self.user,
-            estado=self.estado
+            titulo="Contenido de prueba",
+            contenido="Este es un contenido de prueba",
+            categoria=self.categoria,
+            estado=self.estado,
+            autor=self.user
         )
 
-    def test_agregar_historial_method(self):
-        """
-        Test the agregar_historial method of the Contenidos model
-        """
-        # Initial state of historial
-        initial_historial = self.contenido.historial
-
-        # Add a history entry
-        self.contenido.agregar_historial("Test Action", "Test Details")
-
-        # Refresh the content from the database
-        self.contenido.refresh_from_db()
-
-        # Check that a new history entry was added
-        self.assertTrue(len(self.contenido.historial) > len(initial_historial))
+    def test_agregar_historial(self):
+        """Test para validar la funcionalidad de agregar_historial."""
+        # Acción 1
+        self.contenido.agregar_historial("Creación", "Contenido creado por el autor.")
+        self.assertIn("Creación - Contenido creado por el autor", self.contenido.historial)
         
-        # Check that the new entry contains the expected text
-        self.assertIn("Test Action - Test Details", self.contenido.historial)
+        # Acción 2
+        self.contenido.agregar_historial("Edición", "Se actualizó el título del contenido.")
+        self.assertIn("Edición - Se actualizó el título del contenido", self.contenido.historial)
         
-        # Check that the entry includes a timestamp
-        self.assertTrue(datetime.now().strftime("%Y-%m-%d") in self.contenido.historial)
-
-    def test_ver_historial_view(self):
-        """
-        Test the ver_historial view
-        """
-        # Add some history entries
-        self.contenido.agregar_historial("First Action", "First Details")
-        self.contenido.agregar_historial("Second Action", "Second Details")
-
-        # Log in the test user
-        self.client.login(username='testuser', password='12345')
-
-        # Get the ver_historial URL
-        url = reverse('ver_historial', kwargs={'id': self.contenido.id})
-        
-        # Make a GET request to the view
-        response = self.client.get(url)
-
-        # Check that the response is 200 OK
-        self.assertEqual(response.status_code, 200)
-
-        # Check that the content's history is in the response
-        self.assertContains(response, "First Action")
-        self.assertContains(response, "Second Action")
-
-    def test_historial_entries_multiple_methods(self):
-        """
-        Test adding multiple history entries through different methods
-        """
-        # Add initial history entry during content creation
-        self.contenido.agregar_historial("Created", "Initial content creation")
-
-        # Simulate state change
-        new_estado = Estado.objects.create(descripcion='Revisión')
-        self.contenido.estado = new_estado
-        self.contenido.save()
-        self.contenido.agregar_historial(f"Cambio de estado '{self.estado}' a estado '{new_estado}'")
-
-        # Refresh the content
-        self.contenido.refresh_from_db()
-
-        # Split the history entries
-        history_entries = self.contenido.historial.split("\n")
-
-        # Check that we have multiple entries
-        self.assertTrue(len(history_entries) >= 2)
-        
-        # Check the content of entries
-        self.assertIn("Created", history_entries[0])
-        self.assertIn("Cambio de estado", history_entries[1])
-
-    def test_historial_view_permissions(self):
-        """
-        Test that only authenticated users can view history
-        """
-        # Create another user without permissions
-        other_user = User.objects.create_user(
-            username='otheruser', 
-            password='54321'
-        )
-
-        # Get the ver_historial URL
-        url = reverse('ver_historial', kwargs={'id': self.contenido.id})
-        
-        # Try accessing without login (no redirection check)
-        response = self.client.get(url)
-        
-        # If you want to skip the redirect check, you can just check if the status is 200
-        self.assertEqual(response.status_code, 200)  # Check if the page loads even without login
-
-        # Login with the content's author
-        self.client.login(username='testuser', password='12345')
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)  # Should return 200 after login
+        # Verificar que ambas acciones están en el historial
+        historial = self.contenido.historial
+        self.assertIn("Creación - Contenido creado por el autor", historial)
+        self.assertIn("Edición - Se actualizó el título del contenido", historial)

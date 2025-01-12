@@ -126,6 +126,7 @@ class Contenidos(models.Model):
             ("can_viewAceptado", "Puede ver contenido aceptado"),
             ("can_change_estado", "Puede cambiar estado"),
             ("can_activateContenido", "Puede activar contenido"),
+            ("can_viewReportes", "Puede ver los reportes"),
         ]
 
 class Comentario(models.Model):
