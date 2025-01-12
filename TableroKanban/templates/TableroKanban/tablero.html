@@ -53,7 +53,7 @@
                     <div class="kanban-tarjeta card" {% if puede_cambiar_estado %} draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')" {% endif %}>
                         <div class="card-body">
                             <h6 class="card-title">
-                                <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
+                                <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.contenido.titulo }}</a>
                             </h6>
                             <p class="card-text">{{ tarjeta.descripcion }}</p>
                         </div>
@@ -70,7 +70,7 @@
                     <div class="kanban-tarjeta card" draggable="false">
                         <div class="card-body">
                             <h6 class="card-title">
-                                <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
+                                <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{  tarjeta.contenido.titulo  }}</a>
                             </h6>
                             <p class="card-text">{{ tarjeta.descripcion }}</p>
                         </div>
@@ -88,7 +88,7 @@
                     <div class="kanban-tarjeta card" draggable="false">
                         <div class="card-body">
                             <h6 class="card-title">
-                                <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
+                                <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{  tarjeta.contenido.titulo  }}</a>
                             </h6>
                             <p class="card-text">{{ tarjeta.descripcion }}</p>
                         </div>
@@ -104,7 +104,7 @@
                     <div class="kanban-tarjeta card" {% if puede_cambiar_estado %} draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')" {% endif %}>
                         <div class="card-body">
                             <h6 class="card-title">
-                                <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
+                                <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{  tarjeta.contenido.titulo  }}</a>
                             </h6>
                             <p class="card-text">{{ tarjeta.descripcion }}</p>
                         </div>
@@ -120,7 +120,7 @@
                     <div class="kanban-tarjeta card" {% if puede_cambiar_estado %} draggable="true" ondragstart="drag(event, '{{ tarjeta.id }}')" {% endif %}>
                         <div class="card-body">
                             <h6 class="card-title">
-                                <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{ tarjeta.titulo }}</a>
+                                <a href="{% url 'visualizar_contenido' tarjeta.id %}">{{  tarjeta.contenido.titulo  }}</a>
                             </h6>
                             <p class="card-text">{{ tarjeta.descripcion }}</p>
                         </div>
