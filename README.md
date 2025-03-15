@@ -1,4 +1,4 @@
-# 📌 Sistema de Gestión de Contenidos (CMS) en Django
+# 📌 Sistema de Gestión de Contenidos (CMS) 
 
 ## 📖 Descripción
 
